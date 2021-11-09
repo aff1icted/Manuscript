@@ -8,9 +8,7 @@ import BookPage from "../components/Bookpage";
 
 function Bookid() {
 
-  const [Book, setBook] = useState({
-    Title:"title"
-  })
+  const [Book, setBook] = useState({})
   const LinkISBN = useParams().ISBN
 
 
