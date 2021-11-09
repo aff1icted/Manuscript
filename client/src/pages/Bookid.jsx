@@ -1,34 +1,44 @@
+import react, { useEffect, useMemo, useState } from "react";
 import '../styles/App.css'
 import { useParams } from 'react-router';
+import { useHttp } from '../components/hooks/html.hook';
+import { Loader } from "../components/UI/Loader";
+import BookPage from "../components/Bookpage";
+
 
 function Bookid() {
-   const params = useParams() 
-  return(
-  
-    <div class="Bookdet">
-          <div className = "upperbook">
 
-            
-          <img scr=""/>
-            <div className="infosdet">
-             <div>название</div>
-             <div>автор</div>
-             <div>теги</div>
-             <div className = "description">описание</div>
-            </div>
-        </div>
-            <div className="lowerbook">
-                цена:
-                
-            </div>
-            <div className="lowerbook">
-                <button>в корзину</button>
-                <button>читать</button>
-            </div>  
-    </div> 
-    
-   
-  )
+  const [Book, setBook] = useState({
+    Title:"title"
+  })
+  const LinkISBN = useParams().ISBN
+
+
+  const { loading, error, request } = useHttp()
+
+  const getOneBook = async () => {
+    try {
+      const data = await request(`/books/${LinkISBN}`)
+      console.log('Data', data[0])
+      console.log('Title', data[0].Title)
+      console.log('LinkISBN', LinkISBN)
+      setBook(data[0])
+    } catch (error) { }
+  }
+
+  useEffect(() => {
+    getOneBook()
+  }, [])
+
+  
+  if (loading) {
+    return (      
+      <Loader />
+    )
+  } else {
+    return (
+        <BookPage Book={Book}/>      
+    )}
 }
 
 export default Bookid;

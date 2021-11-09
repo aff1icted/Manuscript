@@ -8,12 +8,36 @@ class BookController{
         res.json(newBook.rows[0])
     }
     async getBooks(req,res){
-        const books = await db.query('SELECT * FROM "Book"')
+        const books = await db.query(`select "ISBN", "Title","Authors","Tags","Description" from "Book" Left join
+        (select "BookTagAuthor"."Book","Authors","Tags",string_agg("Series", ', ') as "Series"
+        from(select "BookAuthor"."Book","Authors",string_agg("Tag", ', ') as "Tags" from (
+        select "Book" as "Book", 
+         string_agg("FullName", ', ') as "Authors"
+        from "BookAuthor", 
+        (select "AuthorID", concat_ws(' ', "Surname", "Name", "Patronymic")  as "FullName"  from "Authors")as "Authors"
+        where "Author"="AuthorID" 
+        group by "BookAuthor"."Book") as "BookAuthor" left join "BookTag" ON "BookAuthor"."Book"="BookTag"."Book"
+        group by "BookAuthor"."Book", "Authors") as "BookTagAuthor" 
+        left join "BookSeries" ON "BookTagAuthor"."Book"="BookSeries"."Book"
+        group by "BookTagAuthor"."Book","Authors","Tags") as "BookTagAuthorSeries" on "ISBN"="Book"
+        `)
         res.json(books.rows)
     }
     async getOneBook(req,res){
         const isbn = req.params.isbn
-        const book = await db.query('SELECT * FROM "Book" WHERE "ISBN"=$1',[isbn])
+        const book = await db.query(`select "ISBN", "Title","Authors","Tags","Description" from "Book" Left join
+        (select "BookTagAuthor"."Book","Authors","Tags",string_agg("Series", ', ') as "Series"
+        from(select "BookAuthor"."Book","Authors",string_agg("Tag", ', ') as "Tags" from (
+        select "Book" as "Book", 
+         string_agg("FullName", ', ') as "Authors"
+        from "BookAuthor", 
+        (select "AuthorID", concat_ws(' ', "Surname", "Name", "Patronymic")  as "FullName"  from "Authors")as "Authors"
+        where "Author"="AuthorID" 
+        group by "BookAuthor"."Book") as "BookAuthor" left join "BookTag" ON "BookAuthor"."Book"="BookTag"."Book"
+        group by "BookAuthor"."Book", "Authors") as "BookTagAuthor" 
+        left join "BookSeries" ON "BookTagAuthor"."Book"="BookSeries"."Book"
+        group by "BookTagAuthor"."Book","Authors","Tags") as "BookTagAuthorSeries" on "ISBN"="Book" 
+        WHERE "ISBN"=$1`,[isbn])
         res.json(book.rows)
     }
     async updateBook(req,res){

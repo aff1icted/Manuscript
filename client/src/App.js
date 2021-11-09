@@ -25,7 +25,7 @@ function App() {
         <Route exact path="/books">
           <Books />
         </Route>
-        <Route exact path="/books/:id">
+        <Route exact path="/books/:ISBN">
           <Bookid />
         </Route>
         <Route path="/author">

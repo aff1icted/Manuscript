@@ -3,20 +3,23 @@ import { useHistory } from "react-router";
 
 const BookItem = (props) =>{
     const router= useHistory()
-    return (
-        <div className="Book">
-            <div className="BookContent">
-                <strong>{props.book.title}</strong>
-                <div>
-                    {props.book.body}
-                </div>
+    return ( 
+        <div className="Book" onClick={()=> router.push(`/books/${props.book.ISBN}`)}>
+        <img scr=""/>
+        <div className="BookContent">
+            <h2>{props.book.Title}</h2>
+            <div>
+                {props.book.Authors}
             </div>
-            <div className='BookButton'>
-                <button onClick={()=> router.push(`/books/${props.book.id}`)}>
-                    Открыть
-                </button>
+            <div>
+                {props.book.Tags}
+            </div>
+            <div className="bookdesc">
+                {props.book.Description}
             </div>
         </div>
+        
+    </div>
 
     );
 };

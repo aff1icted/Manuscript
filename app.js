@@ -4,7 +4,7 @@ const bookRouter = require('./routes/book.routes')
 
 const app = express()
 
-app.use(express.json())
+app.use(express.json({extended:true}))
 app.use('/',bookRouter)
 
 const PORT = config.get('port')
