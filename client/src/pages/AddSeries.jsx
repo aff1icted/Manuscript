@@ -6,31 +6,18 @@ import { Link } from "react-router-dom";
 function AddSeries() {
 
     return (
-        <div>
-            <div className="header">
-                аккаунт
-            </div>
-            <div className="blocks">
-                <div className="admmenu">
-                <li><Link to="/admin">добавить книгу</Link></li>
-                <li><Link to="/addtags">добавить тег</Link></li>
-                <li><Link to="/addseries">добавить серию</Link></li>
-                <li><Link to="/addauthor">добавить автора</Link></li>
-                </div>
-                <div className="tagenter">
-                    <input type ="text" placeholder="название серии"/>
-                    
-                    
-                    <button>картинка</button>
-                    <button>тут был календарь</button>
+        <div className="tagenter">
+            <input type="text" placeholder="название серии" />
 
-                    <button>вхерачить</button>
 
-                    </div>
+            <button>картинка</button>
+            <button>тут был календарь</button>
 
-                </div>
-            </div>
-            )
+            <button>вхерачить</button>
+
+        </div>
+
+    )
 }
 
-            export default AddSeries;
+export default AddSeries;
