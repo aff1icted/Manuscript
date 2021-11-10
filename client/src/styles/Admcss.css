@@ -1,0 +1,74 @@
+.header
+{
+    
+    position: relative;
+    text-align:right;
+    padding: 15px; 
+    background: red; 
+    color: #fff; 
+    
+    font-size: 36px;
+
+}
+
+.blocks
+{
+    padding: 30px 200px;
+    display: flex;
+    flex-direction: row;
+    
+}
+.admmenu
+{
+    background: silver;
+    height: 400px;
+    width: 200px;
+    box-shadow: 0px 2px 5px gray;
+}
+
+.admmenu li
+{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    list-style: none;
+    padding: 10px;
+    
+}
+
+.admmenu li a
+{
+    color: black;
+    text-decoration: none;
+}
+
+.enter
+{
+    width: 600px;
+    justify-content: space-around;
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    flex-direction: column;
+    background: rgb(226, 226, 226);
+    box-shadow: 0px 2px 5px gray;
+}
+
+.enter textarea
+{
+    resize: none;
+}
+
+.tagenter
+{
+    width: 300px;
+    justify-content:flex-start;
+    display: flex;
+    padding: 10px;
+    
+    flex-direction: column;
+    background: rgb(226, 226, 226);
+    box-shadow: 0px 2px 5px gray;
+}
+
+.tagenter input{ margin-bottom: 10px;}
+.tagenter button{margin-bottom: 10px;}
+
