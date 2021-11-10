@@ -10,36 +10,63 @@ import Order from "./pages/Order";
 import Bookid from "./pages/Bookid";
 import NavBar from "./components/UI/NavBar";
 import Footer from "./components/UI/Footer";
+import Admin from "./pages/Admin";
+import Error from "./pages/Error";
 
 
 function App() {
   return (
-    
-    <BrowserRouter>
-      <div className="content">
-        <NavBar />
-        <Switch>
-          <Route path="/about">
-            <About />
-        </Route>
-        <Route exact path="/books">
-          <Books />
-        </Route>
-        <Route exact path="/books/:ISBN">
-          <Bookid />
-        </Route>
-        <Route path="/author">
-          <Author />
-        </Route>
-        <Route path="/order">
-          <Order />
-        </Route>        
-        <Redirect to="/books"/>
-        </Switch>
-        
-      </div>
-      <Footer />
 
+    <BrowserRouter>
+
+        <Switch>        
+          <Route path="/about">
+          <div className="content">
+            <NavBar />
+            <About />
+            </div>
+            <Footer />
+            
+          </Route>
+          <Route exact path="/books">
+            <div className="content">
+            <NavBar />
+            <Books />
+            </div>
+            <Footer />
+          </Route>
+          <Route exact path="/books/:ISBN">
+          <div className="content">
+            <NavBar />
+            <Bookid />
+            </div>
+            <Footer />
+            
+          </Route>
+          <Route path="/author">
+          <div className="content">
+            <NavBar />
+            <Author />
+            </div>
+            <Footer />
+            
+          </Route>
+          <Route path="/order">
+          <div className="content">
+            <NavBar />
+            <Order />
+            </div>
+            <Footer />
+            
+          </Route>
+          <Route path="/admin">
+            <Admin />
+          </Route>
+          <Route path="/error">
+            <Error />
+          </Route>
+          <Redirect to="/books" />
+        </Switch>
     </BrowserRouter>
 
   )
