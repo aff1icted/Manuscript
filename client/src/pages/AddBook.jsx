@@ -9,7 +9,7 @@ function addtag() {
 function AddBook() {
 
     return (
-        <div>
+        
             
             
                 <div className="enter">
@@ -55,7 +55,7 @@ function AddBook() {
 
                     </div>
 
-                </div>
+                
             
             )
 }
