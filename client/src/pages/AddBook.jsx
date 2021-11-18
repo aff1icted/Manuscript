@@ -4,7 +4,7 @@ import Select from "../components/UI/Select";
 import '../styles/Admcss.css'
 import { Form, FormGroup } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import {Col, Row} from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 
 function addtag() {
@@ -22,7 +22,20 @@ function AddBook() {
         console.log(tags)
     }
 
-    
+    const [info, setInfo] = useState([])
+
+    const addInfo = () => {
+        setInfo([...info, { title: '', number: Date.now() }])
+    }
+
+    const removeInfo = (number) => {
+        setInfo(info.filter(i => i.number !== number))
+    }
+    const changeInfo = (key, value, number) => {
+        setInfo(info.map(i => i.number === number ? { ...i, [key]: value } : i))
+    }
+
+
     return (
 
         <div className="enter">
@@ -37,71 +50,71 @@ function AddBook() {
                     <Form.Control required type="text" placeholder="Название книги" />
                 </FormGroup>
                 <Row className="g-2">
-                <Col md>
-                    <FormGroup className="mb-3" controlId="authors">
-                        <Form.Control type="text" placeholder="Авторы" />
-                    </FormGroup>
-                </Col>
-                <Col md>
-                    <FormGroup controlId="authselect" className="mb-3">
-                        <Form.Select >
-                            
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </Form.Select>
-                    </FormGroup>
-                </Col>
-                <Col md>
-                <Button id="authadd" variant="secondary" type="input">
-                    +
-                </Button>
-                </Col>
+                    <Col md>
+                        <FormGroup className="mb-3" controlId="authors">
+                            <Form.Control type="text" placeholder="Авторы" />
+                        </FormGroup>
+                    </Col>
+                    <Col md>
+                        <FormGroup controlId="authselect" className="mb-3">
+                            <Form.Select >
+
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </Form.Select>
+                        </FormGroup>
+                    </Col>
+                    <Col md>
+                        <Button id="authadd" variant="secondary" type="input">
+                            +
+                        </Button>
+                    </Col>
 
                 </Row>
                 <Row className="g-2">
-                <Col md>
-                    <FormGroup className="mb-3" controlId="tags">
-                        <Form.Control type="text" placeholder="Теги" />
-                    </FormGroup>
-                </Col>
-                <Col md>
-                    <FormGroup controlId="tagselect" className="mb-3">
-                        <Form.Select >
-                            
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </Form.Select>
-                    </FormGroup>
-                </Col>
-                <Col md>
-                <Button id="tagadd" variant="secondary" type="input">
-                    +
-                </Button>
-                </Col>
+                    <Col md>
+                        <FormGroup className="mb-3" controlId="tags">
+                            <Form.Control type="text" placeholder="Теги" />
+                        </FormGroup>
+                    </Col>
+                    <Col md>
+                        <FormGroup controlId="tagselect" className="mb-3">
+                            <Form.Select >
+
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </Form.Select>
+                        </FormGroup>
+                    </Col>
+                    <Col md>
+                        <Button id="tagadd" variant="secondary" type="input">
+                            +
+                        </Button>
+                    </Col>
                 </Row>
                 <Row className="g-2">
-                <Col md>
-                    <FormGroup className="mb-3" controlId="series">
-                        <Form.Control type="text" placeholder="Серии" />
-                    </FormGroup>
-                </Col>
-                <Col md>
-                    <FormGroup controlId="serselect" className="mb-3">
-                        <Form.Select >
-                            
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </Form.Select>
-                    </FormGroup>
-                </Col>
-                <Col md>
-                <Button id="seradd" variant="secondary" type="input">
-                    +
-                </Button>
-                </Col>
+                    <Col md>
+                        <FormGroup className="mb-3" controlId="series">
+                            <Form.Control type="text" placeholder="Серии" />
+                        </FormGroup>
+                    </Col>
+                    <Col md>
+                        <FormGroup controlId="serselect" className="mb-3">
+                            <Form.Select >
+
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </Form.Select>
+                        </FormGroup>
+                    </Col>
+                    <Col md>
+                        <Button id="seradd" variant="secondary" type="input">
+                            +
+                        </Button>
+                    </Col>
                 </Row>
 
                 <Form.Group className="mb-3" controlId="BookDescr">
@@ -111,6 +124,32 @@ function AddBook() {
                     <Form.Label>Обложка книги</Form.Label>
                     <Form.Control type="file" />
                 </Form.Group>
+                <Button
+                    variant={"outline-dark"}
+                    onClick={addInfo}
+                >
+                    Добавить новое свойство
+                </Button>
+
+                {info.map(i =>
+                    <Row className="mt-4" key={i.number}>
+                        <Col md={4}>                            
+                            <Form.Select onChange={(e) => changeInfo('title', e.target.value, i.number)}>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </Form.Select>
+                        </Col>
+                        <Col md={4}>
+                            <Button
+                                onClick={() => removeInfo(i.number)}
+                                variant={"outline-danger"}
+                            >
+                                Удалить
+                            </Button>
+                        </Col>
+                    </Row>
+                )}
 
                 <Button variant="secondary" type="submit">
                     Добавить
