@@ -5,21 +5,39 @@ import NavAdmin from "../components/UI/NavAdmin";
 import HeaderAdmin from "../components/UI/HeaderAdmin";
 import { Form, FormGroup } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import axios from "axios";
 
 function AddFormat() {
+
+    const [name, setName]= useState('')
+    const [coeff,setCoeff]= useState('')
+    
+
+    async function create(type) {
+        const {data} = await axios.post(`${process.env.REACT_APP_API_URL}api/format`, type)
+        return data
+    }
+
+    const addformat = () => {               
+
+        create({name:name,transfercoeff:coeff}).then(data => {
+            setName('')  
+            setCoeff('') 
+        })
+    }
 
     return (
         <div className="enter">
             
             <Form>
                 <FormGroup className="mb-3" controlId="formatname">
-                    <Form.Control required type="text" placeholder="Название формата" />
+                    <Form.Control required type="text" placeholder="Название формата" value={name} onChange={e=>setName(e.target.value)}/>
                 </FormGroup>
                 <FormGroup className="mb-3" controlId="formratio">
-                    <Form.Control required type="text" placeholder="коэффициент" />
+                    <Form.Control required type="text" placeholder="коэффициент" value={coeff} onChange={e=>setCoeff(e.target.value)}/>
                 </FormGroup>
                
-                <Button variant="secondary" type="submit">
+                <Button variant="secondary" onClick= {addformat}>
                     Добавить
                 </Button>
             </Form>

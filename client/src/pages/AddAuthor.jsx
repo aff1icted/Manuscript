@@ -26,7 +26,6 @@ function AddAuthor() {
         formData.append('fullname',fullName)
         formData.append('about',description)
         formData.append('img',img)
-        console.log('govno',formData)
         
 
         create(formData).then(data => {

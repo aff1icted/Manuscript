@@ -1,4 +1,6 @@
 const { Type, Series } = require('../models/models')
+const ApiError = require('../error/ApiError')
+const path = require('path')
 const uuid = require('uuid')
 
 class SeriesController {
@@ -11,10 +13,10 @@ class SeriesController {
 
             const series = await Series.create({ seriesname, foundation, seriespic: fileName })
 
-            return res.json(series)
+            return res.json({series})
         } catch (e) {
             next(ApiError.badRequest(e.message))
-        }
+        }        
     }
 
     async getAll(req, res) {
