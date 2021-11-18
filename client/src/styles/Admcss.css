@@ -22,7 +22,7 @@
 .admmenu
 {
     background: silver;
-    height: 400px;
+    height: 550px;
     width: 200px;
     box-shadow: 0px 2px 5px gray;
 }
@@ -44,10 +44,10 @@
 .enter
 {
     width: 600px;
-    justify-content: space-around;
+    justify-content: flex-start;
     display: flex;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 10px;
+    
     flex-direction: column;
     background: rgb(226, 226, 226);
     box-shadow: 0px 2px 5px gray;

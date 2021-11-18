@@ -2,6 +2,9 @@ import react, { useEffect, useState } from "react";
 import Input from "../components/UI/Input";
 import Select from "../components/UI/Select";
 import '../styles/Admcss.css'
+import { Form, FormGroup } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 
 
 function addtag() {
@@ -12,7 +15,7 @@ function AddBook() {
     const [tag, setTag] = useState()
     const [tags, setTags] = useState([])
 
-    const  gettag = async() => {
+    const gettag = async () => {
         let bufarr = tags
         bufarr.push(tag)
         setTags(bufarr)
@@ -29,7 +32,99 @@ function AddBook() {
     return (
 
         <div className="enter">
-            <input type="text" placeholder="ISBN" />
+
+            <Form>
+
+                <FormGroup className="mb-3" controlId="isbn">
+                    <Form.Control required type="text" placeholder="ISBN" />
+                </FormGroup>
+
+                <FormGroup className="mb-3" controlId="bookname">
+                    <Form.Control required type="text" placeholder="Название книги" />
+                </FormGroup>
+                <Row className="g-2">
+                <Col md>
+                    <FormGroup className="mb-3" controlId="authors">
+                        <Form.Control type="text" placeholder="Авторы" />
+                    </FormGroup>
+                </Col>
+                <Col md>
+                    <FormGroup controlId="authselect" className="mb-3">
+                        <Form.Select >
+                            
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </Form.Select>
+                    </FormGroup>
+                </Col>
+                <Col md>
+                <Button id="authadd" variant="secondary" type="input">
+                    +
+                </Button>
+                </Col>
+
+                </Row>
+                <Row className="g-2">
+                <Col md>
+                    <FormGroup className="mb-3" controlId="tags">
+                        <Form.Control type="text" placeholder="Теги" />
+                    </FormGroup>
+                </Col>
+                <Col md>
+                    <FormGroup controlId="tagselect" className="mb-3">
+                        <Form.Select >
+                            
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </Form.Select>
+                    </FormGroup>
+                </Col>
+                <Col md>
+                <Button id="tagadd" variant="secondary" type="input">
+                    +
+                </Button>
+                </Col>
+                </Row>
+                <Row className="g-2">
+                <Col md>
+                    <FormGroup className="mb-3" controlId="series">
+                        <Form.Control type="text" placeholder="Серии" />
+                    </FormGroup>
+                </Col>
+                <Col md>
+                    <FormGroup controlId="serselect" className="mb-3">
+                        <Form.Select >
+                            
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </Form.Select>
+                    </FormGroup>
+                </Col>
+                <Col md>
+                <Button id="seradd" variant="secondary" type="input">
+                    +
+                </Button>
+                </Col>
+                </Row>
+
+                <Form.Group className="mb-3" controlId="BookDescr">
+                    <Form.Control required as="textarea" rows='3' placeholder="Описание" />
+                </Form.Group>
+                <Form.Group controlId="bookimg" className="mb-3">
+                    <Form.Label>Обложка книги</Form.Label>
+                    <Form.Control type="file" />
+                </Form.Group>
+
+                <Button variant="secondary" type="submit">
+                    Добавить
+                </Button>
+
+            </Form>
+
+            {/*<input type="text" placeholder="ISBN" />
             <input type="text" placeholder="Название книги" />
             <div>
 
@@ -70,7 +165,7 @@ function AddBook() {
 
             <textarea placeholder="описание" rows='10'></textarea>
 
-            <button>вхерачить</button>
+            <button>вхерачить</button>*/}
 
         </div>
 

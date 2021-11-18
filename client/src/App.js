@@ -17,6 +17,8 @@ import AddBook from "./pages/AddBook";
 import AddSeries from "./pages/AddSeries";
 import AddAuthor from "./pages/AddAuthor";
 import AddTag from "./pages/AddTag";
+import AddCover from "./pages/Addcover";
+import AddFormat from "./pages/AddFormat";
 import NavAdmin from "./components/UI/NavAdmin";
 import HeaderAdmin from "./components/UI/HeaderAdmin";
 
@@ -100,6 +102,20 @@ function App() {
         <div className="blocks">
             <NavAdmin />
             <AddSeries />
+          </div>            
+        </Route>
+        <Route exact path="/admin/addcover">
+        <HeaderAdmin />
+        <div className="blocks">
+            <NavAdmin />
+            <AddCover/>
+          </div>            
+        </Route>
+        <Route exact path="/admin/addformat">
+        <HeaderAdmin />
+        <div className="blocks">
+            <NavAdmin />
+            <AddFormat />
           </div>            
         </Route>
         <Route path="/error">

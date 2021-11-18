@@ -3,17 +3,26 @@ import '../styles/Admcss.css'
 import { Link } from "react-router-dom";
 import NavAdmin from "../components/UI/NavAdmin";
 import HeaderAdmin from "../components/UI/HeaderAdmin";
+import { Form, FormGroup } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 
 function AddTag() {
 
     return (
-        <div className="tagenter">
-            <input type="text" placeholder="название тега" />
+        <div className="enter">
+            <Form>
 
-            <button>вхерачить</button>
-
-        </div>
+            <FormGroup className="mb-3" controlId="Tagname">
+            <Form.Control required type="text" placeholder="Название тега" />
+            </FormGroup>
+            <Button variant="secondary" type="submit">
+                Добавить
+            </Button>
+            
+        </Form>
+            
+        </div >
     )
 }
 

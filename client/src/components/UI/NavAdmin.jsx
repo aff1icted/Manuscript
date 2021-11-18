@@ -8,6 +8,8 @@ const NavAdmin = () => {
             <li><Link to="/admin/addtag">добавить тег</Link></li>
             <li><Link to="/admin/addseries">добавить серию</Link></li>
             <li><Link to="/admin/addauthor">добавить автора</Link></li>
+            <li><Link to="/admin/addcover">добавить переплет</Link></li>
+            <li><Link to="/admin/addformat">добавить формат</Link></li>
         </div>
     );
 };
