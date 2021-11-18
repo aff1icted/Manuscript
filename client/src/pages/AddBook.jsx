@@ -22,13 +22,7 @@ function AddBook() {
         console.log(tags)
     }
 
-    /*<select name="authsel" id="authsel" value={tag} onChange={e => setTag(e.target.value)} >
-                    <option value="автор1">автор1</option>
-                    <option value="автор2">автор2</option>
-                    <option value="автор3">автор3</option>
-                    <option value="автор4">автор4</option>
-                </select>*/
-    //<input type="text" name="authinp" id="authinp" placeholder="автор(ы)" value={tags.toString()}/>
+    
     return (
 
         <div className="enter">
