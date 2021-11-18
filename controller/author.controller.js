@@ -11,15 +11,15 @@ class AuthorsController {
             let fileName = uuid.v4() + ".jpg"
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
 
-            const author = await Authors.create({ fullname, about, photo: fileName})
+            const author = await Authors.create({ fullname, about, photo: fileName })
 
-            return res.json({author})
+            return res.json({ author })
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
     }
 
-    async getAll(req, res){
+    async getAll(req, res) {
         const authors = await Authors.findAll()
         return res.json(authors)
     }
