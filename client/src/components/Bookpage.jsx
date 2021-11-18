@@ -2,6 +2,7 @@ import e from "cors";
 import react, { useState , useEffect} from "react"
 import { useHistory} from "react-router";
 import AuthorList from "./AuthorList";
+import { Image } from "react-bootstrap";
 import TagList from "./TagList";
 //<button onClick={getOneBook} disabled={loading}>get</button>
 const BookPage = (props) => {
@@ -14,7 +15,7 @@ const BookPage = (props) => {
       <div className="upperbook">
 
 
-
+        {/*<Image  width={100}height={200}scr={process.env.REACT_APP_API_URL+props.Book.coverart}/>*/}
         <img scr={process.env.REACT_APP_API_URL+props.Book.coverart} />
         <div className="infosdet">
           <div>{props.Book.title}</div>
