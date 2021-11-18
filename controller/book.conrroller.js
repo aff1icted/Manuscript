@@ -1,9 +1,11 @@
 const sequelize = require('../db.js')
 const db = require('../db')
-const { Book, Tags, Authors, Series, BookTag } = require('../models/models')
+const { Book, Tags, Authors, Series, BookTag, BookAuthor, BookSeries } = require('../models/models')
 const uuid = require('uuid')
 const path = require('path')
 const ApiError = require('../error/ApiError')
+
+
 
 
 // переделать на sequelize
@@ -21,18 +23,49 @@ class BookController {
 
     async create(req, res) {
 
-        const { isbn, title, publicationdate, edition, pagenumber, description, price } = req.body
-        const { coverart, shortpdf, fullpdf } = req.files
+        const { isbn, title, publicationdate, edition, pagenumber, description, price, tags, authors, series } = req.body
+        const { coverart/*, shortpdf, fullpdf*/ } = req.files
+
         let coverartName = uuid.v4() + ".jpg"
         coverart.mv(path.resolve(__dirname, '..', 'static', coverartName))
 
-        let shortpdfName = uuid.v4() + ".pdf"
+        /*let shortpdfName = uuid.v4() + ".pdf"
         shortpdf.mv(path.resolve(__dirname, '..', 'static', shortpdfName))
 
         let fullpdfName = uuid.v4() + ".pdf"
-        fullpdf.mv(path.resolve(__dirname, '..', 'static', fullpdfName))
+        fullpdf.mv(path.resolve(__dirname, '..', 'static', fullpdfName))*/
 
-        const book = await Book.create({ isbn, title, publicationdate, coverart: coverartName, shortpdf: shortpdfName, fullpdf: fullpdfName, edition, pagenumber, description, price })
+        const book = await Book.create({ isbn, title, publicationdate, coverart: coverartName, /*shortpdf: shortpdfName, fullpdf: fullpdfName,*/ edition, pagenumber, description, price })
+
+        if (tags) {
+            tags = JSON.parse(tags)
+            tags.array.forEach(i => {
+                BookTag.create({
+                    bookIsbn: isbn,
+                    tagTagname: i.tagname
+                })
+            });
+        }
+
+        if (authors) {
+            authors = JSON.parse(authors)
+            authors.array.forEach(i => {
+                BookAuthor.create({
+                    bookIsbn: isbn,
+                    authorFullname: i.fullname
+                })
+            });
+        }
+
+        if (series) {
+            series = JSON.parse(series)
+            series.array.forEach(i => {
+                BookSeries.create({
+                    bookIsbn: isbn,
+                    seriesSeriesname: i.seriesname
+                })
+            });
+        }
 
         return res.json({ book })
 
@@ -44,10 +77,10 @@ class BookController {
 
     }
     async getOneBook(req, res) {
-        const {isbn} = req.params
+        const { isbn } = req.params
         const book = await Book.findAll(
             {
-                where:{isbn},
+                where: { isbn },
                 include: [Tags, Authors, Series]
             }
         )
