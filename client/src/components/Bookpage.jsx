@@ -1,29 +1,32 @@
+import e from "cors";
 import react, { useState , useEffect} from "react"
 import { useHistory} from "react-router";
+import AuthorList from "./AuthorList";
 import TagList from "./TagList";
 //<button onClick={getOneBook} disabled={loading}>get</button>
 const BookPage = (props) => {
   const router = useHistory()
   console.log('Book', props)
   console.log('tag', props.Book.tags)   
-
+  console.log('art', process.env.REACT_APP_API_URL+props.Book.coverart)  
   return (
     <div class="Bookdet">
       <div className="upperbook">
 
 
 
-        <img scr="" />
+        <img scr={process.env.REACT_APP_API_URL+props.Book.coverart} />
         <div className="infosdet">
           <div>{props.Book.title}</div>
           <div>{props.Book.Authors}</div>
-          <TagList tags={props.Book.tags} />
+          <TagList tags={props.Book.tags}/>
+          <AuthorList authors={props.Book.authors}/>
           <div>{/*props.Book.tags.map(tag =>tag.tagname)props.Book.tags[0].tagname*/}</div>
           <div className="description">{props.Book.description}</div>
         </div>
       </div>
       <div className="lowerbook">
-        цена:
+        цена:{props.Book.price}
 
       </div>
       <div className="lowerbook">

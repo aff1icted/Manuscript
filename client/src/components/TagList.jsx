@@ -4,15 +4,19 @@ import BookItem from "./BookItem";
 
 
 const TagList = ({tags}) =>{
+    let buf=[]
+    tags.map(tag => buf.push(tag.tagname))
 
     if (!tags.length) {
         return(
-        <h1 style={{textAlign:"center"}}>КНИГИ НЕ НАЙДЕНЫ</h1>
+        <h1 style={{textAlign:"center"}}>нет данных</h1>
         )
     }
     return (
         <div>
-            {tags.map(tag => tag.tagname)} 
+            {//tags.map(tag => tag.tagname+', ')
+               buf.toString()
+            } 
         </div>
 
     );

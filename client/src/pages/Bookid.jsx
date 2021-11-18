@@ -13,8 +13,8 @@ function Bookid() {
   const LinkISBN = useParams().ISBN
   console.log('isbn',useParams().ISBN)
 
-
-  const { loading, error, request } = useHttp()
+  const [loading, setLoading] = useState(true)
+  //const { loading, error, request } = useHttp()
 
   /*const getOneBook = async () => {
     try {
@@ -26,15 +26,16 @@ function Bookid() {
     } catch (error) { }
   }*/
 
-  async function fetchBook(){
+  async function fetchBook(){  
     const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book/${LinkISBN}`)
     console.log('data',response.data[0])
     setBook(response.data[0])
   }
 
   useEffect(() => {
-    //getOneBook()
-    fetchBook()
+    setTimeout(() => {
+      fetchBook().finally(() => setLoading(false))
+    }, 1000);
   }, [])
 
   

@@ -1,5 +1,7 @@
 import react from "react"
 import { useHistory } from "react-router";
+import AuthorList from "./AuthorList";
+import TagList from "./TagList";
 require('dotenv').config()
 
 
@@ -14,10 +16,10 @@ const BookItem = (props) =>{
         <div className="BookContent">
             <h2>{props.book.title}</h2>
             <div>
-                {props.book.tags[0].tagname}
+                <TagList tags={props.book.tags}/>
             </div>
             <div>
-                {/*props.book.authors[0].fullname*/ }
+                <AuthorList authors={props.book.authors}/>
             </div>
             <div className="bookdesc">
                 {props.book.description}
