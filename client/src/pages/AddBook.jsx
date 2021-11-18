@@ -100,7 +100,6 @@ function AddBook() {
         formData.append('authors', JSON.stringify(bookAuthor))
         formData.append('series', JSON.stringify(bookSeries))
         formData.append('coverart', coverart)
-        console.log(coverart)
         
         create(formData).then(data => {
             setIsbn('')

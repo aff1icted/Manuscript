@@ -38,8 +38,8 @@ class BookController {
         const book = await Book.create({ isbn, title, publicationdate, coverart: coverartName, /*shortpdf: shortpdfName, fullpdf: fullpdfName,*/ edition, pagenumber, description, price })
 
         if (tags) {
-            tags = JSON.parse(tags)
-            tags.array.forEach(i => {
+            const tag = JSON.parse(tags)
+            tag.forEach(i => {
                 BookTag.create({
                     bookIsbn: isbn,
                     tagTagname: i.tagname
@@ -48,8 +48,8 @@ class BookController {
         }
 
         if (authors) {
-            authors = JSON.parse(authors)
-            authors.array.forEach(i => {
+            const author = JSON.parse(authors)
+            author.forEach(i => {
                 BookAuthor.create({
                     bookIsbn: isbn,
                     authorFullname: i.fullname
@@ -58,8 +58,8 @@ class BookController {
         }
 
         if (series) {
-            series = JSON.parse(series)
-            series.array.forEach(i => {
+            const ser = JSON.parse(series)
+            ser.forEach(i => {
                 BookSeries.create({
                     bookIsbn: isbn,
                     seriesSeriesname: i.seriesname
