@@ -3,6 +3,7 @@ import '../styles/Admcss.css'
 import { Link } from "react-router-dom";
 
 
+
 function AddSeries() {
 
     return (
@@ -11,7 +12,10 @@ function AddSeries() {
 
 
             <button>картинка</button>
-            <button>тут был календарь</button>
+
+            
+
+            <input>тут был календарь</input>
 
             <button>вхерачить</button>
 
