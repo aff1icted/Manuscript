@@ -1,10 +1,10 @@
 const Router = require('express')
 const BookConrroller = require('../controller/Book.conrroller')
 const router = new Router()
-router.post('/books', BookConrroller.createBook)
-router.get('/books', BookConrroller.getBooks)
-router.get('/books/:isbn', BookConrroller.getOneBook)
-router.put('/books', BookConrroller.updateBook)
-router.delete('/books/:isbn', BookConrroller.deleteBook)
+router.post('/', BookConrroller.create)
+router.get('/', BookConrroller.getAll)
+router.get('/:isbn', BookConrroller.getOneBook)
+router.put('/', BookConrroller.updateBook)
+router.delete('/:isbn', BookConrroller.deleteBook)
 
 module.exports = router

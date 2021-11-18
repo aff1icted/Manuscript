@@ -27,7 +27,7 @@ function Books() {
 
     const getAllBook = async () =>{
       try {
-        const data = await request('/books')
+        const data = await request('api/book')
         console.log('Data',data)
         setBook(data)
       } catch (error) {}
@@ -36,12 +36,7 @@ function Books() {
     
   //  <Filter filter={filter} setFilter={setFilter}></Filter>   
   return(
-  <div className="App">
-    <div>
-      <button onClick={getAllBook} disabled={loading}>get</button>
-      
-      
-    </div>    
+  <div className="App">     
     <BookList Books={Books}/>   
     
     
