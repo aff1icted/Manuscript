@@ -11,7 +11,7 @@ const BookItem = (props) => {
     return (
         <div className="Book" onClick={() => router.push(`/books/${props.book.isbn}`)}>
 
-            <img scr={process.env.REACT_APP_API_URL + props.book.coverart} />
+            <img src={process.env.REACT_APP_API_URL + props.book.coverart} />
             {console.log(process.env.REACT_APP_API_URL + props.book.coverart)}
             <div className="BookContent">
                 <h2>{props.book.title}</h2>

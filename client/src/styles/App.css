@@ -111,7 +111,7 @@ ul.menu li a:hover {
     height: 200px;
     float: left;
     
-    background-color: gray;
+    
 }
 
 .BookContent 
@@ -154,8 +154,7 @@ ul.menu li a:hover {
     height: 400px;
     float: left;
     
-    background-color: gray;
-}
+    }
 
 .infosdet 
 {

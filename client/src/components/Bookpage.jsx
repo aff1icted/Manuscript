@@ -16,7 +16,7 @@ const BookPage = (props) => {
 
 
         {/*<Image  width={100}height={200}scr={process.env.REACT_APP_API_URL+props.Book.coverart}/>*/}
-        <img scr={process.env.REACT_APP_API_URL+props.Book.coverart} />
+        <img src={process.env.REACT_APP_API_URL+props.Book.coverart} />
         <div className="infosdet">
           <div>{props.Book.title}</div>
           <div>{props.Book.Authors}</div>
