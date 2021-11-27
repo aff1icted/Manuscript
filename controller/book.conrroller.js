@@ -23,19 +23,19 @@ class BookController {
 
     async create(req, res) {
 
-        const { isbn, title, publicationdate, edition, pagenumber, description, price, tags, authors, series } = req.body
-        const { coverart/*, shortpdf, fullpdf*/ } = req.files
+        const { isbn, title, publicationdate, edition, pagenumber, description, price, tags, authors, series,formatName,coverCover } = req.body
+        const { coverart, shortpdf, fullpdf} = req.files
 
         let coverartName = uuid.v4() + ".jpg"
         coverart.mv(path.resolve(__dirname, '..', 'static', coverartName))
 
-        /*let shortpdfName = uuid.v4() + ".pdf"
+        let shortpdfName = uuid.v4() + ".pdf"
         shortpdf.mv(path.resolve(__dirname, '..', 'static', shortpdfName))
 
         let fullpdfName = uuid.v4() + ".pdf"
-        fullpdf.mv(path.resolve(__dirname, '..', 'static', fullpdfName))*/
+        fullpdf.mv(path.resolve(__dirname, '..', 'static', fullpdfName))
 
-        const book = await Book.create({ isbn, title, publicationdate, coverart: coverartName, /*shortpdf: shortpdfName, fullpdf: fullpdfName,*/ edition, pagenumber, description, price })
+        const book = await Book.create({ isbn, title, publicationdate, coverart: coverartName, shortpdf: shortpdfName, fullpdf: fullpdfName, edition, pagenumber, description, price,formatName,coverCover })
 
         if (tags) {
             const tag = JSON.parse(tags)

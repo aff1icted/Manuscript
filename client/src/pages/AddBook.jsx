@@ -18,6 +18,16 @@ function AddBook() {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [coverart, setCoverart] = useState(null)
+    const [formats,setFormats]= useState([])
+    const [covers,setCovers]= useState([])
+    const [format,setFormat]= useState()
+    const [cover,setCover]= useState()
+    const [publicationdate,setPublicationdate]= useState()
+    const [shortpdf,setShortpdf]= useState()
+    const [fullpdf,setFullpdf]= useState()
+    const [edition,setEdition]= useState()
+    const [pagenumber,setPagenumber]= useState()
+    const [price,setPrice]= useState()
 
 
     async function fetchAuthors() {
@@ -34,9 +44,19 @@ function AddBook() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/tag`)
         setTags(response.data)
     }
+    async function fetchcovers() {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/cover`)
+        setCovers(response.data)
+    }
+    async function fetchformats() {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/format`)
+        setFormats(response.data)
+    }
 
     useEffect(() => {
         setTimeout(() => {
+            fetchformats()
+            fetchcovers()
             fetchAuthors()
             fetchSeries()
             fetchtags().finally(() => setLoading(false))
@@ -87,7 +107,7 @@ function AddBook() {
 
 
     async function create(type) {
-        const {data} = await axios.post(`${process.env.REACT_APP_API_URL}api/book`, type)
+        const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/book`, type)
         return data
     }
 
@@ -95,20 +115,31 @@ function AddBook() {
         const formData = new FormData()
         formData.append('isbn', isbn)
         formData.append('title', title)
+        formData.append('publicationdate', publicationdate)
+        formData.append('edition', `${edition}`)
+        formData.append('pagenumber', `${pagenumber}`)
         formData.append('description', description)
+        formData.append('price', `${price}`)
         formData.append('tags', JSON.stringify(bookTag))
         formData.append('authors', JSON.stringify(bookAuthor))
         formData.append('series', JSON.stringify(bookSeries))
         formData.append('coverart', coverart)
-        
+        formData.append('shortpdf', shortpdf)
+        formData.append('fullpdf', fullpdf)
+        formData.append('formatName', format)
+        formData.append('coverCover', cover)
+
         create(formData).then(data => {
             setIsbn('')
             setTitle('')
             setDescription('')
+            setPagenumber('')
+            setEdition('')
+            setPrice('')
             setBookAuthor([])
             setBookSeries([])
             setBookTag([])
-        })  
+        })
 
     }
 
@@ -133,6 +164,11 @@ function AddBook() {
 
                 <FormGroup className="mb-3" controlId="bookname">
                     <Form.Control required type="text" placeholder="Название книги" value={title} onChange={e => setTitle(e.target.value)} />
+                </FormGroup>
+
+                <FormGroup className="mb-3" controlId="bookdate">
+                    <Form.Label>Дата публикации</Form.Label>
+                    <Form.Control required type="date" onChange={e=>setPublicationdate(e.target.value)}/>
                 </FormGroup>
                 <Row className="mb-3 mx-1">
 
@@ -226,7 +262,41 @@ function AddBook() {
 
 
 
-                </Row>
+                </Row>                
+                <FormGroup className="mb-3" controlId="bookdate">
+                    <Form.Select onChange={(e) => setCover(e.target.value)}>
+                    <option selected="true" disabled="disabled">Обложка</option> 
+                        {covers.map(option =>
+                            <option key={option.cover} value={option.cover}>
+                                {option.cover}
+                            </option>
+                        )}
+                    </Form.Select>
+                </FormGroup>
+
+                <FormGroup className="mb-3" controlId="bookdate">
+                    <Form.Select onChange={(e) => setFormat(e.target.value)}>
+                    <option selected="true" disabled="disabled">Формат</option> 
+                        {formats.map(option =>
+                            <option key={option.name} value={option.name}>
+                                {option.name}
+                            </option>
+                        )}
+                    </Form.Select>
+                </FormGroup>
+
+                <FormGroup className="mb-3" controlId="isbn">
+                    <Form.Control required type="text" placeholder="Количество страниц" value={pagenumber} onChange={e => setPagenumber(e.target.value)} />
+                </FormGroup>
+
+                <FormGroup className="mb-3" controlId="isbn">
+                    <Form.Control required type="text" placeholder="Тираж" value={edition} onChange={e => setEdition(e.target.value)} />
+                </FormGroup>
+                <FormGroup className="mb-3" controlId="isbn">
+                    <Form.Control required type="text" placeholder="Цена" value={price} onChange={e => setPrice(e.target.value)} />
+                </FormGroup>
+
+
 
                 <Form.Group className="mb-3" controlId="BookDescr">
                     <Form.Control required as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
@@ -234,6 +304,14 @@ function AddBook() {
                 <Form.Group controlId="bookimg" className="mb-3">
                     <Form.Label>Обложка книги</Form.Label>
                     <Form.Control type="file" onChange={e => setCoverart(e.target.files[0])} />
+                </Form.Group>
+                <Form.Group controlId="bookimg" className="mb-3">
+                    <Form.Label>Короткий PDF</Form.Label>
+                    <Form.Control type="file" onChange={e => setShortpdf(e.target.files[0])} />
+                </Form.Group>
+                <Form.Group controlId="bookimg" className="mb-3">
+                    <Form.Label>Полный PDF</Form.Label>
+                    <Form.Control type="file" onChange={e => setFullpdf(e.target.files[0])} />
                 </Form.Group>
 
                 <Button variant="secondary" onClick={addBook}>
