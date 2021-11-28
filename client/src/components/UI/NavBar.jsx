@@ -1,6 +1,6 @@
 import react from "react"
 import { Link } from "react-router-dom";
-
+/* авыаваыв*/
 const NavBar = () =>{
   return (
     <div class="nav d-flex justify-content-around">
