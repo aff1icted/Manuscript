@@ -52,6 +52,13 @@ const BookTag = sequelize.define('booktag',{
     id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}
 });
 
+const User = sequelize.define('user', {
+    username: {type: DataTypes.STRING, primaryKey: true},
+    email: {type: DataTypes.STRING, unique: true},
+    password: {type: DataTypes.STRING},
+    role: {type: DataTypes.STRING, defaultValue: "USER"},
+})
+
 Format.hasMany(Book)
 Book.belongsTo(Format)
 
@@ -77,5 +84,6 @@ module.exports = {
     Tags,
     BookAuthor,
     BookSeries,
-    BookTag
+    BookTag,
+    User
 }

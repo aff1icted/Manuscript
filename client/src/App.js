@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import react, { useState, useContext, useEffect } from "react";
 import BookItem from "./components/BookItem";
 import BookList from "./components/BookList";
 import './styles/App.css'
@@ -21,14 +21,41 @@ import AddCover from "./pages/Addcover";
 import AddFormat from "./pages/AddFormat";
 import NavAdmin from "./components/UI/NavAdmin";
 import HeaderAdmin from "./components/UI/HeaderAdmin";
+import Auth from "./pages/Auth";
+import NavUser from "./components/UI/NavUser";
+import {Spinner} from "react-bootstrap";
+import axios from "axios";
+import {observer} from "mobx-react-lite";
+import jwt_decode from "jwt-decode";
+import { Context } from "./index"
 
 
+const App = observer(() => {
 
-function App() {
+  const { user } = useContext(Context)
+  const [loading, setLoading] = useState(true)
+
+  const check = async () => {
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/auth`)
+    localStorage.setItem('token', data.token)
+    return jwt_decode(data.token)
+}
+
+  useEffect(() => {
+    check().then(data => {
+      user.setUser(true)
+      user.setIsAuth(true)
+    }).finally(() => setLoading(false))
+  }, [])
+
+  if (loading) {
+    return <Spinner animation={"grow"} />
+  }
+
   return (
 
     <BrowserRouter>
-
+      <NavUser />
       <Switch>
         <Route path="/about">
           <div className="content">
@@ -38,6 +65,23 @@ function App() {
           <Footer />
 
         </Route>
+        <Route path="/registration">
+          <div className="content">
+            <NavBar />
+            <Auth />
+          </div>
+          <Footer />
+        </Route>
+
+        <Route path="/login">
+          <div className="content">
+            <NavBar />
+            <Auth />
+          </div>
+          <Footer />
+        </Route>
+
+
         <Route exact path="/books">
           <div className="content">
             <NavBar />
@@ -70,53 +114,53 @@ function App() {
 
         </Route>
         <Route exact path="/admin">
-          <HeaderAdmin />
+          
           <div className="blocks">
             <NavAdmin />
             <Admin />
           </div>
         </Route>
         <Route exact path="/admin/addbook">
-          <HeaderAdmin />
+          
           <div className="blocks">
             <NavAdmin />
             <AddBook />
           </div>
         </Route>
-        <Route exact path="/admin/addtag"> 
-          <HeaderAdmin />
+        <Route exact path="/admin/addtag">
+         
           <div className="blocks">
             <NavAdmin />
             <AddTag />
           </div>
         </Route>
         <Route exact path="/admin/addauthor">
-        <HeaderAdmin />
+          
           <div className="blocks">
             <NavAdmin />
             <AddAuthor />
-          </div>          
+          </div>
         </Route>
         <Route exact path="/admin/addseries">
-        <HeaderAdmin />
-        <div className="blocks">
+          
+          <div className="blocks">
             <NavAdmin />
             <AddSeries />
-          </div>            
+          </div>
         </Route>
         <Route exact path="/admin/addcover">
-        <HeaderAdmin />
-        <div className="blocks">
+          
+          <div className="blocks">
             <NavAdmin />
-            <AddCover/>
-          </div>            
+            <AddCover />
+          </div>
         </Route>
         <Route exact path="/admin/addformat">
-        <HeaderAdmin />
-        <div className="blocks">
+          
+          <div className="blocks">
             <NavAdmin />
             <AddFormat />
-          </div>            
+          </div>
         </Route>
         <Route path="/error">
           <Error />
@@ -125,7 +169,7 @@ function App() {
       </Switch>
     </BrowserRouter>
 
-  )
-}
+  );
+});
 
 export default App;

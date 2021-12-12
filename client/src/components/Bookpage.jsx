@@ -6,7 +6,7 @@ import { Image } from "react-bootstrap";
 import TagList from "./TagList";
 
 const BookPage = (props) => {
-  const router = useHistory()
+  const history = useHistory()
   console.log('Book', props)
   console.log('tag', props.Book.tags)
   console.log('art', process.env.REACT_APP_API_URL + props.Book.coverart)
@@ -16,7 +16,7 @@ const BookPage = (props) => {
 
 
         {/*<Image  width={100}height={200}scr={process.env.REACT_APP_API_URL+props.Book.coverart}/>*/}
-        <img scr={process.env.REACT_APP_API_URL + props.Book.coverart} />
+        <img src={process.env.REACT_APP_API_URL + props.Book.coverart} />
         <div className="infosdet">
           
           <div>{props.Book.title}</div>
@@ -31,11 +31,16 @@ const BookPage = (props) => {
       </div>
       <div className="lowerbook">
         цена:{props.Book.price}
+        <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.shortpdf}>отрывок</a>
+        <a  className="mr-3"href={process.env.REACT_APP_API_URL + props.Book.fullpdf}>читать полностью</a>
 
       </div>
       <div className="lowerbook">
+        
+        
         <button>в корзину</button>
-        <button>читать</button>
+        
+        
       </div>
     </div>
 
