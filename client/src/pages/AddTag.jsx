@@ -17,12 +17,42 @@ function AddTag() {
         return data
     }
 
-    const addTag = () => {               
-
-        create({tagname:tag}).then(data => {
-            setTag('')   
-        })
+    /*const addTag = async () => {          
+        try {
+            create({tagname:tag}).then(data => {
+                setTag('')   
+            })
+        } catch (e) {
+            alert(e.response.data.message)
+        }        
+    }*/
+    
+    const addTag = async () => {          
+        try {
+            let data;
+            data = await create({tagname:tag});            
+            setTag('')               
+        } catch (e) {
+            alert(e.response.data.message)
+        }        
     }
+
+    /*const click = async () => {
+        try {
+            let data;
+            if (isLogin) {
+                data = await login(username, password);
+            } else {
+                data = await registration(email, password);
+            }
+            user.setUser(user)
+            user.setIsAuth(true)
+            history.push(BOOKS_ROUTE)
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+
+  }*/
 
     return (
         <div className="enter">

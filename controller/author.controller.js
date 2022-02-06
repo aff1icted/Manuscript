@@ -7,9 +7,22 @@ class AuthorsController {
     async create(req, res, next) {
         try {
             const { fullname, about } = req.body
-            const { img } = req.files
-            let fileName = uuid.v4() + ".jpg"
-            img.mv(path.resolve(__dirname, '..', 'static', fileName))
+            let fileName
+            if (req.files != null) {
+                const { img } = req.files
+                fileName = uuid.v4() + ".jpg"
+                img.mv(path.resolve(__dirname, '..', 'static', fileName))
+            } else {
+                fileName = 'noimg'
+            }
+
+
+            const candidate = await Authors.findOne({ where: { fullname } })
+            if (candidate) {
+                return next(ApiError.badRequest('Такой автор уже существует'))
+            }
+
+
 
             const author = await Authors.create({ fullname, about, photo: fileName })
 

@@ -18,12 +18,24 @@ function AddFormat() {
         return data
     }
 
-    const addformat = () => {               
+    /*const addformat = () => {               
 
         create({name:name,transfercoeff:coeff}).then(data => {
             setName('')  
             setCoeff('') 
         })
+    }*/
+
+
+    const addformat = async () => {          
+        try {
+            let data;
+            data = await create({name:name,transfercoeff:coeff});            
+            setName('')  
+            setCoeff('')              
+        } catch (e) {
+            alert(e.response.data.message)
+        }        
     }
 
     return (

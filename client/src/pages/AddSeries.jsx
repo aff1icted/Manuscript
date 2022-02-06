@@ -8,16 +8,17 @@ import axios from "axios"
 function AddSeries() {
     const [seriesName, setSeriesName] = useState('')
     const [foundation, setFoundation] = useState('')
-    
+
     const [seriesPic, setSeriesPic] = useState(null)
 
 
     async function create(type) {
-        const {data} = await axios.post(`${process.env.REACT_APP_API_URL}api/series`, type)
+        const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/series`, type)
         return data
     }
 
-    const addSeries = () => {
+    /* const addSeries = async () => {
+        
         const formData = new FormData()
         formData.append('seriesname',seriesName)
         formData.append('foundation',foundation)
@@ -29,10 +30,28 @@ function AddSeries() {
             setSeriesPic(null)
             
         })
+    }*/
+
+    const addSeries = async () => {
+        try {
+            const formData = new FormData()
+            formData.append('seriesname', seriesName)
+            formData.append('foundation', foundation)
+            formData.append('seriespic', seriesPic)
+            let data;
+            data = await create(formData);
+            setSeriesName('')
+            setFoundation('')
+            setSeriesPic(null)
+        } catch (e) {
+            alert(e.response.data.message)
+        }        
     }
 
-    const selectFile = e =>{        
-        setSeriesPic(e.target.files[0])  
+
+
+    const selectFile = e => {
+        setSeriesPic(e.target.files[0])
     }
 
     return (
@@ -40,15 +59,15 @@ function AddSeries() {
 
             <Form>
                 <FormGroup className="mb-3" controlId="sername">
-                    <Form.Control required type="text" placeholder="Название серии" value={seriesName} onChange={e=>setSeriesName(e.target.value)} />
+                    <Form.Control required type="text" placeholder="Название серии" value={seriesName} onChange={e => setSeriesName(e.target.value)} />
                 </FormGroup>
                 <Form.Group controlId="serimg" className="mb-3">
                     <Form.Label>Иллюстрация к серии</Form.Label>
-                    <Form.Control type="file"  onChange={e => setSeriesPic(e.target.files[0])}/>
+                    <Form.Control type="file" onChange={e => setSeriesPic(e.target.files[0])} />
                 </Form.Group>
                 <Form.Group controlId="serdate" className="mb-3">
-                <Form.Label>Дата основания серии</Form.Label>
-                    <Form.Control required type="date" onChange={e=>setFoundation(e.target.value)}/>
+                    <Form.Label>Дата основания серии</Form.Label>
+                    <Form.Control required type="date" onChange={e => setFoundation(e.target.value)} />
                 </Form.Group>
                 <Button variant="secondary" onClick={addSeries}>
                     Добавить

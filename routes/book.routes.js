@@ -1,5 +1,5 @@
 const Router = require('express')
-const BookConrroller = require('../controller/Book.conrroller')
+const BookConrroller = require('../controller/book.conrroller')
 const router = new Router()
 router.post('/', BookConrroller.create)
 router.get('/', BookConrroller.getAll)

@@ -21,21 +21,39 @@ class BookController {
         res.json(newBook.rows[0])
     }*/
 
-    async create(req, res) {
+    async create(req, res, next) {
 
-        const { isbn, title, publicationdate, edition, pagenumber, description, price, tags, authors, series,formatName,coverCover } = req.body
-        const { coverart, shortpdf, fullpdf} = req.files
+        const { isbn, title, publicationdate, edition, pagenumber, description, price, tags, authors, series, formatName, coverCover } = req.body
+        let coverartName
+        let shortpdfName
+        let fullpdfName
 
-        let coverartName = uuid.v4() + ".jpg"
-        coverart.mv(path.resolve(__dirname, '..', 'static', coverartName))
+        if (req.files != null) {
+            const { coverart, shortpdf, fullpdf } = req.files
 
-        let shortpdfName = uuid.v4() + ".pdf"
-        shortpdf.mv(path.resolve(__dirname, '..', 'static', shortpdfName))
+            coverartName = uuid.v4() + ".jpg"
+            coverart.mv(path.resolve(__dirname, '..', 'static', coverartName))
 
-        let fullpdfName = uuid.v4() + ".pdf"
-        fullpdf.mv(path.resolve(__dirname, '..', 'static', fullpdfName))
+            shortpdfName = uuid.v4() + ".pdf"
+            shortpdf.mv(path.resolve(__dirname, '..', 'static', shortpdfName))
 
-        const book = await Book.create({ isbn, title, publicationdate, coverart: coverartName, shortpdf: shortpdfName, fullpdf: fullpdfName, edition, pagenumber, description, price,formatName,coverCover })
+            fullpdfName = uuid.v4() + ".pdf"
+            fullpdf.mv(path.resolve(__dirname, '..', 'static', fullpdfName))
+
+        } else {
+            coverartName = 'noimg'
+            shortpdfName = 'nofile'
+            fullpdfName = 'nofile'
+        }
+
+
+
+        const candidate = await Book.findOne({ where: { isbn } })
+        if (candidate) {
+            return next(ApiError.badRequest('Такая книга уже существует'))
+        }
+
+        const book = await Book.create({ isbn, title, publicationdate, coverart: coverartName, shortpdf: shortpdfName, fullpdf: fullpdfName, edition, pagenumber, description, price, formatName, coverCover })
 
         if (tags) {
             const tag = JSON.parse(tags)

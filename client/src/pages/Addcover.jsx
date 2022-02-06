@@ -17,12 +17,23 @@ function AddCover() {
         return data
     }
 
-    const addCover = () => {               
-
+    /*const addCover = async () => {               
+        
         create({cover:cover}).then(data => {
             setCover('')   
         })
-    }
+    }*/
+
+    const addCover = async () => {               
+        try {
+            let data;
+            data = await create({cover:cover});            
+            setCover('')             
+        } catch (e) {
+            alert(e.response.data.message)
+        }         
+    }    
+
 
     return (
         <div className="enter">

@@ -18,16 +18,16 @@ function AddBook() {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [coverart, setCoverart] = useState(null)
-    const [formats,setFormats]= useState([])
-    const [covers,setCovers]= useState([])
-    const [format,setFormat]= useState()
-    const [cover,setCover]= useState()
-    const [publicationdate,setPublicationdate]= useState()
-    const [shortpdf,setShortpdf]= useState()
-    const [fullpdf,setFullpdf]= useState()
-    const [edition,setEdition]= useState()
-    const [pagenumber,setPagenumber]= useState()
-    const [price,setPrice]= useState()
+    const [formats, setFormats] = useState([])
+    const [covers, setCovers] = useState([])
+    const [format, setFormat] = useState()
+    const [cover, setCover] = useState()
+    const [publicationdate, setPublicationdate] = useState()
+    const [shortpdf, setShortpdf] = useState()
+    const [fullpdf, setFullpdf] = useState()
+    const [edition, setEdition] = useState()
+    const [pagenumber, setPagenumber] = useState()
+    const [price, setPrice] = useState()
 
 
     async function fetchAuthors() {
@@ -111,7 +111,7 @@ function AddBook() {
         return data
     }
 
-    const addBook = () => {
+    /*const addBook = () => {
         const formData = new FormData()
         formData.append('isbn', isbn)
         formData.append('title', title)
@@ -141,10 +141,44 @@ function AddBook() {
             setBookTag([])
         })
 
+    }*/
+
+
+
+    const addBook = async () => {
+
+        try {
+            const formData = new FormData()
+            formData.append('isbn', isbn)
+            formData.append('title', title)
+            formData.append('publicationdate', publicationdate)
+            formData.append('edition', `${edition}`)
+            formData.append('pagenumber', `${pagenumber}`)
+            formData.append('description', description)
+            formData.append('price', `${price}`)
+            formData.append('tags', JSON.stringify(bookTag))
+            formData.append('authors', JSON.stringify(bookAuthor))
+            formData.append('series', JSON.stringify(bookSeries))
+            formData.append('coverart', coverart)
+            formData.append('shortpdf', shortpdf)
+            formData.append('fullpdf', fullpdf)
+            formData.append('formatName', format)
+            formData.append('coverCover', cover)
+            let data;
+            data = await create(formData);
+            setIsbn('')
+            setTitle('')
+            setDescription('')
+            setPagenumber('')
+            setEdition('')
+            setPrice('')
+            setBookAuthor([])
+            setBookSeries([])
+            setBookTag([])
+        } catch (e) {
+            alert(e.response.data.message)
+        } 
     }
-
-
-
 
 
 
@@ -168,7 +202,7 @@ function AddBook() {
 
                 <FormGroup className="mb-3" controlId="bookdate">
                     <Form.Label>Дата публикации</Form.Label>
-                    <Form.Control required type="date" onChange={e=>setPublicationdate(e.target.value)}/>
+                    <Form.Control required type="date" onChange={e => setPublicationdate(e.target.value)} />
                 </FormGroup>
                 <Row className="mb-3 mx-1">
 
@@ -262,10 +296,10 @@ function AddBook() {
 
 
 
-                </Row>                
+                </Row>
                 <FormGroup className="mb-3" controlId="bookdate">
                     <Form.Select onChange={(e) => setCover(e.target.value)}>
-                    <option selected="true" disabled="disabled">Обложка</option> 
+                        <option selected="true" disabled="disabled">Обложка</option>
                         {covers.map(option =>
                             <option key={option.cover} value={option.cover}>
                                 {option.cover}
@@ -276,7 +310,7 @@ function AddBook() {
 
                 <FormGroup className="mb-3" controlId="bookdate">
                     <Form.Select onChange={(e) => setFormat(e.target.value)}>
-                    <option selected="true" disabled="disabled">Формат</option> 
+                        <option selected="true" disabled="disabled">Формат</option>
                         {formats.map(option =>
                             <option key={option.name} value={option.name}>
                                 {option.name}
