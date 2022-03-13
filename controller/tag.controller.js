@@ -16,6 +16,20 @@ class TagController{
         const tags = await Tags.findAll()
         return res.json(tags)
     }
+
+    async update(req, res) {
+        
+    }
+
+    async delete(req, res) {
+        const { tagname } = req.params
+        const tag = await Tags.destroy(
+            {
+                where: { tagname }
+            }
+        )
+        return res.json(tag)
+    }
 }
 
 module.exports = new TagController()

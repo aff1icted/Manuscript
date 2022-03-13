@@ -94,7 +94,7 @@ class BookController {
         return res.json(books)
 
     }
-    async getOneBook(req, res) {
+    async getOne(req, res) {
         const { isbn } = req.params
         const book = await Book.findAll(
             {
@@ -104,17 +104,51 @@ class BookController {
         )
         res.json(book)
     }
-    async updateBook(req, res) {
-        const { ISBN, Title, PublicationDate, Format, Cover, CoverArt, ShortPDF, FullPDF, Edition, PageNumber, Description } = req.body
-        //const book = await db.query('UPDATE "Book" SET "Title"=$2, "PublicationDate"=$3, "Format"=$4, "Cover"=$5, "CoverArt"=$6, "ShortPDF"=$7, "FullPDF"=$8, "Edition"=$9, "PageNumber"=$9, "Description"=$10 WHERE "ISBN"=$1 RETURNING *',[ISBN, Title, PublicationDate, Format, Cover, CoverArt, ShortPDF, FullPDF, Edition, PageNumber, Description])
-        const book = await sequelize.query('UPDATE "Book" SET "Title"=$2 WHERE "ISBN"=$1 RETURNING *', [ISBN, Title])
+    // не рабочая хуита, не знаю как сделать изменения связей
+    async update(req, res) {
+        /*const { ISBN, Title, PublicationDate, Format, Cover, CoverArt, ShortPDF, FullPDF, Edition, PageNumber, Description } = req.body
+        let coverartName
+        let shortpdfName
+        let fullpdfName
+
+        if (req.files != null) {
+            const { coverart, shortpdf, fullpdf } = req.files
+
+            coverartName = uuid.v4() + ".jpg"
+            coverart.mv(path.resolve(__dirname, '..', 'static', coverartName))
+
+            shortpdfName = uuid.v4() + ".pdf"
+            shortpdf.mv(path.resolve(__dirname, '..', 'static', shortpdfName))
+
+            fullpdfName = uuid.v4() + ".pdf"
+            fullpdf.mv(path.resolve(__dirname, '..', 'static', fullpdfName))
+
+        } else {
+            coverartName = 'noimg'
+            shortpdfName = 'nofile'
+            fullpdfName = 'nofile'
+        }        
+
+        const book = await sequelize.query('UPDATE "Book" SET "Title"=$2 WHERE "ISBN"=$1 RETURNING *', [ISBN, Title])*/
         res.json(book.rows[0])
     }
-    async deleteBook(req, res) {
-        const isbn = req.params.isbn
-        const book = await sequelize.query('DELETE FROM "Book" WHERE "ISBN"=$1', [isbn])
-        res.json(book.rows)
+
+    
+    
+    
+
+
+
+    async delete(req, res) {
+        const { isbn } = req.params
+        const book = await Book.destroy(
+            {
+                where: { isbn }
+            }
+        )
+        return res.json(book)
     }
+   
 }
 
 module.exports = new BookController()

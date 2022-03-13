@@ -16,6 +16,21 @@ class FormatController{
         const formats = await Format.findAll()
         return res.json(formats)
     }
+
+    async update(req, res) {
+        const {name,transfercoeff} = req.body
+        const formats = await Format.update({transfercoeff}, {where: { name } } )
+        return res.json({formats})
+    }
+    async delete(req, res) {
+        const { name } = req.params
+        const formats = await Format.destroy(
+            {
+                where: { name }
+            }
+        )
+        return res.json(formats)
+    }
 }
 
 module.exports = new FormatController()

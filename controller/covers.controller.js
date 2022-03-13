@@ -15,6 +15,19 @@ class CoversController{
     async getAll(req, res){
         const covers = await Covers.findAll()
         return res.json(covers)
+    }   
+    
+    async update(req, res) {
+        
+    }
+    async delete(req, res) {
+        const { cover } = req.params
+        const covers = await Covers.destroy(
+            {
+                where: { cover }
+            }
+        )
+        return res.json(covers)
     }
 }
 

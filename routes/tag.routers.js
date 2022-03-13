@@ -4,5 +4,6 @@ const TagConrroller = require('../controller/tag.controller')
 
 router.post('/', TagConrroller.create)
 router.get('/',TagConrroller.getAll)
+router.delete('/:tagname', TagConrroller.delete)
 
 module.exports = router
