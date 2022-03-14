@@ -299,7 +299,7 @@ function AddBook() {
                 </Row>
                 <FormGroup className="mb-3" controlId="bookdate">
                     <Form.Select onChange={(e) => setCover(e.target.value)}>
-                        <option selected="true" disabled="disabled">Обложка</option>
+                        <option selected="true" disabled="disabled">Переплет</option>
                         {covers.map(option =>
                             <option key={option.cover} value={option.cover}>
                                 {option.cover}

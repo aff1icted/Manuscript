@@ -10,6 +10,13 @@ const NavAdmin = () => {
             <li><Link to="/admin/addauthor">добавить автора</Link></li>
             <li><Link to="/admin/addcover">добавить переплет</Link></li>
             <li><Link to="/admin/addformat">добавить формат</Link></li>
+            <li><Link to="/admin/editauthor">изменить автора</Link></li>
+            <li><Link to="/admin/edittags">изменить теги</Link></li>
+            <li><Link to="/admin/editseries">изменить серию</Link></li>
+            <li><Link to="/admin/editcover">изменить переплет</Link></li>
+            <li><Link to="/admin/editformat">изменить формат</Link></li>
+            <li><Link to="/admin/editbook">удалить книгу</Link></li>
+
         </div>
     );
 };
