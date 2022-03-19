@@ -140,10 +140,10 @@ class BookController {
 
 
     async delete(req, res) {
-        const { isbn } = req.params
+        const { title } = req.params
         const book = await Book.destroy(
             {
-                where: { isbn }
+                where: { title }
             }
         )
         return res.json(book)
