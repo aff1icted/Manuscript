@@ -13,7 +13,7 @@ function EditBook(){
 
     const [name, setName] = useState('')
     const [format, setFormat] = useState()
-    const [book, setBook] = useState([])
+    const [book, setBook] = useState()
     const [books, setBooks] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -21,6 +21,24 @@ function EditBook(){
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book`)
         setBooks(response.data)
     }
+
+    async function dbook() {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/book/${book}`)
+        return data
+    }
+
+
+    const deletebook = async () => {
+
+        try {
+            let data;
+            data = await  dbook();   
+            alert("удалено") 
+        } catch (e) {
+            alert(e.response.data.message)
+        }       
+    }
+
 
     useEffect(() => {
         setTimeout(() => {
@@ -31,6 +49,7 @@ function EditBook(){
     if (loading) {
         return <Loader />
     }
+    
 
     return(
         <div className="enter">
@@ -48,7 +67,7 @@ function EditBook(){
                 </FormGroup>
         
 
-                <Button variant="secondary" >
+                <Button variant="secondary" onClick={deletebook} >
                     Удалить
                 </Button>
 
