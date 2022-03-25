@@ -33,17 +33,13 @@ function EditAuthor() {
         console.log('img', img)
 
     }
-
-    const changeAuthor = (key, value, number) => {
-        setBookAuthor(bookAuthor.map(i => i.number === number ? { ...i, [key]: value } : i))
-    }
-
+    
     return (
 
         <div className="enter">
             < Form >
                 <FormGroup className="mb-3" controlId="bookdate">
-                    <Form.Select onChange={(e) => changeAuthor(e.target.value)}>
+                    <Form.Select onChange={(e) => setBookAuthor(e.target.value)}>
                         <option selected="true" disabled="disabled">Автор</option>
                         {author.map(option =>
                             <option key={option.fullname} value={option.fullname}>

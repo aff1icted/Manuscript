@@ -28,17 +28,14 @@ function EditSeries() {
             fetchSeries().finally(() => setLoading(false))
         }, 1000);
     }, [])
-
-    const selectFile = e => {
-        setSeriesPic(e.target.files[0])
-    }
+   
 
     return (
         <div className="enter">
             <Form>
 
                 <FormGroup className="mb-3" controlId="bookdate">
-                    <Form.Select onChange={(e) => changeSeries(e.target.value)}>
+                    <Form.Select onChange={(e) => setSeriesName(e.target.value)}>
                         <option selected="true" disabled="disabled">Серия</option>
                         {series.map(option =>
                             <option key={option.seriesname} value={option.seriesname}>

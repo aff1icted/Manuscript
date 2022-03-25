@@ -17,6 +17,16 @@ class FormatController{
         return res.json(formats)
     }
 
+    async getOne(req, res) {
+        const { name } = req.params
+        const format = await Format.findOne(
+            {
+                where: { name }
+            }
+        )
+        res.json(format)
+    }
+
     async update(req, res) {
         const {name,transfercoeff} = req.body
         const formats = await Format.update({transfercoeff}, {where: { name } } )

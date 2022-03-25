@@ -19,18 +19,24 @@ function EditFormat() {
         setFormats(response.data)
     }
 
+    async function fetchFormat() {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/format/${name}`)
+        setFormat(response.data)
+    }
+
     useEffect(() => {
         setTimeout(() => {
             fetchformats().finally(() => setLoading(false))
         }, 1000);
     }, [])
+    
 
     return (
         <div className="enter">
             <Form>
 
                 <FormGroup className="mb-3" controlId="bookdate">
-                    <Form.Select onChange={(e) => setFormat(e.target.value)}>
+                    <Form.Select onChange={(e) => {setName(e.target.value)}}>
                         <option selected="true" disabled="disabled">Формат</option>
                         {formats.map(option =>
                             <option key={option.name} value={option.name}>
