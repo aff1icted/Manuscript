@@ -6,6 +6,7 @@ import HeaderAdmin from "../components/UI/HeaderAdmin";
 import { Form, FormGroup } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import axios from "axios";
+import { Loader } from "../components/UI/Loader";
 
 function EditFormat() {
     const [name, setName] = useState('')
@@ -24,19 +25,61 @@ function EditFormat() {
         setFormat(response.data)
     }
 
+    async function dformat() {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/format/${name}`)
+        return data
+    }
+
+
+
     useEffect(() => {
         setTimeout(() => {
             fetchformats().finally(() => setLoading(false))
         }, 1000);
     }, [])
-    
 
+    const dataUpdate = (value) => {
+        /* setLoading(true)
+         setTimeout(() => {
+             fetchFormat().finally(() => setLoading(false))
+         }, 1000); 
+         //setName(format.name)   
+        setCoeff(format.transfercoeff)*/
+        console.log(formats)
+        formats.map(function (obj) {
+            if (obj.name == format) {
+                setName(obj.name)
+                if(obj.transfercoeff == null)
+                {
+                    setCoeff('')
+                }else{
+                    setCoeff(obj.transfercoeff)
+                }
+                
+            }
+        });
+    }
+
+    const deleteFormat = async () => {
+
+        try {
+            let data;
+            data = await dformat();
+            alert("удалено")
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
+
+    if (loading) {
+        return <Loader />
+    }
     return (
         <div className="enter">
             <Form>
 
                 <FormGroup className="mb-3" controlId="bookdate">
-                    <Form.Select onChange={(e) => {setName(e.target.value)}}>
+                    <Form.Select onChange={(e) => { setFormat(e.target.value) }}>
                         <option selected="true" disabled="disabled">Формат</option>
                         {formats.map(option =>
                             <option key={option.name} value={option.name}>
@@ -44,6 +87,14 @@ function EditFormat() {
                             </option>
                         )}
                     </Form.Select>
+                </FormGroup>
+
+                <Button variant="secondary" onClick={dataUpdate}>
+                    обновить
+                </Button>
+
+                <FormGroup className="mb-3" controlId="formratio">
+                    <Form.Control required type="text" placeholder="Название" value={name} onChange={e => setName(e.target.value)} />
                 </FormGroup>
 
                 <FormGroup className="mb-3" controlId="formratio">
@@ -54,7 +105,7 @@ function EditFormat() {
                     Изменить
                 </Button>
 
-                <Button variant="secondary" >
+                <Button variant="secondary" onClick={deleteFormat}>
                     Удалить
                 </Button>
 
