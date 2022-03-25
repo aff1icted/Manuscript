@@ -39,23 +39,15 @@ function EditFormat() {
     }, [])
 
     const dataUpdate = (value) => {
-        /* setLoading(true)
-         setTimeout(() => {
-             fetchFormat().finally(() => setLoading(false))
-         }, 1000); 
-         //setName(format.name)   
-        setCoeff(format.transfercoeff)*/
-        console.log(formats)
         formats.map(function (obj) {
             if (obj.name == format) {
                 setName(obj.name)
-                if(obj.transfercoeff == null)
-                {
+                if (obj.transfercoeff == null) {
                     setCoeff('')
-                }else{
+                } else {
                     setCoeff(obj.transfercoeff)
                 }
-                
+
             }
         });
     }
@@ -98,7 +90,7 @@ function EditFormat() {
                 </FormGroup>
 
                 <FormGroup className="mb-3" controlId="formratio">
-                    <Form.Control required type="text" placeholder="коэффициент" value={coeff} onChange={e => setCoeff(e.target.value)} />
+                    <Form.Control required type="text" placeholder="Коэффициент" value={coeff} onChange={e => setCoeff(e.target.value)} />
                 </FormGroup>
 
                 <Button variant="secondary">
