@@ -24,6 +24,22 @@ function EditTags() {
         }, 1000);
     }, [])
 
+    async function dtag() {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/tag/${tagname}`)
+        return data
+    }
+
+    const deletetag = async () => {
+
+        try {
+            let data;
+            data = await dtag();
+            alert("удалено")
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
+
     
 
     return (
@@ -41,7 +57,7 @@ function EditTags() {
                     </Form.Select>
                 </FormGroup>
 
-                <Button variant="secondary" >
+                <Button variant="secondary" onClick={deletetag} >
                     Удалить
                 </Button>
 

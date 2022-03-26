@@ -25,6 +25,22 @@ function EditCover() {
         }, 1000);
     }, [])
 
+    async function dcover() {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/cover/${cover}`)
+        return data
+    }
+
+    const deletecover = async () => {
+
+        try {
+            let data;
+            data = await dcover();
+            alert("удалено")
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
+
     return (
         <div className="enter">
             <Form>
@@ -40,7 +56,7 @@ function EditCover() {
                     </Form.Select>
                 </FormGroup>
 
-                <Button variant="secondary" >
+                <Button variant="secondary" onClick={deletecover}>
                     Удалить
                 </Button>
 

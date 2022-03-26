@@ -18,12 +18,7 @@ function EditFormat() {
     async function fetchformats() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/format`)
         setFormats(response.data)
-    }
-
-    async function fetchFormat() {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/format/${name}`)
-        setFormat(response.data)
-    }
+    }    
 
     async function dformat() {
         const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/format/${name}`)

@@ -12,7 +12,7 @@ function EditAuthor() {
     const [author, setAuthor] = useState([])
     const [description, setDescription] = useState('')
     const [img, setImg] = useState(null)
-    const [bookAuthor, setBookAuthor] = useState([])
+    const [authorName, setAuthorName] = useState('')
 
     async function fetchAuthors() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
@@ -33,13 +33,31 @@ function EditAuthor() {
         console.log('img', img)
 
     }
+
+    async function dauthor() {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/author/${authorName}`)
+        return data
+    }
+
+    const deleteauthor = async () => {
+
+        try {
+            let data;
+            data = await dauthor();
+            alert("удалено")
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
+
+
     
     return (
 
         <div className="enter">
             < Form >
                 <FormGroup className="mb-3" controlId="bookdate">
-                    <Form.Select onChange={(e) => setBookAuthor(e.target.value)}>
+                    <Form.Select onChange={(e) => setAuthorName(e.target.value)}>
                         <option selected="true" disabled="disabled">Автор</option>
                         {author.map(option =>
                             <option key={option.fullname} value={option.fullname}>
@@ -58,7 +76,7 @@ function EditAuthor() {
                 <Button variant="secondary" >
                     Изменить
                 </Button>
-                <Button variant="secondary" >
+                <Button variant="secondary" onClick={deleteauthor}>
                    Удалить
                 </Button>
             </Form >

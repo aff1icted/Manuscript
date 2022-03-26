@@ -12,10 +12,7 @@ function EditSeries() {
     const [foundation, setFoundation] = useState('')
     const [loading, setLoading] = useState(true)
     const [seriesPic, setSeriesPic] = useState(null)
-
-    const changeSeries = (key, value, number) => {
-        setBookSeries(bookSeries.map(i => i.number === number ? { ...i, [key]: value } : i))
-    }
+    
 
     async function fetchSeries() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/series`)
@@ -28,6 +25,23 @@ function EditSeries() {
             fetchSeries().finally(() => setLoading(false))
         }, 1000);
     }, [])
+
+
+    async function dseries() {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/series/${seriesName}`)
+        return data
+    }
+
+    const deleteseries = async () => {
+
+        try {
+            let data;
+            data = await dseries();
+            alert("удалено")
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
    
 
     return (
@@ -57,7 +71,7 @@ function EditSeries() {
                     Добавить
                 </Button>
 
-                <Button variant="secondary" >
+                <Button variant="secondary" onClick={deleteseries} >
                     Удалить
                 </Button>
 
