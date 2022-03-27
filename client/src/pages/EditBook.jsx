@@ -8,6 +8,9 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 import Books from "./Books";
 import { Loader } from "../components/UI/Loader";
+import { faArrowRotateBack } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Col, Row } from "react-bootstrap";
 
 function EditBook() {
 
@@ -17,10 +20,10 @@ function EditBook() {
     const [books, setBooks] = useState([])
     const [loading, setLoading] = useState(true)
     const [isbn, setIsbn] = useState('')
-    const [pagenumber, setPagenumber]= useState('')
-    const [edition, setEdition]= useState('')
-    const [price, setPrice]= useState('')
-    const [description, setDescription]= useState('')
+    const [pagenumber, setPagenumber] = useState('')
+    const [edition, setEdition] = useState('')
+    const [price, setPrice] = useState('')
+    const [description, setDescription] = useState('')
 
     async function fetchbook() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book`)
@@ -79,7 +82,7 @@ function EditBook() {
                     setEdition(obj.edition)
                 }
 
-               
+
 
             }
         });
@@ -92,19 +95,29 @@ function EditBook() {
         <div className="enter">
             <Form>
 
-                <FormGroup className="mb-3" controlId="bookdate">
-                    <Form.Select onChange={(e) => setBook(e.target.value)}>
-                        <option selected="true" disabled="disabled">Книга</option>
-                        {books.map(option =>
-                            <option key={option.title} value={option.title}>
-                                {option.title}
-                            </option>
-                        )}
-                    </Form.Select>
-                </FormGroup>
-                <Button variant="secondary" onClick={dataUpdate}>
-                    обновить
-                </Button>
+                <Row className="justify-content-md-center">
+                    <Col>
+                        <FormGroup className="mb-3" controlId="bookdate">
+                            <Form.Select onChange={(e) => setBook(e.target.value)}>
+                                <option selected="true" disabled="disabled">Книга</option>
+                                {books.map(option =>
+                                    <option key={option.title} value={option.title}>
+                                        {option.title}
+                                    </option>
+                                )}
+                            </Form.Select>
+                        </FormGroup>
+                    </Col>
+
+                    <Col md="auto">
+
+                        <Button variant="secondary" onClick={dataUpdate}>
+                            <FontAwesomeIcon icon={faArrowRotateBack} />
+                        </Button>
+
+                    </Col>
+
+                </Row>
                 <FormGroup className="mb-3" controlId="isbn">
                     <Form.Control required type="text" placeholder="ISBN" value={isbn} onChange={e => setIsbn(e.target.value)} />
                 </FormGroup>

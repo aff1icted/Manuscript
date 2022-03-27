@@ -7,6 +7,9 @@ import { Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRotateBack } from "@fortawesome/free-solid-svg-icons";
+
 
 function EditAuthor() {
     const [loading, setLoading] = useState(true)
@@ -82,20 +85,25 @@ function EditAuthor() {
 
         <div className="enter">
             < Form >
-                <FormGroup className="mb-3" controlId="bookdate">
-                    <Form.Select onChange={(e) => setAuthorName(e.target.value)}>
-                        <option selected="true" disabled="disabled">Автор</option>
-                        {author.map(option =>
-                            <option key={option.fullname} value={option.fullname}>
-                                {option.fullname}
-                            </option>
-                        )}
-                    </Form.Select>
-                </FormGroup>
-                <Button variant="secondary" onClick={dataUpdate}>
-                    обновить
-                </Button>
-
+                <Row className="justify-content-md-center">
+                    <Col>
+                        <FormGroup className="mb-3" controlId="bookdate">
+                            <Form.Select onChange={(e) => setAuthorName(e.target.value)}>
+                                <option selected="true" disabled="disabled">Автор</option>
+                                {author.map(option =>
+                                    <option key={option.fullname} value={option.fullname}>
+                                        {option.fullname}
+                                    </option>
+                                )}
+                            </Form.Select>
+                        </FormGroup>
+                    </Col>
+                    <Col md="auto">
+                        <Button variant="secondary" onClick={dataUpdate}>
+                            <FontAwesomeIcon icon={faArrowRotateBack} />
+                        </Button>
+                    </Col>
+                </Row>
                 <FormGroup className="mb-3" controlId="authname">
                     <Form.Control required type="text" placeholder="Название" value={name} onChange={e => setName(e.target.value)} />
                 </FormGroup>

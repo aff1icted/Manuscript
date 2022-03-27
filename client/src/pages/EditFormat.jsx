@@ -7,6 +7,9 @@ import { Form, FormGroup } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import { Loader } from "../components/UI/Loader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRotateBack } from "@fortawesome/free-solid-svg-icons";
+import { Col, Row } from "react-bootstrap";
 
 function EditFormat() {
     const [name, setName] = useState('')
@@ -18,7 +21,7 @@ function EditFormat() {
     async function fetchformats() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/format`)
         setFormats(response.data)
-    }    
+    }
 
     async function dformat() {
         const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/format/${name}`)
@@ -64,21 +67,28 @@ function EditFormat() {
     return (
         <div className="enter">
             <Form>
+                <Row className="justify-content-md-center">
+                    <Col>
 
-                <FormGroup className="mb-3" controlId="bookdate">
-                    <Form.Select onChange={(e) => { setFormat(e.target.value) }}>
-                        <option selected="true" disabled="disabled">Формат</option>
-                        {formats.map(option =>
-                            <option key={option.name} value={option.name}>
-                                {option.name}
-                            </option>
-                        )}
-                    </Form.Select>
-                </FormGroup>
+                        <FormGroup className="mb-3" controlId="bookdate">
 
-                <Button variant="secondary" onClick={dataUpdate}>
-                    обновить
-                </Button>
+                            <Form.Select onChange={(e) => { setFormat(e.target.value) }}>
+                                <option selected="true" disabled="disabled">Формат</option>
+                                {formats.map(option =>
+                                    <option key={option.name} value={option.name}>
+                                        {option.name}
+                                    </option>
+                                )}
+                            </Form.Select>
+                        </FormGroup>
+                    </Col>
+
+                    <Col md="auto">
+
+                        <Button variant="secondary" onClick={dataUpdate}>
+                            <FontAwesomeIcon icon={faArrowRotateBack} />
+                        </Button>
+                    </Col></Row>
 
                 <FormGroup className="mb-3" controlId="formratio">
                     <Form.Control required type="text" placeholder="Название" value={name} onChange={e => setName(e.target.value)} />
