@@ -12,7 +12,7 @@ function EditSeries() {
     const [foundation, setFoundation] = useState('')
     const [loading, setLoading] = useState(true)
     const [seriesPic, setSeriesPic] = useState(null)
-    
+    const [name, setName]  = useState('')
 
     async function fetchSeries() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/series`)
@@ -42,6 +42,27 @@ function EditSeries() {
             alert(e.response.data.message)
         }
     }
+
+    const dataUpdate = (value) => {
+        series.map(function (obj) {
+            if (obj.seriesname == seriesName) {
+                setName(obj.seriesname)
+
+                if (obj.foundation == null) {
+                    setFoundation('')
+                } else {
+                    setFoundation(obj.about)
+                }
+
+                if (obj.photo == null) {
+                    setSeriesPic('')
+                } else {
+                    setSeriesPic(obj.seriespic)
+                }                
+
+            }
+        });
+    }
    
 
     return (
@@ -58,13 +79,20 @@ function EditSeries() {
                         )}
                     </Form.Select>
                 </FormGroup>
+                <Button variant="secondary" onClick={dataUpdate}>
+                    обновить
+                </Button>
+
+                <FormGroup className="mb-3" controlId="sername">
+                    <Form.Control required type="text" placeholder="Название" value={name} onChange={e => setName(e.target.value)} />
+                </FormGroup>
                 <Form.Group controlId="serimg" className="mb-3">
                     <Form.Label>Иллюстрация к серии</Form.Label>
-                    <Form.Control type="file" />
+                    <Form.Control type="file" />{/*добавить отображение картинки */}
                 </Form.Group>
                 <Form.Group controlId="serdate" className="mb-3">
                     <Form.Label>Дата основания серии</Form.Label>
-                    <Form.Control required type="date"/>
+                    <Form.Control required type="date"/>{/*добавить отображение даты */}
                 </Form.Group>
 
                 <Button variant="secondary">

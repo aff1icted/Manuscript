@@ -6,6 +6,7 @@ import { Col, Row } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
+import { Loader } from "../components/UI/Loader";
 
 function EditAuthor() {
     const [loading, setLoading] = useState(true)
@@ -13,6 +14,7 @@ function EditAuthor() {
     const [description, setDescription] = useState('')
     const [img, setImg] = useState(null)
     const [authorName, setAuthorName] = useState('')
+    const [name, setName] = useState('')
 
     async function fetchAuthors() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
@@ -51,7 +53,31 @@ function EditAuthor() {
     }
 
 
-    
+    const dataUpdate = (value) => {
+        author.map(function (obj) {
+            if (obj.fullname == authorName) {
+                setName(obj.fullname)
+
+                if (obj.about == null) {
+                    setDescription('')
+                } else {
+                    setDescription(obj.about)
+                }
+
+                if (obj.photo == null) {
+                    setImg('')
+                } else {
+                    setImg(obj.photo)
+                }
+
+            }
+        });
+    }
+
+
+    if (loading) {
+        return <Loader />
+    }
     return (
 
         <div className="enter">
@@ -66,6 +92,14 @@ function EditAuthor() {
                         )}
                     </Form.Select>
                 </FormGroup>
+                <Button variant="secondary" onClick={dataUpdate}>
+                    обновить
+                </Button>
+
+                <FormGroup className="mb-3" controlId="authname">
+                    <Form.Control required type="text" placeholder="Название" value={name} onChange={e => setName(e.target.value)} />
+                </FormGroup>
+
                 <Form.Group className="mb-3" controlId="AuthorDescr">
                     <Form.Control as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
                 </Form.Group>
@@ -77,7 +111,7 @@ function EditAuthor() {
                     Изменить
                 </Button>
                 <Button variant="secondary" onClick={deleteauthor}>
-                   Удалить
+                    Удалить
                 </Button>
             </Form >
         </div>

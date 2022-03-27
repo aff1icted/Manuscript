@@ -9,13 +9,18 @@ import axios from "axios";
 import Books from "./Books";
 import { Loader } from "../components/UI/Loader";
 
-function EditBook(){
+function EditBook() {
 
     const [name, setName] = useState('')
     const [format, setFormat] = useState()
     const [book, setBook] = useState()
     const [books, setBooks] = useState([])
     const [loading, setLoading] = useState(true)
+    const [isbn, setIsbn] = useState('')
+    const [pagenumber, setPagenumber]= useState('')
+    const [edition, setEdition]= useState('')
+    const [price, setPrice]= useState('')
+    const [description, setDescription]= useState('')
 
     async function fetchbook() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book`)
@@ -32,11 +37,11 @@ function EditBook(){
 
         try {
             let data;
-            data = await  dbook();   
-            alert("удалено") 
+            data = await dbook();
+            alert("удалено")
         } catch (e) {
             alert(e.response.data.message)
-        }       
+        }
     }
 
 
@@ -46,12 +51,44 @@ function EditBook(){
         }, 1000);
     }, [])
 
+    // сделать получение нехванающих данных
+    const dataUpdate = (value) => {
+        books.map(function (obj) {
+            if (obj.title == book) {
+                setName(obj.title)
+                setIsbn(obj.isbn)
+
+                if (obj.pagenumber == null) {
+                    setPagenumber('')
+                } else {
+                    setPagenumber(obj.pagenumber)
+                }
+                if (obj.description == null) {
+                    setDescription('')
+                } else {
+                    setDescription(obj.description)
+                }
+                if (obj.price == null) {
+                    setPrice('')
+                } else {
+                    setPrice(obj.price)
+                }
+                if (obj.edition == null) {
+                    setEdition('')
+                } else {
+                    setEdition(obj.edition)
+                }
+
+               
+
+            }
+        });
+    }
+
     if (loading) {
         return <Loader />
     }
-    
-
-    return(
+    return (
         <div className="enter">
             <Form>
 
@@ -65,7 +102,32 @@ function EditBook(){
                         )}
                     </Form.Select>
                 </FormGroup>
-        
+                <Button variant="secondary" onClick={dataUpdate}>
+                    обновить
+                </Button>
+                <FormGroup className="mb-3" controlId="isbn">
+                    <Form.Control required type="text" placeholder="ISBN" value={isbn} onChange={e => setIsbn(e.target.value)} />
+                </FormGroup>
+
+                <FormGroup className="mb-3" controlId="authname">
+                    <Form.Control required type="text" placeholder="Название" value={name} onChange={e => setName(e.target.value)} />
+                </FormGroup>
+
+                <FormGroup className="mb-3" controlId="isbn">
+                    <Form.Control required type="text" placeholder="Количество страниц" value={pagenumber} onChange={e => setPagenumber(e.target.value)} />
+                </FormGroup>
+
+                <FormGroup className="mb-3" controlId="isbn">
+                    <Form.Control required type="text" placeholder="Тираж" value={edition} onChange={e => setEdition(e.target.value)} />
+                </FormGroup>
+                <FormGroup className="mb-3" controlId="isbn">
+                    <Form.Control required type="text" placeholder="Цена" value={price} onChange={e => setPrice(e.target.value)} />
+                </FormGroup>
+
+                <Form.Group className="mb-3" controlId="BookDescr">
+                    <Form.Control required as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
+                </Form.Group>
+
 
                 <Button variant="secondary" onClick={deletebook} >
                     Удалить
