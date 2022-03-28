@@ -32,12 +32,7 @@ function EditAuthor() {
         }, 1000);
     }, [])
 
-    const selectFile = e => {
-        console.log(e.target.files[0])
-        setImg(e.target.files[0])
-        console.log('img', img)
-
-    }
+    
 
     async function dauthor() {
         const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/author/${authorName}`)
@@ -113,7 +108,7 @@ function EditAuthor() {
                 </Form.Group>
                 <Form.Group controlId="authimg" className="mb-3">
                     <Form.Label>Фотография автора</Form.Label>
-                    <Form.Control type="file" onChange={selectFile} />
+                    <Form.Control type="file" onChange={e =>setImg(e.target.files[0])} />
                 </Form.Group>
                 <Button variant="secondary" >
                     Изменить
