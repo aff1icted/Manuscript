@@ -54,7 +54,7 @@ function EditSeries() {
                 if (obj.foundation == null) {
                     setFoundation('')
                 } else {
-                    setFoundation(obj.about)
+                    setFoundation(obj.foundation)
                 }
 
                 if (obj.photo == null) {
@@ -101,7 +101,7 @@ function EditSeries() {
                 </Form.Group>
                 <Form.Group controlId="serdate" className="mb-3">
                     <Form.Label>Дата основания серии</Form.Label>
-                    <Form.Control required type="date" />{/*добавить отображение даты */}
+                    <Form.Control required type="date" value={foundation} />{/*добавить отображение даты */}
                 </Form.Group>
 
                 <Button variant="secondary">
