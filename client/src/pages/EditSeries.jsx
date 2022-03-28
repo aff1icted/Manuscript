@@ -35,6 +35,27 @@ function EditSeries() {
         return data
     }
 
+    async function useries(type) {
+        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/series`, type)
+        return data
+    }
+
+    const edtSeries = async () => {
+        try {
+            const formData = new FormData()
+            formData.append('seriesname', name)
+            formData.append('foundation', foundation)
+            formData.append('seriespic', seriesPic)
+            let data;
+            data = await useries(formData);
+            setSeriesName('')
+            setFoundation('')
+            setSeriesPic(null)
+        } catch (e) {
+            alert(e.response.data.message)
+        }        
+    }
+
     const deleteseries = async () => {
 
         try {
@@ -46,7 +67,7 @@ function EditSeries() {
         }
     }
 
-    const dataUpdate = (value) => {
+    const dataUpdate = () => {
         series.map(function (obj) {
             if (obj.seriesname == seriesName) {
                 setName(obj.seriesname)
@@ -60,7 +81,7 @@ function EditSeries() {
                 if (obj.photo == null) {
                     setSeriesPic('')
                 } else {
-                    setSeriesPic(obj.seriespic)
+                    setSeriesPic(obj.photo)
                 }
 
             }
@@ -97,14 +118,14 @@ function EditSeries() {
                 </FormGroup>
                 <Form.Group controlId="serimg" className="mb-3">
                     <Form.Label>Иллюстрация к серии</Form.Label>
-                    <Form.Control type="file" />{/*добавить отображение картинки */}
+                    <Form.Control type="file" value={seriesPic} onChange={e => setSeriesPic(e.target.files[0])}/>{/*добавить отображение картинки */}
                 </Form.Group>
                 <Form.Group controlId="serdate" className="mb-3">
                     <Form.Label>Дата основания серии</Form.Label>
-                    <Form.Control required type="date" value={foundation} />{/*добавить отображение даты */}
+                    <Form.Control required type="date" value={foundation} onChange={e => setFoundation(e.target.value)} />
                 </Form.Group>
 
-                <Button variant="secondary">
+                <Button variant="secondary" onClick={edtSeries}>
                     Добавить
                 </Button>
 

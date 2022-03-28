@@ -47,7 +47,6 @@ class SeriesController {
     }
 
     async update(req, res) {
-
         const { seriesname, foundation } = req.body
         let fileName
         if (req.files != null) {
