@@ -106,30 +106,8 @@ class BookController {
     }
     // не рабочая хуита, не знаю как сделать изменения связей
     async update(req, res) {
-        /*const { ISBN, Title, PublicationDate, Format, Cover, CoverArt, ShortPDF, FullPDF, Edition, PageNumber, Description } = req.body
-        let coverartName
-        let shortpdfName
-        let fullpdfName
-
-        if (req.files != null) {
-            const { coverart, shortpdf, fullpdf } = req.files
-
-            coverartName = uuid.v4() + ".jpg"
-            coverart.mv(path.resolve(__dirname, '..', 'static', coverartName))
-
-            shortpdfName = uuid.v4() + ".pdf"
-            shortpdf.mv(path.resolve(__dirname, '..', 'static', shortpdfName))
-
-            fullpdfName = uuid.v4() + ".pdf"
-            fullpdf.mv(path.resolve(__dirname, '..', 'static', fullpdfName))
-
-        } else {
-            coverartName = 'noimg'
-            shortpdfName = 'nofile'
-            fullpdfName = 'nofile'
-        }        
-
-        const book = await sequelize.query('UPDATE "Book" SET "Title"=$2 WHERE "ISBN"=$1 RETURNING *', [ISBN, Title])*/
+        const { isbn, title, pagenumber, edition, price, description} = req.body
+        const book = await Book.update({ isbn, pagenumber, edition, price, description}, {where: { title } })
         res.json(book.rows[0])
     }
 

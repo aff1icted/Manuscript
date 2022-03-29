@@ -88,6 +88,34 @@ function EditBook() {
         });
     }
 
+
+    async function ubook(type) {
+        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/book`, type)
+        return data
+    }
+
+    const edtbook = async () => {
+        try {
+            const formData = new FormData()
+            formData.append('title', name)
+            formData.append('isbn', isbn)
+            formData.append('pagenumber', pagenumber)
+            formData.append('edition', edition)
+            formData.append('price', price)
+            formData.append('description', description)
+            let data;
+            data = await ubook(formData);
+            setName('')
+            setIsbn('')
+            setPagenumber('')
+            setEdition('')
+            setPrice('')
+            setDescription('')
+        } catch (e) {
+            alert(e.response.data.message)
+        }        
+    }
+
     if (loading) {
         return <Loader />
     }
@@ -140,6 +168,10 @@ function EditBook() {
                 <Form.Group className="mb-3" controlId="BookDescr">
                     <Form.Control required as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
                 </Form.Group>
+
+                <Button variant="secondary" onClick={edtbook} >
+                    Обновить
+                </Button>
 
 
                 <Button variant="secondary" onClick={deletebook} >

@@ -61,6 +61,25 @@ function EditFormat() {
         }
     }
 
+    async function uformat(type) {
+        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/format`, type)
+        return data
+    }
+
+    const edtformat = async () => {
+        try {
+            const formData = new FormData()
+            formData.append('name', name)
+            formData.append('transfercoeff', coeff)
+            let data;
+            data = await uformat(formData);
+            setName('')
+            setCoeff('')
+        } catch (e) {
+            alert(e.response.data.message)
+        }        
+    }
+
     if (loading) {
         return <Loader />
     }
@@ -98,7 +117,7 @@ function EditFormat() {
                     <Form.Control required type="text" placeholder="Коэффициент" value={coeff} onChange={e => setCoeff(e.target.value)} />
                 </FormGroup>
 
-                <Button variant="secondary">
+                <Button variant="secondary" onClick={edtformat}>
                     Изменить
                 </Button>
 

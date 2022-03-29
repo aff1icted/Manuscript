@@ -72,6 +72,27 @@ function EditAuthor() {
         });
     }
 
+    async function uauthor(type) {
+        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/author`, type)
+        return data
+    }
+
+    const edtAuthor = async () => {
+        try {
+            const formData = new FormData()
+            formData.append('fullname', name)
+            formData.append('about', description)
+            formData.append('photo', img)
+            let data;
+            data = await uauthor(formData);
+            setName('')
+            setDescription('')
+            setImg(null)
+        } catch (e) {
+            alert(e.response.data.message)
+        }        
+    }
+
 
     if (loading) {
         return <Loader />
@@ -110,7 +131,7 @@ function EditAuthor() {
                     <Form.Label>Фотография автора</Form.Label>
                     <Form.Control type="file" onChange={e =>setImg(e.target.files[0])} />
                 </Form.Group>
-                <Button variant="secondary" >
+                <Button variant="secondary" onClick={edtAuthor}>
                     Изменить
                 </Button>
                 <Button variant="secondary" onClick={deleteauthor}>
