@@ -1,8 +1,5 @@
 import react, { useEffect, useState } from "react";
 import '../styles/Admcss.css'
-import { Link } from "react-router-dom";
-import NavAdmin from "../components/UI/NavAdmin";
-import HeaderAdmin from "../components/UI/HeaderAdmin";
 import { Form, FormGroup } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import axios from 'axios'

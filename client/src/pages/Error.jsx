@@ -1,6 +1,3 @@
-import react, { useState } from "react";
-
-
 function Error() {
   return(
   <div>
