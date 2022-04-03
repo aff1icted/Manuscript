@@ -1,12 +1,12 @@
 import react, { useEffect, useState } from "react";
-import Input from "../components/UI/Input";
-import Select from "../components/UI/Select";
 import '../styles/Admcss.css'
 import { Form, FormGroup } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { Col, Row } from "react-bootstrap";
 import { Loader } from "../components/UI/Loader";
 import axios from "axios";
+import { faArrowRotateBack } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Col, Row } from "react-bootstrap";
 
 
 function AddBook() {
@@ -29,6 +29,12 @@ function AddBook() {
     const [pagenumber, setPagenumber] = useState()
     const [price, setPrice] = useState()
 
+    const [book, setBook] = useState()
+    const [books, setBooks] = useState([])
+    const [name, setName] = useState('')
+
+    const [selectedCover, setSelectedCover] = useState('Переплет')
+    const [selectedFormat, setSelectedFormat] = useState('Формат')
 
     async function fetchAuthors() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
@@ -111,38 +117,7 @@ function AddBook() {
         return data
     }
 
-    /*const addBook = () => {
-        const formData = new FormData()
-        formData.append('isbn', isbn)
-        formData.append('title', title)
-        formData.append('publicationdate', publicationdate)
-        formData.append('edition', `${edition}`)
-        formData.append('pagenumber', `${pagenumber}`)
-        formData.append('description', description)
-        formData.append('price', `${price}`)
-        formData.append('tags', JSON.stringify(bookTag))
-        formData.append('authors', JSON.stringify(bookAuthor))
-        formData.append('series', JSON.stringify(bookSeries))
-        formData.append('coverart', coverart)
-        formData.append('shortpdf', shortpdf)
-        formData.append('fullpdf', fullpdf)
-        formData.append('formatName', format)
-        formData.append('coverCover', cover)
-
-        create(formData).then(data => {
-            setIsbn('')
-            setTitle('')
-            setDescription('')
-            setPagenumber('')
-            setEdition('')
-            setPrice('')
-            setBookAuthor([])
-            setBookSeries([])
-            setBookTag([])
-        })
-
-    }*/
-
+    
 
 
     const addBook = async () => {
@@ -175,12 +150,132 @@ function AddBook() {
             setBookAuthor([])
             setBookSeries([])
             setBookTag([])
+            alert("Добавленно")
         } catch (e) {
             alert(e.response.data.message)
-        } 
+        }
     }
 
 
+
+    async function fetchbook() {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book`)
+        setBooks(response.data)
+    }
+
+    async function dbook() {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/book/${book}`)
+        return data
+    }
+
+
+    const deletebook = async () => {
+
+        try {
+            let data;
+            data = await dbook();
+            alert("удалено")
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            fetchbook().finally(() => setLoading(false))
+        }, 1000);
+    }, [])
+
+    // сделать получение нехванающих данных
+    const dataUpdate = (value) => {
+        books.map(function (obj) {
+            if (obj.title == book) {
+                setTitle(obj.title)
+                setIsbn(obj.isbn)
+
+                if (obj.pagenumber == null) {
+                    setPagenumber('')
+                } else {
+                    setPagenumber(obj.pagenumber)
+                }
+                if (obj.description == null) {
+                    setDescription('')
+                } else {
+                    setDescription(obj.description)
+                }
+                if (obj.price == null) {
+                    setPrice('')
+                } else {
+                    setPrice(obj.price)
+                }
+                if (obj.edition == null) {
+                    setEdition('')
+                } else {
+                    setEdition(obj.edition)
+                }
+                if (obj.publicationdate == null) {
+                    setPublicationdate('')
+                } else {
+                    setPublicationdate(obj.publicationdate)
+                }
+
+                if (obj.formatName == null) {
+                    setFormat('')
+                } else {
+                    setFormat(obj.formatName)
+                    setSelectedFormat(obj.formatName)
+                }
+
+                if (obj.coverCover == null) {
+                    setCover('')
+                } else {
+                    setCover(obj.coverCover )
+                    setSelectedCover(obj.coverCover)
+                }
+                /*сделать обновление файлов
+                setShortpdf()
+                setFullpdf()
+                setCoverart()
+                сделать отображение
+               setBookAuthor(obj.authors)
+               setBookSeries(obj.series)
+               setBookTag(obj.tags)*/
+
+
+            }
+        });
+    }
+
+
+    async function ubook(type) {
+        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/book`, type)
+        return data
+    }
+
+    //сделать изменение всех данных
+    const edtbook = async () => {
+        try {
+            const formData = new FormData()
+            formData.append('title', book)//переделать
+            formData.append('isbn', isbn)
+            formData.append('pagenumber', pagenumber)
+            formData.append('edition', edition)
+            formData.append('price', price)
+            formData.append('description', description)
+            let data;
+            data = await ubook(formData);
+            setName('')
+            setIsbn('')
+            setPagenumber('')
+            setEdition('')
+            setPrice('')
+            setDescription('')
+            alert("Изменено")
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
 
     if (loading) {
         return <Loader />
@@ -192,6 +287,30 @@ function AddBook() {
 
             <Form>
 
+            <Row className="justify-content-md-center">
+                    <Col>
+                        <FormGroup className="mb-3" controlId="bookdate">
+                            <Form.Select onChange={(e) => setBook(e.target.value)}>
+                                <option selected="true" disabled="disabled">Книга</option>
+                                {books.map(option =>
+                                    <option key={option.title} value={option.title}>
+                                        {option.title}
+                                    </option>
+                                )}
+                            </Form.Select>
+                        </FormGroup>
+                    </Col>
+
+                    <Col md="auto">
+
+                        <Button variant="secondary" onClick={dataUpdate}>
+                            <FontAwesomeIcon icon={faArrowRotateBack} />
+                        </Button>
+
+                    </Col>
+
+                </Row>
+
                 <FormGroup className="mb-3" controlId="isbn">
                     <Form.Control required type="text" placeholder="ISBN" value={isbn} onChange={e => setIsbn(e.target.value)} />
                 </FormGroup>
@@ -202,7 +321,7 @@ function AddBook() {
 
                 <FormGroup className="mb-3" controlId="bookdate">
                     <Form.Label>Дата публикации</Form.Label>
-                    <Form.Control required type="date" onChange={e => setPublicationdate(e.target.value)} />
+                    <Form.Control required type="date" value={publicationdate} onChange={e => setPublicationdate(e.target.value)} />
                 </FormGroup>
                 <Row className="mb-3 mx-1">
 
@@ -299,7 +418,7 @@ function AddBook() {
                 </Row>
                 <FormGroup className="mb-3" controlId="bookdate">
                     <Form.Select onChange={(e) => setCover(e.target.value)}>
-                        <option selected="true" disabled="disabled">Переплет</option>
+                        <option selected="true" disabled="disabled">{selectedCover}</option>
                         {covers.map(option =>
                             <option key={option.cover} value={option.cover}>
                                 {option.cover}
@@ -310,7 +429,7 @@ function AddBook() {
 
                 <FormGroup className="mb-3" controlId="bookdate">
                     <Form.Select onChange={(e) => setFormat(e.target.value)}>
-                        <option selected="true" disabled="disabled">Формат</option>
+                        <option selected="true" disabled="disabled">{selectedFormat}</option>
                         {formats.map(option =>
                             <option key={option.name} value={option.name}>
                                 {option.name}
@@ -350,6 +469,14 @@ function AddBook() {
 
                 <Button variant="secondary" onClick={addBook}>
                     Добавить
+                </Button>
+                <Button variant="secondary" onClick={edtbook} >
+                    Изменить
+                </Button>
+
+
+                <Button variant="secondary" onClick={deletebook} >
+                    Удалить
                 </Button>
 
             </Form>
