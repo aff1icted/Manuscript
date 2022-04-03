@@ -34,6 +34,7 @@ import axios from "axios";
 import { observer } from "mobx-react-lite";
 import jwt_decode from "jwt-decode";
 import { Context } from "./index"
+import Pages from "./pages/Pages";
 
 
 
@@ -215,6 +216,14 @@ const App = observer(() => {
           <div className="blocks">
             <NavAdmin />
             <EditBook />
+          </div>
+        </Route>
+
+        <Route exact path="/admin/pages">
+
+          <div className="blocks">
+            <NavAdmin />
+            <Pages />
           </div>
         </Route>
 
