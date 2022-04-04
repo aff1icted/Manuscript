@@ -35,6 +35,7 @@ import { observer } from "mobx-react-lite";
 import jwt_decode from "jwt-decode";
 import { Context } from "./index"
 import Pages from "./pages/Pages";
+import Main from "./pages/Main";
 
 
 
@@ -73,6 +74,15 @@ const App = observer(() => {
           <Footer />
 
         </Route>
+        <Route path="/main">
+          <div className="content">
+            <NavBar />
+            <Main />
+          </div>
+          <Footer />
+
+        </Route>
+
         <Route path="/registration">
           <div className="content">
             <NavBar />
