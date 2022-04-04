@@ -7,6 +7,7 @@ const seriesRouter = require('./series.routes')
 const formatRouter = require('./format.routes')
 const coversRouter = require('./covers.routes')
 const userRouter = require('./user.routers')
+const pagesRouter = require('./pages.routes')
 
 router.use('/tag', tagRouter)
 router.use('/author', authorRouter)
@@ -15,5 +16,6 @@ router.use('/book', bookRouter)
 router.use('/format', formatRouter)
 router.use('/cover', coversRouter)
 router.use('/user', userRouter)
+router.use('/pages', pagesRouter)
 
 module.exports = router

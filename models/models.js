@@ -59,6 +59,12 @@ const User = sequelize.define('user', {
     role: {type: DataTypes.STRING, defaultValue: "USER"},
 })
 
+const Pages = sequelize.define('pages', {
+    item: {type: DataTypes.STRING, primaryKey: true},
+    text: {type: DataTypes.TEXT},
+    img: {type: DataTypes.STRING}
+})
+
 Format.hasMany(Book)
 Book.belongsTo(Format)
 
@@ -85,5 +91,6 @@ module.exports = {
     BookAuthor,
     BookSeries,
     BookTag,
-    User
+    User,
+    Pages
 }

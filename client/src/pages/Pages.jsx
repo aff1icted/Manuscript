@@ -24,25 +24,23 @@ function Pages() {
     const [fifth, setFifth] = useState('')
 
     async function uPage(type) {
-        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/page`, type)
+        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/pages`, type)
         return data
     }
 
     const edtPage = async () => {
         try {
             const formData = new FormData()
-            /*formData.append('mainText', mainText)
+            formData.append('mainText', mainText)
             formData.append('book', book)
-            formData.append('author', author) 
-            formData.append('about', about) 
-            formData.append('footer', footer) 
-            formData.append('first', first) 
-            formData.append('second', second) 
-            formData.append('third', third) 
-            formData.append('fourth', fourth) 
-            formData.append('fifth', fifth) 
-            переделать создание данных
-            */
+            formData.append('author', author)
+            formData.append('about', about)
+            formData.append('footer', footer)
+            formData.append('first', first)
+            formData.append('second', second)
+            formData.append('third', third)
+            formData.append('fourth', fourth)
+            formData.append('fifth', fifth)
             let data;
             data = await uPage(formData);
             alert('Сохранено')
@@ -54,24 +52,56 @@ function Pages() {
 
 
     async function fetchPages() {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages`)
+        let response = []
+        response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages`)        
         setPages(response.data)
+    }
+
+    const dataUpdate = () => {
+        pages.map(function (obj) {
+            switch (obj.item) {
+                case 'mainText':
+                    setMainText(obj.text)
+                    break;
+                case 'book':
+                    setBook(obj.text)
+                    break;
+                case 'author':
+                    setAuthor(obj.text)
+                    break;
+                case 'about':
+                    setAbout(obj.text)
+                    break;
+                case 'footer':
+                    setFooter(obj.text)
+                    break;
+                case 'first':
+                    setFirst(obj.text)
+                    break;
+                case 'second':
+                    setSecond(obj.text)
+                    break;
+                case 'third':
+                    setThird(obj.text)
+                    break;
+                case 'fourth':
+                    setFourth(obj.text)
+                    break;
+                case 'fifth':
+                    setFifth(obj.text)
+                    break;
+
+                default:
+                    break;
+            }
+
+        })
     }
 
     useEffect(() => {
         setTimeout(() => {
 
             fetchPages().finally(() => setLoading(false))
-            setMainText()
-            setBook()
-            setAuthor()
-            setAbout()
-            setFooter()
-            setFifth()
-            setSecond()
-            setThird()
-            setFourth()
-            setFifth()//сделать присвоение
         }, 1000);
     }, [])
 
@@ -83,6 +113,9 @@ function Pages() {
 
         <div className="enter">
             < Form >
+                <Button variant="secondary" onClick={dataUpdate}>
+                    Обновить
+                </Button>
                 <Form.Label>Главная страница</Form.Label>
                 <Form.Group className="mb-3" controlId="AuthorDescr">
                     <Form.Control as="textarea" rows='3' placeholder="" value={mainText} onChange={e => setMainText(e.target.value)} />
