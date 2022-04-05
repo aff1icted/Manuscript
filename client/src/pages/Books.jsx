@@ -9,6 +9,7 @@ import { Loader } from "../components/UI/Loader";
 
 function Books() {
     const [Books, setBook] = useState([]) 
+    const [bookText, setBookText] = useState([]) 
 
     async function fetchPosts(){
       const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
@@ -41,13 +42,18 @@ function Books() {
   
 
   async function fetchBooks(){  
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book`)
-    
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book`)    
     setBook(response.data)
+  }
+
+  async function fetchBookText(){  
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/book`)    
+    setBookText(response.data)
   }
 
   useEffect(() => {
     setTimeout(() => {
+      fetchBookText()
       fetchBooks().finally(() => setLoading(false))
     }, 1000);
   }, [])
@@ -64,7 +70,7 @@ function Books() {
   } 
   return(
   <div className="App"> 
-       
+    <div>{bookText.text}</div>   
     <BookList Books={Books}/>   
     
     

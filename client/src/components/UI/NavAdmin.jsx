@@ -10,7 +10,7 @@ const NavAdmin = () => {
             <li><Link to="/admin/addauthor">добавить автора</Link></li>
             <li><Link to="/admin/addcover">добавить переплет</Link></li>
             <li><Link to="/admin/addformat">добавить формат</Link></li>        
-            <li><Link to="/admin/editbook">удалить книгу</Link></li>
+            <li><Link to="/admin/pages">Изменить данные на страницах</Link></li>
 
         </div>
     );
