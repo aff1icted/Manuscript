@@ -107,8 +107,8 @@ class BookController {
     // не рабочая хуита, не знаю как сделать изменения связей
     async update(req, res) {
         const { isbn, title, pagenumber, edition, price, description} = req.body
-        const book = await Book.update({ isbn, pagenumber, edition, price, description}, {where: { title } })
-        res.json(book.rows[0])
+        const book = await Book.update({ title, pagenumber, edition, price, description}, {where: { isbn } })
+        res.json(book)
     }
 
     

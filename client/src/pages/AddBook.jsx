@@ -1,15 +1,17 @@
 import react, { useEffect, useState } from "react";
 import '../styles/Admcss.css'
-import { Form, FormGroup } from "react-bootstrap";
+import { Form, FormGroup} from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Loader } from "../components/UI/Loader";
 import axios from "axios";
 import { faArrowRotateBack } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Col, Row } from "react-bootstrap";
+import BookModal from "../components/modals/BookModal";
 
 
 function AddBook() {
+    
     const [loading, setLoading] = useState(true)
     const [tags, setTags] = useState([])
     const [series, setSeries] = useState([])
@@ -117,7 +119,7 @@ function AddBook() {
         return data
     }
 
-    
+
 
 
     const addBook = async () => {
@@ -230,7 +232,7 @@ function AddBook() {
                 if (obj.coverCover == null) {
                     setCover('')
                 } else {
-                    setCover(obj.coverCover )
+                    setCover(obj.coverCover)
                     setSelectedCover(obj.coverCover)
                 }
                 /*сделать обновление файлов
@@ -287,7 +289,7 @@ function AddBook() {
 
             <Form>
 
-            <Row className="justify-content-md-center">
+                <Row className="justify-content-md-center">
                     <Col>
                         <FormGroup className="mb-3" controlId="bookdate">
                             <Form.Select onChange={(e) => setBook(e.target.value)}>
@@ -477,10 +479,9 @@ function AddBook() {
 
                 <Button variant="secondary" onClick={deletebook} >
                     Удалить
-                </Button>
+                </Button>                
 
-            </Form>
-
+            </Form> 
 
         </div>
 

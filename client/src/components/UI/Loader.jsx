@@ -1,5 +1,6 @@
 import React from "react";
+import { Spinner } from "react-bootstrap";
 
 export const Loader =  () => (
-    <div>Здесь могла быть вращающаяся штука </div>
+    <Spinner animation={"grow"} />
 )

@@ -37,6 +37,7 @@ import { Context } from "./index"
 import Pages from "./pages/Pages";
 import Main from "./pages/Main";
 import AdminBook from "./pages/AdminBook";
+import TestPage from "./pages/TestPage";
 
 
 
@@ -243,6 +244,14 @@ const App = observer(() => {
           <div className="blocks">
             <NavAdmin />
             <AdminBook />
+          </div>
+        </Route>
+
+        <Route exact path="/admin/testpage">
+
+          <div className="blocks">
+            <NavAdmin />
+            <TestPage />
           </div>
         </Route>
 
