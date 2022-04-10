@@ -5,6 +5,8 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 //import leftArrow from "./icons/left-arrow.svg";
 //import rightArrow from "./icons/right-arrow.svg";
+import LeftArrow from '../../static/angle-left.svg'
+import RightArrow from '../../static/angle-right.svg'
 
 export default function BtnSlider({ direction, moveSlide }) {
   console.log(direction, moveSlide);
@@ -13,7 +15,7 @@ export default function BtnSlider({ direction, moveSlide }) {
       onClick={moveSlide}
       className={direction === "next" ? "btn-slide next" : "btn-slide prev"}
     >
-      <img src={direction === "next" ? faArrowRight : faArrowLeft} />
+      <img src={direction === "next" ? RightArrow : LeftArrow} />
     </button>
   );
 }
