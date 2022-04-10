@@ -34,6 +34,8 @@ const BookModal = ({ show, onHide, selectedBook }) => {
     const [bookTag, setBookTag] = useState([])
     const [bookSeries, setBookSeries] = useState([])
     const [heading, setHeading] = useState('Добавление книги')
+    const [addButton,setAddButton] = useState(false)
+    const [editButton,setEditButton] = useState(false)
 
 
     async function fetchAuthors() {
@@ -165,7 +167,6 @@ const BookModal = ({ show, onHide, selectedBook }) => {
 
     async function dataUpdate() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book/${selectedBook}`)
-        console.log("SelectedBook", response.data)
         response.data?.map(function (obj) {
 
             if (obj.isbn == null) {
@@ -286,10 +287,14 @@ const BookModal = ({ show, onHide, selectedBook }) => {
             onEnter={function () {
                 if (selectedBook !== '') {
                     dataUpdate()
-                    setHeading('Изменение книги')
+                    setHeading('Изменение книги')                    
+                    setAddButton(true)
+                    setEditButton(false)
                 } else {
                     Clear()
                     setHeading('Добавление книги')
+                    setAddButton(false)
+                    setEditButton(true)
                 }
             }}
         >
@@ -457,23 +462,20 @@ const BookModal = ({ show, onHide, selectedBook }) => {
                         <Form.Control type="file" onChange={e => setFullpdf(e.target.files[0])} />
                     </Form.Group>
 
-                    <Button variant="secondary" onClick={addBook}>
+                    <Button variant="secondary" onClick={addBook} hidden={addButton}>
                         Добавить
                     </Button>
-                    <Button variant="secondary" onClick={edtbook} >
+                    <Button variant="secondary" onClick={edtbook} hidden={editButton}>
                         Изменить
                     </Button>
-
-
-                    <Button variant="secondary" onClick={deletebook} >
+                    <Button variant="secondary" onClick={deletebook} hidden={editButton}>
                         Удалить
                     </Button>
 
                 </Form>
 
             </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={onHide}>Close</Button>
+            <Modal.Footer>                
             </Modal.Footer>
         </Modal>
     )

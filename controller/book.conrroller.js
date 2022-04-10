@@ -108,7 +108,7 @@ class BookController {
     async update(req, res) {
         const { isbn, title, pagenumber, edition, price, description} = req.body
         const book = await Book.update({ title, pagenumber, edition, price, description}, {where: { isbn } })
-        res.json(book.rows[0])
+        res.json(book)
     }
 
     

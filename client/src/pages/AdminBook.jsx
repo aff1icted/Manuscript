@@ -37,9 +37,7 @@ function AdminBook() {
     };
 
     useEffect(() => {
-        setTimeout(() => {
-            fetchbook().finally(() => setLoading(false))
-        }, 1000);
+        fetchbook().finally(() => setLoading(false))
     }, [])
 
 
@@ -58,7 +56,7 @@ function AdminBook() {
 
     const rowEvents = {
         onClick: (e, row) => {
-            SetCurrentBook(row.isbn)            
+            SetCurrentBook(row.isbn)
         }
     }
 
