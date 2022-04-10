@@ -223,10 +223,10 @@ const BookModal = ({ show, onHide, selectedBook }) => {
             setShortpdf()
             setFullpdf()
             setCoverart()
-            сделать отображение
+            сделать отображение*/
            setBookAuthor(obj.authors)
            setBookSeries(obj.series)
-           setBookTag(obj.tags)*/
+           setBookTag(obj.tags)
 
 
 
@@ -328,6 +328,7 @@ const BookModal = ({ show, onHide, selectedBook }) => {
                             <Row className="my-2" key={i.number}>
                                 <Col>
                                     <Form.Select onChange={(e) => changeAuthor('fullname', e.target.value, i.number)}>
+                                    <option selected="true" disabled="disabled">{i.fullname}</option>
                                         {author.map(option =>
                                             <option key={option.fullname} value={option.fullname}>
                                                 {option.fullname}
@@ -359,6 +360,7 @@ const BookModal = ({ show, onHide, selectedBook }) => {
                             <Row className="my-2" key={i.number}>
                                 <Col>
                                     <Form.Select onChange={(e) => changeTag('tagname', e.target.value, i.number)}>
+                                    <option selected="true" disabled="disabled">{i.tagname}</option>
                                         {tags.map(option =>
                                             <option key={option.tagname} value={option.tagname}>
                                                 {option.tagname}
@@ -390,6 +392,7 @@ const BookModal = ({ show, onHide, selectedBook }) => {
                             <Row className="my-2" key={i.number}>
                                 <Col>
                                     <Form.Select onChange={(e) => changeSeries('seriesname', e.target.value, i.number)}>
+                                    <option selected="true" disabled="disabled">{i.seriesname}</option>
                                         {series.map(option =>
                                             <option key={option.seriesname} value={option.seriesname}>
                                                 {option.seriesname}
