@@ -125,7 +125,7 @@ class BookController {
             }
         )
         return res.json(book)
-    }
+    }    
    
 }
 
