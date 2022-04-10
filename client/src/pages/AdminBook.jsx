@@ -46,6 +46,12 @@ function AdminBook() {
         { dataField: "authors", text: "Авторы" }
     ]
 
+    const selectRow = {
+        mode: 'radio',
+        clickToSelect: true,
+        bgColor: '#00BFFF',
+        hideSelectColumn: true
+      };
 
     if (loading) {
         return <Loader />
@@ -56,6 +62,10 @@ function AdminBook() {
                 keyField="isbn"
                 data={books}
                 columns={columns}
+                hover="true"
+                selectRow={ selectRow }
+                
+                
             />   
         </div>
     )
