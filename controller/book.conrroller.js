@@ -102,7 +102,7 @@ class BookController {
                 include: [Tags, Authors, Series]
             }
         )
-        res.json(book)
+        return res.json(book)
     }
     // не рабочая хуита, не знаю как сделать изменения связей
     async update(req, res) {
@@ -118,10 +118,10 @@ class BookController {
 
 
     async delete(req, res) {
-        const { title } = req.params
+        const { isbn } = req.params
         const book = await Book.destroy(
             {
-                where: { title }
+                where: { isbn }                
             }
         )
         return res.json(book)

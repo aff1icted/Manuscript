@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import '../styles/Admcss.css'
 import { Loader } from "../components/UI/Loader";
 import axios from "axios";
@@ -15,6 +15,18 @@ function AdminBook() {
     const [selectedBook, setSelectedBook] = useState('')
     const [currentBook, SetCurrentBook] = useState('')
     const [bookModalVisible, setBookModalVisible] = useState(false)
+    const [titleSearch, setTitleSearch] = useState('')
+    const [isbnSearch, setIsbnSearch] = useState('')
+    const [authorSearch, setAuthorSearch] = useState('')
+    const [filteredBook, setFilteredBook] = useState([])
+    const [authors, setAuthors] = useState([])
+    const [filterHide, setFilterHide] = useState(true)
+    const [filterButton, setFIlterButton]=useState('Показать фильтр')
+
+    async function fetchAuthors() {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
+        setAuthors(response.data)
+    }
 
 
     async function fetchbook() {
@@ -22,6 +34,7 @@ function AdminBook() {
         console.log('data', response.data)
         response.data.map(book => book.authors = List(book.authors))
         setBooks(response.data)
+        setFilteredBook(response.data)
     }
 
 
@@ -37,6 +50,7 @@ function AdminBook() {
     };
 
     useEffect(() => {
+        fetchAuthors()
         fetchbook().finally(() => setLoading(false))
     }, [])
 
@@ -71,14 +85,46 @@ function AdminBook() {
 
 
 
+
+
+    function Filtr() {
+        setFilteredBook(books.filter(book => book.title.toLowerCase().includes(titleSearch.toLowerCase()) && book.isbn.toLowerCase().includes(isbnSearch.toLowerCase())
+            && book.authors.toLowerCase().includes(authorSearch.toLowerCase())))
+    };
+
+    function FilterClic() {
+        if(filterHide){
+            setFilterHide(false)
+            setFIlterButton('Скрыть фильтр')
+        }else{
+            setFilterHide(true)
+            setFIlterButton('Показать фильтр')
+        }
+    };
+
+
     if (loading) {
         return <Loader />
     }
     return (
         <div className="enter">
+            <div hidden={filterHide}>
+                <input value={isbnSearch} onChange={e => setIsbnSearch(e.target.value)} placeholder="Поиск по ISBN" />
+                <input value={titleSearch} onChange={e => setTitleSearch(e.target.value)} placeholder="Поиск по названию" />
+                <select onChange={(e) => setAuthorSearch(e.target.value)}>
+                    <option selected="true" value={''}>{''}</option>
+                    {authors.map(option =>
+                        <option key={option.fullname} value={option.fullname}>
+                            {option.fullname}
+                        </option>
+                    )}
+                </select>
+                <Button onClick={Filtr}>Поиск</Button>
+            </div>
+            <Button onClick={FilterClic}>{filterButton}</Button>
             <BootstrapTable
                 keyField="isbn"
-                data={books}
+                data={filteredBook}
                 columns={columns}
                 hover="true"
                 selectRow={selectRow}

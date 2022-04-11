@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Form, FormGroup, Col, Row } from "react-bootstrap";
+import { Modal, Button, Form, FormGroup, Col, Row, OverlayTrigger, Tooltip } from "react-bootstrap";
 import '../../styles/Admcss.css'
 import { Loader } from "../UI/Loader";
 import axios from "axios";
@@ -40,7 +40,6 @@ const BookModal = ({ show, onHide, selectedBook }) => {
 
     async function fetchAuthors() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
-
         setAuthor(response.data)
     }
     async function fetchSeries() {
@@ -149,6 +148,7 @@ const BookModal = ({ show, onHide, selectedBook }) => {
     }
 
     async function dbook() {
+        console.log('selectedbook',selectedBook)
         const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/book/${selectedBook}`)
         return data
     }
@@ -453,7 +453,16 @@ const BookModal = ({ show, onHide, selectedBook }) => {
                         <Form.Control required as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
                     </Form.Group>
                     <Form.Group controlId="bookimg" className="mb-3">
-                        <Form.Label>Обложка книги</Form.Label>
+                        <OverlayTrigger 
+                        placement="right"
+                        overlay={
+                            <Tooltip> 
+                                Изображение в формате png или jpg не менее 400x360
+                            </Tooltip>
+                        }>
+                            <Form.Label>Обложка книги</Form.Label>
+                        </OverlayTrigger>
+                                               
                         <Form.Control type="file" onChange={e => setCoverart(e.target.files[0])} />
                     </Form.Group>
                     <Form.Group controlId="bookimg" className="mb-3">
