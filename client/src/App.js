@@ -38,6 +38,11 @@ import Pages from "./pages/Pages";
 import Main from "./pages/Main";
 import Template from "./pages/Template";
 import AdminBook from "./pages/AdminBook";
+import AdminFormat from "./pages/AdminFormat";
+import AdminCover from "./pages/AdminCover";
+import AdminTag from "./pages/AdminTag";
+import AdminSeries from "./pages/AdminSeries";
+import AdminAuthor from "./pages/AdminAuthor";
 
 
 
@@ -256,7 +261,47 @@ const App = observer(() => {
           </div>
         </Route>
 
-       
+        <Route exact path="/admin/format">
+
+          <div className="blocks">
+            <NavAdmin />
+            <AdminFormat />
+          </div>
+        </Route>
+
+        <Route exact path="/admin/author">
+
+          <div className="blocks">
+            <NavAdmin />
+            <AdminAuthor />
+          </div>
+        </Route>
+
+        <Route exact path="/admin/series">
+
+          <div className="blocks">
+            <NavAdmin />
+            <AdminSeries />
+          </div>
+        </Route>
+
+        <Route exact path="/admin/tag">
+
+          <div className="blocks">
+            <NavAdmin />
+            <AdminTag />
+          </div>
+        </Route>
+
+        <Route exact path="/admin/cover">
+
+          <div className="blocks">
+            <NavAdmin />
+            <AdminCover/>
+          </div>
+        </Route>
+
+
 
         <Route path="/error">
           <Error />

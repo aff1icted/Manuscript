@@ -11,7 +11,6 @@ import { Col, Row } from "react-bootstrap";
 
 function Pages() {
     const [loading, setLoading] = useState(true)
-    const [pages, setPages] = useState([])
     const [mainText, setMainText] = useState('')
     const [book, setBook] = useState('')
     const [author, setAuthor] = useState('')
@@ -53,12 +52,12 @@ function Pages() {
 
     async function fetchPages() {
         let response = []
-        response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages`)        
-        setPages(response.data)
+        response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages`)    
+        dataUpdate(response.data)
     }
 
-    const dataUpdate = () => {
-        pages.map(function (obj) {
+    const dataUpdate = (data) => {
+        data?.map(function (obj) {
             switch (obj.item) {
                 case 'mainText':
                     setMainText(obj.text)
@@ -113,9 +112,6 @@ function Pages() {
 
         <div className="enter">
             < Form >
-                <Button variant="secondary" onClick={dataUpdate}>
-                    Обновить
-                </Button>
                 <Form.Label>Главная страница</Form.Label>
                 <Form.Group className="mb-3" controlId="AuthorDescr">
                     <Form.Control as="textarea" rows='3' placeholder="" value={mainText} onChange={e => setMainText(e.target.value)} />

@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import '../styles/Admcss.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Loader } from "../components/UI/Loader";
 import axios from "axios";
 import BootstrapTable from "react-bootstrap-table-next";
-import { Button } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import BookModal from "../components/modals/BookModal";
 
 
@@ -21,7 +22,7 @@ function AdminBook() {
     const [filteredBook, setFilteredBook] = useState([])
     const [authors, setAuthors] = useState([])
     const [filterHide, setFilterHide] = useState(true)
-    const [filterButton, setFIlterButton]=useState('Показать фильтр')
+    const [filterButton, setFIlterButton] = useState('Показать фильтр')
 
     async function fetchAuthors() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
@@ -61,8 +62,24 @@ function AdminBook() {
         { dataField: "authors", text: "Авторы" }
     ]
 
+    //const [value,setValue]=useState([])
+
     const selectRow = {
         mode: 'radio',
+        /*mode: 'checkbox',
+        onSelect: (row, isSelect, rowIndex, e) => {
+            if (!(value.some(item => row.isbn === item.isbn))) {
+                const selectedData = {
+                    isbn: row.isbn
+                };
+                setValue(value => [...value, selectedData]);
+                console.log('value',value)
+            } else {
+                setValue(value.filter(item => item.isbn !== row.isbn));
+                console.log('value',value)
+            }
+        },*/
+
         clickToSelect: true,
         bgColor: '#00BFFF',
         hideSelectColumn: true
@@ -93,10 +110,10 @@ function AdminBook() {
     };
 
     function FilterClic() {
-        if(filterHide){
+        if (filterHide) {
             setFilterHide(false)
             setFIlterButton('Скрыть фильтр')
-        }else{
+        } else {
             setFilterHide(true)
             setFIlterButton('Показать фильтр')
         }
@@ -108,34 +125,51 @@ function AdminBook() {
     }
     return (
         <div className="enter">
-            <div hidden={filterHide}>
-                <input value={isbnSearch} onChange={e => setIsbnSearch(e.target.value)} placeholder="Поиск по ISBN" />
-                <input value={titleSearch} onChange={e => setTitleSearch(e.target.value)} placeholder="Поиск по названию" />
-                <select onChange={(e) => setAuthorSearch(e.target.value)}>
-                    <option selected="true" value={''}>{''}</option>
-                    {authors.map(option =>
-                        <option key={option.fullname} value={option.fullname}>
-                            {option.fullname}
-                        </option>
-                    )}
-                </select>
-                <Button onClick={Filtr}>Поиск</Button>
-            </div>
-            <Button onClick={FilterClic}>{filterButton}</Button>
-            <BootstrapTable
-                keyField="isbn"
-                data={filteredBook}
-                columns={columns}
-                hover="true"
-                selectRow={selectRow}
-                rowEvents={rowEvents}
-            />
-            <Button variant="secondary" onClick={() => edit()} >
-                Изменить
-            </Button>
-            <Button variant="secondary" onClick={() => add()} >
-                Добавить
-            </Button>
+
+            <Row className="justify-content-md-center">
+                <Col md-4>
+                    <div className="subcolumns-left">
+                        <div hidden={filterHide}>
+                            <input value={isbnSearch} onChange={e => setIsbnSearch(e.target.value)} placeholder="Поиск по ISBN" />
+                            <input value={titleSearch} onChange={e => setTitleSearch(e.target.value)} placeholder="Поиск по названию" />
+                            <select onChange={(e) => setAuthorSearch(e.target.value)}>
+                                <option selected="true" value={''}>{''}</option>
+                                {authors.map(option =>
+                                    <option key={option.fullname} value={option.fullname}>
+                                        {option.fullname}
+                                    </option>
+                                )}
+                            </select>
+                            <Button onClick={Filtr}>Поиск</Button>
+                        </div>
+                        <Button onClick={FilterClic}>{filterButton}</Button>
+                        <BootstrapTable
+                            keyField="isbn"
+                            data={filteredBook}
+                            columns={columns}
+                            hover="true"
+                            selectRow={selectRow}
+                            rowEvents={rowEvents}
+                        />
+                    </div>
+                </Col>
+                <Col md-auto>
+                    <div className="subcolumns-right">                        
+                        <Button variant="secondary" onClick={() => add()}>
+                            Добавить
+                        </Button>
+                        <Button variant="secondary" onClick={() => edit()}>
+                            Изменить
+                        </Button>
+                        <Button variant="secondary">
+                            Сохранить
+                        </Button>
+                        <Button variant="secondary">
+                            Удалить
+                        </Button>
+                    </div>
+                </Col>
+            </Row>
 
             <BookModal show={bookModalVisible} onHide={() => setBookModalVisible(false)} selectedBook={selectedBook} />
         </div>
