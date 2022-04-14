@@ -36,8 +36,9 @@ import jwt_decode from "jwt-decode";
 import { Context } from "./index"
 import Pages from "./pages/Pages";
 import Main from "./pages/Main";
+import Template from "./pages/Template";
 import AdminBook from "./pages/AdminBook";
-import TestPage from "./pages/TestPage";
+
 
 
 
@@ -247,13 +248,15 @@ const App = observer(() => {
           </div>
         </Route>
 
-        <Route exact path="/admin/testpage">
+        <Route exact path="/admin/template">
 
           <div className="blocks">
             <NavAdmin />
-            <TestPage />
+            <Template />
           </div>
         </Route>
+
+       
 
         <Route path="/error">
           <Error />

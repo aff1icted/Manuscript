@@ -43,7 +43,7 @@
 
 .enter
 {
-    width: 600px;
+    width: 800px;
     justify-content: flex-start;
     display: flex;
     padding: 10px;
@@ -73,3 +73,21 @@
 .tagenter input{ margin-bottom: 10px;}
 .tagenter button{margin-bottom: 10px;}
 
+.subcolumns-right
+{
+    padding: 10px;
+    width: 150px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    background: red;
+    justify-content: space-between;
+}
+
+.subcolumns-left
+{
+    padding: 10px;
+    background: violet;
+    width: 600px;
+
+}
