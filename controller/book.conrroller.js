@@ -60,7 +60,7 @@ class BookController {
             tag.forEach(i => {
                 BookTag.create({
                     bookIsbn: isbn,
-                    tagTagname: i.tagname
+                    tagTagname: i
                 })
             });
         }
@@ -70,7 +70,7 @@ class BookController {
             author.forEach(i => {
                 BookAuthor.create({
                     bookIsbn: isbn,
-                    authorFullname: i.fullname
+                    authorFullname: i
                 })
             });
         }
@@ -80,7 +80,7 @@ class BookController {
             ser.forEach(i => {
                 BookSeries.create({
                     bookIsbn: isbn,
-                    seriesSeriesname: i.seriesname
+                    seriesSeriesname: i
                 })
             });
         }
@@ -96,7 +96,7 @@ class BookController {
     }
     async getOne(req, res) {
         const { isbn } = req.params
-        const book = await Book.findAll(
+        const book = await Book.findOne(
             {
                 where: { isbn },
                 include: [Tags, Authors, Series]

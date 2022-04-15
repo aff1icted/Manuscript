@@ -5,17 +5,16 @@ import { Loader } from "../components/UI/Loader";
 import axios from "axios";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Button, Col, Row } from "react-bootstrap";
-import BookModal from "../components/modals/BookModal";
+import { useHistory } from "react-router-dom";
 
 
 
 
 function AdminBook() {
+    const hist = useHistory()
     const [loading, setLoading] = useState(true)
-    const [books, setBooks] = useState([])
-    const [selectedBook, setSelectedBook] = useState('')
-    const [currentBook, SetCurrentBook] = useState('')
-    const [bookModalVisible, setBookModalVisible] = useState(false)
+    const [books, setBooks] = useState([])    
+    const [currentBook, SetCurrentBook] = useState('')    
     const [titleSearch, setTitleSearch] = useState('')
     const [isbnSearch, setIsbnSearch] = useState('')
     const [authorSearch, setAuthorSearch] = useState('')
@@ -30,9 +29,8 @@ function AdminBook() {
     }
 
 
-    async function fetchbook() {
+    async function fetchbooks() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book`)
-        console.log('data', response.data)
         response.data.map(book => book.authors = List(book.authors))
         setBooks(response.data)
         setFilteredBook(response.data)
@@ -45,14 +43,13 @@ function AdminBook() {
 
         if (!authors?.length) {
             return "Авторы не указаны"
-
         }
         return buf.toString()
     };
 
     useEffect(() => {
         fetchAuthors()
-        fetchbook().finally(() => setLoading(false))
+        fetchbooks().finally(() => setLoading(false))
     }, [])
 
 
@@ -60,26 +57,10 @@ function AdminBook() {
         { dataField: "isbn", text: "ISBN" },
         { dataField: "title", text: "Название" },
         { dataField: "authors", text: "Авторы" }
-    ]
-
-    //const [value,setValue]=useState([])
+    ]  
 
     const selectRow = {
         mode: 'radio',
-        /*mode: 'checkbox',
-        onSelect: (row, isSelect, rowIndex, e) => {
-            if (!(value.some(item => row.isbn === item.isbn))) {
-                const selectedData = {
-                    isbn: row.isbn
-                };
-                setValue(value => [...value, selectedData]);
-                console.log('value',value)
-            } else {
-                setValue(value.filter(item => item.isbn !== row.isbn));
-                console.log('value',value)
-            }
-        },*/
-
         clickToSelect: true,
         bgColor: '#00BFFF',
         hideSelectColumn: true
@@ -89,20 +70,7 @@ function AdminBook() {
         onClick: (e, row) => {
             SetCurrentBook(row.isbn)
         }
-    }
-
-    const add = () => {
-        setSelectedBook('')
-        setBookModalVisible(true)
-    }
-    const edit = () => {
-        setSelectedBook(currentBook)
-        setBookModalVisible(true)
-    }
-
-
-
-
+    } 
 
     function Filtr() {
         setFilteredBook(books.filter(book => book.title.toLowerCase().includes(titleSearch.toLowerCase()) && book.isbn.toLowerCase().includes(isbnSearch.toLowerCase())
@@ -118,6 +86,23 @@ function AdminBook() {
             setFIlterButton('Показать фильтр')
         }
     };
+
+    async function dbook() {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/book/${currentBook}`)
+        return data
+    }
+
+    const deletebook = async () => {
+
+        try {
+            let data;
+            data = await dbook();
+            fetchbooks()
+            Filtr()
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
 
 
     if (loading) {
@@ -154,24 +139,19 @@ function AdminBook() {
                     </div>
                 </Col>
                 <Col md-auto>
-                    <div className="subcolumns-right">                        
-                        <Button variant="secondary" onClick={() => add()}>
+                    <div className="subcolumns-right">
+                        <Button variant="secondary" onClick={e => hist.push('/admin/book/creating')}>
                             Добавить
                         </Button>
-                        <Button variant="secondary" onClick={() => edit()}>
+                        <Button variant="secondary" onClick={e => hist.push(`/admin/book/${currentBook}`)}>
                             Изменить
                         </Button>
-                        <Button variant="secondary">
-                            Сохранить
-                        </Button>
-                        <Button variant="secondary">
+                        <Button variant="secondary" onClick={() => deletebook()}>
                             Удалить
                         </Button>
                     </div>
                 </Col>
             </Row>
-
-            <BookModal show={bookModalVisible} onHide={() => setBookModalVisible(false)} selectedBook={selectedBook} />
         </div>
     )
 }
