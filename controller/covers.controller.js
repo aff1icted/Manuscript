@@ -18,8 +18,11 @@ class CoversController{
     }   
     
     async update(req, res) {
-        
+        const { cover, oldcover } = req.body
+        const covers = await Covers.update({ cover }, { where: { cover: oldcover } })
+        return res.json({ covers })
     }
+
     async delete(req, res) {
         const { cover } = req.params
         const covers = await Covers.destroy(

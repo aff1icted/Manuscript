@@ -8,7 +8,7 @@ import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
 
 function AdminTag() {
-    const hist= useHistory()
+    const hist = useHistory()
     const [tags, setTags] = useState([])
     const [filteredTags, setFilteredTags] = useState([])
     const [currentTag, setCurrentTag] = useState('')
@@ -36,7 +36,7 @@ function AdminTag() {
     ]
 
     const selectRow = {
-        mode: 'radio',        
+        mode: 'radio',
         clickToSelect: true,
         bgColor: '#00BFFF',
         hideSelectColumn: true
@@ -48,8 +48,8 @@ function AdminTag() {
         }
     }
 
-    function Filtr() {        
-            setFilteredTags(tags.filter(tag => tag.tagname.toLowerCase().includes(nameSearch.toLowerCase()))) 
+    function Filtr() {
+        setFilteredTags(tags.filter(tag => tag.tagname.toLowerCase().includes(nameSearch.toLowerCase())))
     };
 
     function FilterClic() {
@@ -80,7 +80,7 @@ function AdminTag() {
         }
     }
 
-    
+
 
     if (loading) {
         return <Loader />
@@ -92,35 +92,30 @@ function AdminTag() {
                     {/* Основная часть, здесь размещать таблицы и проч */}
                     <div className="subcolumns-left">
                         <div hidden={filterHide}>
-                            <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />                                                      
+                            <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
                             <Button onClick={Filtr}>Поиск</Button>
                         </div>
                         <Button onClick={FilterClic}>{filterButton}</Button>
                         <BootstrapTable
-                            keyField="name"
+                            keyField="tagname"
                             data={filteredTags}
                             columns={columns}
                             hover="true"
                             selectRow={selectRow}
                             rowEvents={rowEvents}
                         />
-
-
                     </div>
-
                 </Col>
-
                 <Col md-auto>
-
                     {/* А здесь кнопки */}
                     <div className="subcolumns-right">
-                        <Button variant="secondary" onClick={e =>hist.push('/admin/tag/creating')}>
+                        <Button variant="secondary" onClick={e => hist.push('/admin/tag/creating')}>
                             Добавить
                         </Button>
-                        <Button variant="secondary" onClick={e =>hist.push(`/admin/tag/${currentTag}`)}>
+                        <Button variant="secondary" onClick={e => hist.push(`/admin/tag/${currentTag}`)}>
                             Изменить
-                        </Button>                        
-                        <Button variant="secondary" onClick={e =>deletetag()}>
+                        </Button>
+                        <Button variant="secondary" onClick={e => deletetag()}>
                             Удалить
                         </Button>
                     </div>

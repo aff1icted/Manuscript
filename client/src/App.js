@@ -245,11 +245,18 @@ const App = observer(() => {
           </div>
         </Route>
 
-        <Route exact path="/admin/adminbook">
+        <Route exact path="/admin/book">
 
           <div className="blocks">
             <NavAdmin />
             <AdminBook />
+          </div>
+        </Route>
+
+        <Route exact path="/admin/book/:isbn">
+          <div className="blocks">
+            <NavAdmin />
+            <AddBook />
           </div>
         </Route>
 
@@ -269,6 +276,13 @@ const App = observer(() => {
           </div>
         </Route>
 
+        <Route exact path="/admin/format/:name">
+          <div className="blocks">
+            <NavAdmin />
+            <AddFormat />
+          </div>
+        </Route>
+
         <Route exact path="/admin/author">
 
           <div className="blocks">
@@ -277,11 +291,25 @@ const App = observer(() => {
           </div>
         </Route>
 
+        <Route exact path="/admin/author/:fullname">
+          <div className="blocks">
+            <NavAdmin />
+            <AddAuthor />
+          </div>
+        </Route>
+
         <Route exact path="/admin/series">
 
           <div className="blocks">
             <NavAdmin />
             <AdminSeries />
+          </div>
+        </Route>
+
+        <Route exact path="/admin/series/:seriesname">
+          <div className="blocks">
+            <NavAdmin />
+            <AddSeries />
           </div>
         </Route>
 
@@ -308,6 +336,12 @@ const App = observer(() => {
           </div>
         </Route>
 
+        <Route exact path="/admin/cover/:cover">
+          <div className="blocks">
+            <NavAdmin />
+            <AddCover />
+          </div>
+        </Route>
 
 
         <Route path="/error">

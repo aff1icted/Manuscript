@@ -16,8 +16,8 @@ function AddTag() {
     const [tag, setTag] = useState('')
     const [loading, setLoading] = useState(true)
     const [titleText, setTitleText] = useState('')
-    const [addVisible,setAddVisible] = useState(true)
-    const [editVisible,setEditVisible] = useState(true)
+    const [addVisible, setAddVisible] = useState(true)
+    const [editVisible, setEditVisible] = useState(true)
 
     async function create(type) {
         const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/tag`, type)
@@ -35,7 +35,7 @@ function AddTag() {
             alert(e.response.data.message)
         }
     }
-    
+
 
 
     async function update(type) {
@@ -56,7 +56,7 @@ function AddTag() {
             alert(e.response.data.message)
         }
     }
-    
+
     useEffect(() => {
 
         if (LinkTagName == "creating") {
@@ -83,7 +83,7 @@ function AddTag() {
                     {/* Основная часть, здесь размещать таблицы и проч */}
                     <div className="subcolumns-left">
                         <Form>
-                           <h2>{titleText}</h2>
+                            <h2>{titleText}</h2>
                             <FormGroup className="mb-3" controlId="Tagname">
                                 Название тега/жанра
                                 <Form.Control required type="text" placeholder="Название тега" value={tag} onChange={e => setTag(e.target.value)} />
@@ -97,13 +97,13 @@ function AddTag() {
                     {/* А здесь кнопки */}
                     <div className="subcolumns-right">
 
-                        <Button variant="secondary" hidden={addVisible} onClick={e =>addTag()}>
+                        <Button variant="secondary" hidden={addVisible} onClick={e => addTag()}>
                             Добавить
                         </Button>
 
-                        <Button variant="secondary" hidden={editVisible} onClick={e =>edtTag()} >
+                        <Button variant="secondary" hidden={editVisible} onClick={e => edtTag()} >
                             Сохранить
-                        </Button>   
+                        </Button>
 
                     </div>
 

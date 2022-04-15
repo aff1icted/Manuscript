@@ -5,9 +5,11 @@ import BootstrapTable from "react-bootstrap-table-next";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
+import { useHistory } from "react-router-dom";
 
 function AdminCover() {
 
+    const hist = useHistory()
     const [covers, setCovers] = useState([])
     const [filteredCovers, setFilteredCovers] = useState([])
     const [currentCover, setCurrentCover] = useState('')
@@ -42,7 +44,7 @@ function AdminCover() {
 
     const rowEvents = {
         onClick: (e, row) => {
-            setCurrentCover(row.isbn)
+            setCurrentCover(row.cover)
         }
     }
 
@@ -60,6 +62,24 @@ function AdminCover() {
         }
     };
 
+
+    async function dcover() {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/cover/${currentCover}`)
+        return data
+    }
+
+    const deletecover = async () => {
+
+        try {
+            let data;
+            data = await dcover();
+            fetchcovers()
+            Filtr()
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
+
     if (loading) {
         return <Loader />
     }
@@ -75,7 +95,7 @@ function AdminCover() {
                         </div>
                         <Button onClick={FilterClic}>{filterButton}</Button>
                         <BootstrapTable
-                            keyField="name"
+                            keyField="cover"
                             data={filteredCovers}
                             columns={columns}
                             hover="true"
@@ -91,16 +111,13 @@ function AdminCover() {
 
                     {/* А здесь кнопки */}
                     <div className="subcolumns-right">
-                        <Button variant="secondary">
+                        <Button variant="secondary" onClick={e => hist.push('/admin/cover/creating')}>
                             Добавить
                         </Button>
-                        <Button variant="secondary">
+                        <Button variant="secondary" onClick={e => hist.push(`/admin/cover/${currentCover}`)}>
                             Изменить
                         </Button>
-                        <Button variant="secondary">
-                            Сохранить
-                        </Button>
-                        <Button variant="secondary">
+                        <Button variant="secondary" onClick={e => deletecover()/*модалка*/}>
                             Удалить
                         </Button>
                     </div>

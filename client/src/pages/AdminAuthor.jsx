@@ -78,7 +78,7 @@ function AdminAuthor() {
                         </div>
                         <Button onClick={FilterClic}>{filterButton}</Button>
                         <BootstrapTable
-                            keyField="name"
+                            keyField="fullname"
                             data={filteredAuthors}
                             columns={columns}
                             hover="true"

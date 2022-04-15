@@ -84,7 +84,7 @@ function AdminSeries() {
                         </div>
                         <Button onClick={FilterClic}>{filterButton}</Button>
                         <BootstrapTable
-                            keyField="name"
+                            keyField="seriesname"
                             data={filteredSeries}
                             columns={columns}
                             hover="true"

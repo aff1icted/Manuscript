@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 const NavAdmin = () => {
     return (
         <div className="admmenu">
-            <li><Link to="/admin/addbook">добавить книгу</Link></li>
-            <li><Link to="/admin/tag">Тег/Жанр</Link></li>
-            <li><Link to="/admin/addseries">добавить серию</Link></li>
-            <li><Link to="/admin/addauthor">добавить автора</Link></li>
-            <li><Link to="/admin/addcover">добавить переплет</Link></li>
-            <li><Link to="/admin/addformat">добавить формат</Link></li>        
+            <li><Link to="/admin/book">Книги</Link></li>
+            <li><Link to="/admin/tag">Теги/Жанры</Link></li>
+            <li><Link to="/admin/series">Серии</Link></li>
+            <li><Link to="/admin/author">Авторы</Link></li>
+            <li><Link to="/admin/cover">Переплеты</Link></li>
+            <li><Link to="/admin/format">Форматы</Link></li>        
             <li><Link to="/admin/pages">Изменить данные на страницах</Link></li>
             <li><Link to="/admin/adminbook">Тест</Link></li>
 
