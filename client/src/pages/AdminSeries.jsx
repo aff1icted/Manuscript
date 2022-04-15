@@ -5,9 +5,10 @@ import BootstrapTable from "react-bootstrap-table-next";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
+import { useHistory } from "react-router-dom";
 
 function AdminSeries() {
-
+    const hist = useHistory()
     const [series, setSeries] = useState([])
     const [filteredSeries, setFilteredSeries] = useState([])
     const [currentSeries, setCurrentSeries] = useState('')
@@ -44,7 +45,7 @@ function AdminSeries() {
 
     const rowEvents = {
         onClick: (e, row) => {
-            setCurrentSeries(row.isbn)
+            setCurrentSeries(row.seriesname)
         }
     }
 
@@ -66,6 +67,23 @@ function AdminSeries() {
             setFIlterButton('Показать фильтр')
         }
     };
+
+    async function dseries() {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/series/${currentSeries}`)
+        return data
+    }
+
+    const deleteseries = async () => {
+
+        try {
+            let data;
+            data = await dseries();
+            fetchSeries()
+            Filtr()
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
 
     if (loading) {
         return <Loader />
@@ -101,16 +119,13 @@ function AdminSeries() {
 
                     {/* А здесь кнопки */}
                     <div className="subcolumns-right">
-                        <Button variant="secondary">
+                    <Button variant="secondary" onClick={e => hist.push('/admin/series/creating')}>
                             Добавить
                         </Button>
-                        <Button variant="secondary">
+                        <Button variant="secondary" onClick={e => hist.push(`/admin/series/${currentSeries}`)}>
                             Изменить
-                        </Button>
-                        <Button variant="secondary">
-                            Сохранить
-                        </Button>
-                        <Button variant="secondary">
+                        </Button>                       
+                        <Button variant="secondary" onClick={e => deleteseries()}>
                             Удалить
                         </Button>
                     </div>

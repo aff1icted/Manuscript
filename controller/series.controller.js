@@ -47,7 +47,7 @@ class SeriesController {
     }
 
     async update(req, res) {
-        const { seriesname, foundation } = req.body
+        const { oldseriesname, seriesname, foundation, oldseriespic } = req.body
         let fileName
         if (req.files != null) {
             const { seriespic } = req.files
@@ -57,8 +57,13 @@ class SeriesController {
             fileName = 'noimg'
         }
 
-
-        const series = await Series.update({ foundation, seriespic: fileName }, { where: { seriesname } })
+        let series
+        if (fileName =='noimg') {
+            series =await Series.update({ seriesname, foundation, seriespic: oldseriespic }, { where: { seriesname:oldseriesname } })
+        }else{
+            series =await Series.update({ seriesname, foundation, seriespic: fileName }, { where: { seriesname:oldseriesname } })
+        }
+        
 
         return res.json({ series })
 
