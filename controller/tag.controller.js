@@ -17,7 +17,16 @@ class TagController {
         return res.json(tags)
     }
 
+    async getOne(req, res) {
+        const { tagname } = req.params
+        const tags = await Tags.findOne({ where: { tagname } })
+        return res.json(tags)
+    }
+
     async update(req, res) {
+        const { tagname, oldtagname } = req.body
+        const tags = await Tags.update({ tagname }, { where: { tagname: oldtagname } })
+        return res.json({ tags })
 
     }
 

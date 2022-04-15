@@ -1,20 +1,23 @@
-import react, {useEffect, useState } from "react";
+import react, { useEffect, useState } from "react";
 import '../styles/Admcss.css'
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import NavAdmin from "../components/UI/NavAdmin";
 import HeaderAdmin from "../components/UI/HeaderAdmin";
-import { Form, FormGroup } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import { Form, FormGroup, Col, Row, Button } from "react-bootstrap";
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function AddTag() {
 
+    const LinkTagName = useParams().tagname
+
     const [tag, setTag] = useState('')
-    const [tags, setTags] = useState([])
-    const [tagname, setTagname] = useState('')
     const [loading, setLoading] = useState(true)
+    const [titleText, setTitleText] = useState('')
+    const [addVisible,setAddVisible] = useState(true)
+    const [editVisible,setEditVisible] = useState(true)
 
     async function create(type) {
         const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/tag`, type)
@@ -32,32 +35,41 @@ function AddTag() {
             alert(e.response.data.message)
         }
     }
+    
 
-    const deletetag = async () => {
 
+    async function update(type) {
+        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/tag`, type)
+        return data
+    }
+
+
+    const edtTag = async () => {
         try {
-            let data;
-            data = await dtag();
-            alert("удалено")
+            let data
+            const formData = new FormData()
+            formData.append('tagname', tag)
+            formData.append('oldtagname', LinkTagName)
+            data = await update(formData);
+            alert("Сохранено")
         } catch (e) {
             alert(e.response.data.message)
         }
     }
-
-    async function dtag() {
-        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/tag/${tagname}`)
-        return data
-    }
-
-    async function fetchtags() {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/tag`)
-        setTags(response.data)
-    }
-
+    
     useEffect(() => {
-        setTimeout(() => {
-            fetchtags().finally(() => setLoading(false))
-        }, 1000);
+
+        if (LinkTagName == "creating") {
+            setTitleText('Добавление тега/жанра')
+            setAddVisible(false)
+            setLoading(false)
+        } else {
+            setTitleText('Изменение тега/жанра')
+            setTag(LinkTagName)
+            setEditVisible(false)
+            setLoading(false)
+        }
+
     }, [])
 
 
@@ -66,31 +78,39 @@ function AddTag() {
     }
     return (
         <div className="enter">
-            <Form>
-                <FormGroup className="mb-3" controlId="bookdate">
-                    <Form.Select onChange={(e) => setTagname(e.target.value)}>
-                        <option selected="true" disabled="disabled">Тег</option>
-                        {tags.map(option =>
-                            <option key={option.tagname} value={option.tagname}>
-                                {option.tagname}
-                            </option>
-                        )}
-                    </Form.Select>
-                </FormGroup>
+            <Row className="justify-content-md-center">
+                <Col md-4>
+                    {/* Основная часть, здесь размещать таблицы и проч */}
+                    <div className="subcolumns-left">
+                        <Form>
+                           <h2>{titleText}</h2>
+                            <FormGroup className="mb-3" controlId="Tagname">
+                                Название тега/жанра
+                                <Form.Control required type="text" placeholder="Название тега" value={tag} onChange={e => setTag(e.target.value)} />
+                            </FormGroup>
 
-                <FormGroup className="mb-3" controlId="Tagname">
-                    <Form.Control required type="text" placeholder="Название тега" value={tag} onChange={e => setTag(e.target.value)} />
-                </FormGroup>
+                        </Form>
+                    </div>
+                </Col>
+                <Col md-auto>
 
-                <Button variant="secondary" onClick={addTag}>
-                    Добавить
-                </Button>
+                    {/* А здесь кнопки */}
+                    <div className="subcolumns-right">
 
-                <Button variant="secondary" onClick={deletetag} >
-                    Удалить
-                </Button>
+                        <Button variant="secondary" hidden={addVisible} onClick={e =>addTag()}>
+                            Добавить
+                        </Button>
 
-            </Form>
+                        <Button variant="secondary" hidden={editVisible} onClick={e =>edtTag()} >
+                            Сохранить
+                        </Button>   
+
+                    </div>
+
+                </Col>
+            </Row>
+
+
 
         </div >
     )

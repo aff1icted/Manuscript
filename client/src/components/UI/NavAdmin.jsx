@@ -5,7 +5,7 @@ const NavAdmin = () => {
     return (
         <div className="admmenu">
             <li><Link to="/admin/addbook">добавить книгу</Link></li>
-            <li><Link to="/admin/addtag">добавить тег</Link></li>
+            <li><Link to="/admin/tag">Тег/Жанр</Link></li>
             <li><Link to="/admin/addseries">добавить серию</Link></li>
             <li><Link to="/admin/addauthor">добавить автора</Link></li>
             <li><Link to="/admin/addcover">добавить переплет</Link></li>

@@ -5,9 +5,10 @@ import BootstrapTable from "react-bootstrap-table-next";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
+import { useHistory } from "react-router-dom";
 
 function AdminTag() {
-
+    const hist= useHistory()
     const [tags, setTags] = useState([])
     const [filteredTags, setFilteredTags] = useState([])
     const [currentTag, setCurrentTag] = useState('')
@@ -35,7 +36,7 @@ function AdminTag() {
     ]
 
     const selectRow = {
-        mode: 'radio',
+        mode: 'radio',        
         clickToSelect: true,
         bgColor: '#00BFFF',
         hideSelectColumn: true
@@ -43,7 +44,7 @@ function AdminTag() {
 
     const rowEvents = {
         onClick: (e, row) => {
-            setCurrentTag(row.isbn)
+            setCurrentTag(row.tagname)
         }
     }
 
@@ -60,6 +61,26 @@ function AdminTag() {
             setFIlterButton('Показать фильтр')
         }
     };
+
+    async function dtag() {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/tag/${currentTag}`)
+        return data
+    }
+
+    const deletetag = async () => {
+        try {
+            let data;
+            //модальное окно опроса
+            data = await dtag();
+            fetchtags()
+            Filtr()
+            //alert("удалено")
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
+
+    
 
     if (loading) {
         return <Loader />
@@ -93,16 +114,13 @@ function AdminTag() {
 
                     {/* А здесь кнопки */}
                     <div className="subcolumns-right">
-                        <Button variant="secondary">
+                        <Button variant="secondary" onClick={e =>hist.push('/admin/tag/creating')}>
                             Добавить
                         </Button>
-                        <Button variant="secondary">
+                        <Button variant="secondary" onClick={e =>hist.push(`/admin/tag/${currentTag}`)}>
                             Изменить
-                        </Button>
-                        <Button variant="secondary">
-                            Сохранить
-                        </Button>
-                        <Button variant="secondary">
+                        </Button>                        
+                        <Button variant="secondary" onClick={e =>deletetag()}>
                             Удалить
                         </Button>
                     </div>

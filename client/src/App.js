@@ -293,11 +293,18 @@ const App = observer(() => {
           </div>
         </Route>
 
+        <Route exact path="/admin/tag/:tagname">
+          <div className="blocks">
+            <NavAdmin />
+            <AddTag />
+          </div>
+        </Route>
+
         <Route exact path="/admin/cover">
 
           <div className="blocks">
             <NavAdmin />
-            <AdminCover/>
+            <AdminCover />
           </div>
         </Route>
 
