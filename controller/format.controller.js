@@ -28,10 +28,11 @@ class FormatController{
     }
 
     async update(req, res) {
-        const {name,transfercoeff} = req.body
-        const formats = await Format.update({transfercoeff}, {where: { name } } )
+        const {oldname, name,transfercoeff} = req.body
+        const formats = await Format.update({name,transfercoeff}, {where: { name:oldname } } )
         return res.json({formats})
     }
+
     async delete(req, res) {
         const { name } = req.params
         const formats = await Format.destroy(

@@ -4,17 +4,17 @@ import { Form, FormGroup } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import { Loader } from "../components/UI/Loader";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRotateBack } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 function AddFormat() {
-
+    const LinkFormatName = useParams().name
     const [name, setName] = useState('')
     const [coeff, setCoeff] = useState('')
-    const [format, setFormat] = useState()
-    const [formats, setFormats] = useState([])
     const [loading, setLoading] = useState(true)
+    const [titleText, setTitleText] = useState('')
+    const [addVisible, setAddVisible] = useState(true)
+    const [editVisible, setEditVisible] = useState(true)
 
 
     async function create(type) {
@@ -35,47 +35,24 @@ function AddFormat() {
     }
 
 
-    async function fetchformats() {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/format`)
-        setFormats(response.data)
+    async function fetchformat() {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/format/${LinkFormatName}`)
+        setName(response.data.name)
+        setCoeff(response.data.transfercoeff)
     }
-
-    async function dformat() {
-        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/format/${name}`)
-        return data
-    }
-
 
     useEffect(() => {
-        setTimeout(() => {
-            fetchformats().finally(() => setLoading(false))
-        }, 1000);
-    }, [])
 
-    const dataUpdate = (value) => {
-        formats.map(function (obj) {
-            if (obj.name == format) {
-                setName(obj.name)
-                if (obj.transfercoeff == null) {
-                    setCoeff('')
-                } else {
-                    setCoeff(obj.transfercoeff)
-                }
-
-            }
-        });
-    }
-
-    const deleteFormat = async () => {
-
-        try {
-            let data;
-            data = await dformat();
-            alert("удалено")
-        } catch (e) {
-            alert(e.response.data.message)
+        if (LinkFormatName == "creating") {
+            setTitleText('Добавление формата')
+            setAddVisible(false)
+            setLoading(false)
+        } else {
+            setTitleText('Изменение формата')
+            setEditVisible(false)
+            fetchformat().finally(() => setLoading(false))
         }
-    }
+    }, [])
 
     async function uformat(type) {
         const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/format`, type)
@@ -85,16 +62,15 @@ function AddFormat() {
     const edtformat = async () => {
         try {
             const formData = new FormData()
+            formData.append('oldname', LinkFormatName)
             formData.append('name', name)
             formData.append('transfercoeff', coeff)
             let data;
             data = await uformat(formData);
-            setName('')
-            setCoeff('')
             alert("Изменено")
         } catch (e) {
             alert(e.response.data.message)
-        }        
+        }
     }
 
 
@@ -103,58 +79,42 @@ function AddFormat() {
     }
     return (
         <div className="enter">
+            <Row className="justify-content-md-center">
+                <Col md-4>
+                    {/* Основная часть, здесь размещать таблицы и проч */}
+                    <div className="subcolumns-left">
+                        <Form>
+                            <h2>{titleText}</h2>
+                            <FormGroup className="mb-3" controlId="formatname">
+                                Название формата
+                                <Form.Control required type="text" placeholder="Название формата" value={name} onChange={e => setName(e.target.value)} />
+                            </FormGroup>
 
+                            <FormGroup className="mb-3" controlId="formratio">
+                                Коэффициент
+                                <Form.Control required type="text" placeholder="коэффициент" value={coeff} onChange={e => setCoeff(e.target.value)} />
+                            </FormGroup>
+                        </Form>
+                    </div>
+                </Col>
+                <Col md-auto>
+                    {/* А здесь кнопки */}
+                    <div className="subcolumns-right">
 
-
-            <Form>
-
-                <Row className="justify-content-md-center">
-                    <Col>
-
-                        <FormGroup className="mb-3" controlId="bookdate">
-
-                            <Form.Select onChange={(e) => { setFormat(e.target.value) }}>
-                                <option selected="true" disabled="disabled">Формат</option>
-                                {formats.map(option =>
-                                    <option key={option.name} value={option.name}>
-                                        {option.name}
-                                    </option>
-                                )}
-                            </Form.Select>
-                        </FormGroup>
-                    </Col>
-
-                    <Col md="auto">
-
-                        <Button variant="secondary" onClick={dataUpdate}>
-                            <FontAwesomeIcon icon={faArrowRotateBack} />
+                        <Button variant="secondary" hidden={addVisible} onClick={e => addformat()}>
+                            Добавить
                         </Button>
-                    </Col>
-                </Row>
 
-                <FormGroup className="mb-3" controlId="formatname">
-                    <Form.Control required type="text" placeholder="Название формата" value={name} onChange={e => setName(e.target.value)} />
-                </FormGroup>
-
-                <FormGroup className="mb-3" controlId="formratio">
-                    <Form.Control required type="text" placeholder="коэффициент" value={coeff} onChange={e => setCoeff(e.target.value)} />
-                </FormGroup>
-
-                <Button variant="secondary" onClick={addformat}>
-                    Добавить
-                </Button>
-
-                <Button variant="secondary" onClick={edtformat}>
-                    Изменить
-                </Button>
-
-                <Button variant="secondary" onClick={deleteFormat}>
-                    Удалить
-                </Button>
-            </Form>
+                        <Button variant="secondary" hidden={editVisible} onClick={e => edtformat()} >
+                            Сохранить
+                        </Button>
+                    </div>
+                </Col >
+            </Row >
 
 
-        </div>
+
+        </div >
     )
 }
 

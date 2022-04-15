@@ -1,8 +1,6 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import '../styles/Admcss.css'
 import { useParams } from "react-router-dom";
-import NavAdmin from "../components/UI/NavAdmin";
-import HeaderAdmin from "../components/UI/HeaderAdmin";
 import { Form, FormGroup, Col, Row, Button } from "react-bootstrap";
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";

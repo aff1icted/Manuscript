@@ -1,13 +1,14 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import '../styles/Admcss.css'
-import { Form, FormGroup, Col, Row, Button, } from "react-bootstrap";
+import { Col, Row, Button, } from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
+import { useHistory } from "react-router-dom";
 
 function AdminFormat() {
-
+    const hist = useHistory()
     const [formats, setFormats] = useState([])
     const [filteredFormats, setFilteredFormats] = useState([])
     const [currentFormat, setCurrentFormat] = useState('')
@@ -19,7 +20,6 @@ function AdminFormat() {
 
     async function fetchformats() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/format`)
-        console.log('data', response.data)
         setFormats(response.data)
         setFilteredFormats(response.data)
     }
@@ -44,17 +44,17 @@ function AdminFormat() {
 
     const rowEvents = {
         onClick: (e, row) => {
-            setCurrentFormat(row.isbn)
+            setCurrentFormat(row.name)
         }
     }
 
     function Filtr() {
-        if (coeffSearch =='') {
+        if (coeffSearch == '') {
             setFilteredFormats(formats.filter(format => format.name.toLowerCase().includes(nameSearch.toLowerCase())))
-        }else{
-            setFilteredFormats(formats.filter(format => format.name.toLowerCase().includes(nameSearch.toLowerCase()) && format.transfercoeff==coeffSearch))
+        } else {
+            setFilteredFormats(formats.filter(format => format.name.toLowerCase().includes(nameSearch.toLowerCase()) && format.transfercoeff == coeffSearch))
         }
-        
+
     };
 
     function FilterClic() {
@@ -67,6 +67,23 @@ function AdminFormat() {
         }
     };
 
+    async function dformat() {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/format/${currentFormat}`)
+        return data
+    }
+
+    const deleteFormat = async () => {
+
+        try {
+            let data;
+            data = await dformat();
+            fetchformats()
+            Filtr()
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
+
     if (loading) {
         return <Loader />
     }
@@ -78,7 +95,7 @@ function AdminFormat() {
                     <div className="subcolumns-left">
                         <div hidden={filterHide}>
                             <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
-                            <input value={coeffSearch} onChange={e => setCoeffSearch(e.target.value)} placeholder="Поиск по коэффиценту" />                            
+                            <input value={coeffSearch} onChange={e => setCoeffSearch(e.target.value)} placeholder="Поиск по коэффиценту" />
                             <Button onClick={Filtr}>Поиск</Button>
                         </div>
                         <Button onClick={FilterClic}>{filterButton}</Button>
@@ -100,16 +117,13 @@ function AdminFormat() {
 
                     {/* А здесь кнопки */}
                     <div className="subcolumns-right">
-                        <Button variant="secondary">
+                        <Button variant="secondary" onClick={e => hist.push('/admin/format/creating')}>
                             Добавить
                         </Button>
-                        <Button variant="secondary">
+                        <Button variant="secondary" onClick={e => hist.push(`/admin/format/${currentFormat}`)}>
                             Изменить
                         </Button>
-                        <Button variant="secondary">
-                            Сохранить
-                        </Button>
-                        <Button variant="secondary">
+                        <Button variant="secondary" onClick={e => deleteFormat()}>
                             Удалить
                         </Button>
                     </div>

@@ -1,6 +1,6 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import '../styles/Admcss.css'
-import { Form, FormGroup, Col, Row, Button, } from "react-bootstrap";
+import { Col, Row, Button, } from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
@@ -15,7 +15,6 @@ function AdminTag() {
     const [loading, setLoading] = useState(true)
     const [filterHide, setFilterHide] = useState(true)
     const [filterButton, setFIlterButton] = useState('Показать фильтр')
-    const [coeffSearch, setCoeffSearch] = useState('')
     const [nameSearch, setNameSearch] = useState('')
 
     async function fetchtags() {
