@@ -48,7 +48,7 @@ class AuthorsController {
     }
 
     async update(req, res) {
-        const { fullname, about } = req.body
+        const { fullname, oldfullname, about, oldphoto } = req.body
         let fileName
         if (req.files != null) {
             const { img } = req.files
@@ -58,7 +58,13 @@ class AuthorsController {
             fileName = 'noimg'
         }
 
-        const author = await Authors.update({ about, photo: fileName }, {where: { fullname } })
+        let author
+        if (fileName == 'noimg') {
+            author = await Authors.update({ fullname, about, photo: oldphoto }, { where: { fullname: oldfullname } })
+        } else {
+            author = await Authors.update({ fullname, about, photo: fileName }, { where: { fullname: oldfullname } })
+        }
+
         return res.json({ author })
     }
 

@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 
 function AddSeries() {
     const LinkSeriesName = useParams().seriesname
-    const [seriesName, setSeriesName] = useState('')
     const [foundation, setFoundation] = useState('')
     const [oldSeriesPic, setOldSeriesPic] = useState(null)
     const [seriesPic, setSeriesPic] = useState(null)

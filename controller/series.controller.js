@@ -47,7 +47,7 @@ class SeriesController {
     }
 
     async update(req, res) {
-        const { oldseriesname, seriesname, foundation, oldseriespic } = req.body
+        const { oldseriesname, seriesname, foundation, oldseriespic} = req.body
         let fileName
         if (req.files != null) {
             const { seriespic } = req.files

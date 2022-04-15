@@ -1,6 +1,6 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import '../styles/Admcss.css'
-import { Form, FormGroup, Col, Row, Button, } from "react-bootstrap";
+import { Col, Row, Button, } from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
@@ -49,13 +49,13 @@ function AdminSeries() {
         }
     }
 
-    function Filtr() {       
-        if (foundationSearch =='') {
-            setFilteredSeries(series.filter(series => series.seriesname.toLowerCase().includes(nameSearch.toLowerCase())  ))
-        }else{
-            setFilteredSeries(series.filter(series => series.seriesname.toLowerCase().includes(nameSearch.toLowerCase()) && series.foundation == foundationSearch ))
-        } 
-                  
+    function Filtr() {
+        if (foundationSearch == '') {
+            setFilteredSeries(series.filter(series => series.seriesname.toLowerCase().includes(nameSearch.toLowerCase())))
+        } else {
+            setFilteredSeries(series.filter(series => series.seriesname.toLowerCase().includes(nameSearch.toLowerCase()) && series.foundation == foundationSearch))
+        }
+
     };
 
     function FilterClic() {
@@ -97,7 +97,7 @@ function AdminSeries() {
                         <div hidden={filterHide}>
                             <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
                             {/*переделать на поле с датой*/}
-                            <input value={foundationSearch} onChange={e => setFoundationSearch(e.target.value)} placeholder="Поиск по дате основания" />                            
+                            <input value={foundationSearch} onChange={e => setFoundationSearch(e.target.value)} placeholder="Поиск по дате основания" />
                             <Button onClick={Filtr}>Поиск</Button>
                         </div>
                         <Button onClick={FilterClic}>{filterButton}</Button>
@@ -119,12 +119,12 @@ function AdminSeries() {
 
                     {/* А здесь кнопки */}
                     <div className="subcolumns-right">
-                    <Button variant="secondary" onClick={e => hist.push('/admin/series/creating')}>
+                        <Button variant="secondary" onClick={e => hist.push('/admin/series/creating')}>
                             Добавить
                         </Button>
                         <Button variant="secondary" onClick={e => hist.push(`/admin/series/${currentSeries}`)}>
                             Изменить
-                        </Button>                       
+                        </Button>
                         <Button variant="secondary" onClick={e => deleteseries()}>
                             Удалить
                         </Button>

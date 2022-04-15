@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
 import '../styles/Admcss.css'
-import { Form, FormGroup } from "react-bootstrap";
+import { Form, FormGroup} from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRotateBack } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 
 function AddAuthor() {
-
+    const LinkFullName=useParams().fullname
     const [description, setDescription] = useState('')
     const [loading, setLoading] = useState(true)
     const [img, setImg] = useState(null)
-    const [author, setAuthor] = useState([])
-    const [authorName, setAuthorName] = useState('')
+    const [oldImg, setOldImg] = useState('')
     const [name, setName] = useState('')
+    const [titleText, setTitleText] = useState('')
+    const [addVisible, setAddVisible] = useState(true)
+    const [editVisible, setEditVisible] = useState(true)
 
 
 
@@ -50,58 +51,32 @@ function AddAuthor() {
 
 
 
-    async function fetchAuthors() {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
-        console.log(response.data[0].fullname)
-        setAuthor(response.data)
+    async function fetchAuthor() {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author/${LinkFullName}`)
+        setName(response.data.fullname)
+        setDescription(response.data.about)
+        setImg(response.data.photo)   
+        setOldImg(response.data.photo)       
     }
 
     useEffect(() => {
-        setTimeout(() => {
 
-            fetchAuthors().finally(() => setLoading(false))
-        }, 1000);
+        if (LinkFullName  == "creating") {
+            setTitleText('Добавление автора')
+            setAddVisible(false)
+            setLoading(false)
+        } else {
+            setTitleText('Изменение автора')
+            setEditVisible(false)
+            fetchAuthor().finally(() => setLoading(false))
+        }    
+
     }, [])
 
 
 
-    async function dauthor() {
-        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/author/${authorName}`)
-        return data
-    }
 
-    const deleteauthor = async () => {
-
-        try {
-            let data;
-            data = await dauthor();
-            alert("Удалено")
-        } catch (e) {
-            alert(e.response.data.message)
-        }
-    }
-
-
-    const dataUpdate = (value) => {
-        author.map(function (obj) {
-            if (obj.fullname == authorName) {
-                setName(obj.fullname)
-
-                if (obj.about == null) {
-                    setDescription('')
-                } else {
-                    setDescription(obj.about)
-                }
-
-                if (obj.photo == null) {
-                    setImg('')
-                } else {
-                    setImg(obj.photo)
-                }
-
-            }
-        });
-    }
+    
 
     async function uauthor(type) {
         const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/author`, type)
@@ -112,13 +87,12 @@ function AddAuthor() {
         try {
             const formData = new FormData()
             formData.append('fullname', name)
+            formData.append('oldfullname', LinkFullName)
             formData.append('about', description)
-            formData.append('photo', img)
+            formData.append('img', img)
+            formData.append('oldphoto', oldImg)
             let data;
-            data = await uauthor(formData);
-            setName('')
-            setDescription('')
-            setImg(null)
+            data = await uauthor(formData);            
             alert('Изменено')
         } catch (e) {
             alert(e.response.data.message)
@@ -131,49 +105,44 @@ function AddAuthor() {
     return (
         <div className="enter">
 
-            < Form >
-                <Row className="justify-content-md-center">
-                    <Col>
-                        <FormGroup className="mb-3" controlId="bookdate">
-                            <Form.Select onChange={(e) => setAuthorName(e.target.value)}>
-                                <option selected="true" disabled="disabled">Автор</option>
-                                {author.map(option =>
-                                    <option key={option.fullname} value={option.fullname}>
-                                        {option.fullname}
-                                    </option>
-                                )}
-                            </Form.Select>
-                        </FormGroup>
-                    </Col>
-                    <Col md="auto">
-                        <Button variant="secondary" onClick={dataUpdate}>
-                            <FontAwesomeIcon icon={faArrowRotateBack} />
+            <Row className="justify-content-md-center">
+                <Col md-4>
+                    {/* Основная часть, здесь размещать таблицы и проч */}
+                    <div className="subcolumns-left">
+                        <Form>
+                            <h2>{titleText}</h2>
+                            <FormGroup className="mb-3" controlId="AuthorFullName">
+                                Полное имя
+                                <Form.Control required type="text" placeholder="Полное имя" value={name} onChange={e => setName(e.target.value)} />
+                            </FormGroup>
+                            <Form.Group className="mb-3" controlId="AuthorDescr">
+                                Описание
+                                <Form.Control as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
+                            </Form.Group>
+                            <Form.Group controlId="authimg" className="mb-3">
+                                <Form.Label>Фотография автора</Form.Label>
+                                <Form.Control type="file" onChange={e => setImg(e.target.files[0])} />
+                            </Form.Group>
+                        </Form >
+                    </div>
+                </Col>
+                <Col md-auto>
+                    {/* А здесь кнопки */}
+                    <div className="subcolumns-right">
+
+                        <Button variant="secondary" hidden={addVisible} onClick={e => addAuthor()}>
+                            Добавить
                         </Button>
-                    </Col>
-                </Row>
 
-                <Form.Group className="mb-3" controlId="AuthorFullName">
-                    <Form.Control required type="text" placeholder="Полное имя" value={name} onChange={e => setName(e.target.value)} />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="AuthorDescr">
-                    <Form.Control as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
-                </Form.Group>
-                <Form.Group controlId="authimg" className="mb-3">
-                    <Form.Label>Фотография автора</Form.Label>
-                    <Form.Control type="file" onChange={e => setImg(e.target.files[0])} />
-                </Form.Group>
+                        <Button variant="secondary" hidden={editVisible} onClick={e => edtAuthor()} >
+                            Сохранить
+                        </Button>
 
-                <Button variant="secondary" onClick={addAuthor}>
-                    Добавить
-                </Button>
-                <Button variant="secondary" onClick={edtAuthor}>
-                    Изменить
-                </Button>
-                <Button variant="secondary" onClick={deleteauthor}>
-                    Удалить
-                </Button>
-            </Form >
 
+                    </div>
+
+                </Col >
+            </Row >
         </div>
     )
 }
