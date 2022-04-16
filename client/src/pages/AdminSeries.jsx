@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
+import AlertDelete from "../components/modals/AlertDelete";
 
 function AdminSeries() {
     const hist = useHistory()
@@ -17,10 +18,10 @@ function AdminSeries() {
     const [filterButton, setFIlterButton] = useState('Показать фильтр')
     const [foundationSearch, setFoundationSearch] = useState('')
     const [nameSearch, setNameSearch] = useState('')
+    const [show, setShow] = useState(false)
 
     async function fetchSeries() {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/series`)
-        console.log('data', response.data)
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/series`)        
         setSeries(response.data)
         setFilteredSeries(response.data)
     }
@@ -76,10 +77,11 @@ function AdminSeries() {
     const deleteseries = async () => {
 
         try {
-            let data;
-            data = await dseries();
+
+            let data = await dseries();
             fetchSeries()
             Filtr()
+            setCurrentSeries('')
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -125,13 +127,18 @@ function AdminSeries() {
                         <Button variant="secondary" onClick={e => hist.push(`/admin/series/${currentSeries}`)}>
                             Изменить
                         </Button>
-                        <Button variant="secondary" onClick={e => deleteseries()}>
+                        <Button variant="secondary" onClick={e => {
+                            if (currentSeries != '') {
+                                setShow(true)
+                            }
+                        }}>
                             Удалить
                         </Button>
                     </div>
 
                 </Col>
             </Row>
+            <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить серию ${currentSeries}?`} del={() => { deleteseries(); setShow(false) }} />
 
         </div>
 

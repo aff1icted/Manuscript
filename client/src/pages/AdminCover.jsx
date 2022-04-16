@@ -1,11 +1,12 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import '../styles/Admcss.css'
-import { Form, FormGroup, Col, Row, Button, } from "react-bootstrap";
+import { Col, Row, Button, } from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
+import AlertDelete from "../components/modals/AlertDelete";
 
 function AdminCover() {
 
@@ -17,10 +18,10 @@ function AdminCover() {
     const [filterHide, setFilterHide] = useState(true)
     const [filterButton, setFIlterButton] = useState('Показать фильтр')
     const [nameSearch, setNameSearch] = useState('')
+    const [show, setShow] = useState(false)
 
     async function fetchcovers() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/cover`)
-        console.log('data', response.data)
         setCovers(response.data)
         setFilteredCovers(response.data)
     }
@@ -70,11 +71,12 @@ function AdminCover() {
 
     const deletecover = async () => {
 
-        try {
-            let data;
-            data = await dcover();
+        try {           
+            let data = await dcover();
             fetchcovers()
             Filtr()
+            setCurrentCover('')
+
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -117,14 +119,18 @@ function AdminCover() {
                         <Button variant="secondary" onClick={e => hist.push(`/admin/cover/${currentCover}`)}>
                             Изменить
                         </Button>
-                        <Button variant="secondary" onClick={e => deletecover()/*модалка*/}>
+                        <Button variant="secondary" onClick={e => {
+                            if (currentCover != '') {
+                                setShow(true)
+                            }
+                        }}>
                             Удалить
                         </Button>
                     </div>
 
                 </Col>
             </Row>
-
+            <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить переплет ${currentCover}?`} del={() => { deletecover(); setShow(false) }} />
         </div>
 
     )

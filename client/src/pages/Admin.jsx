@@ -1,5 +1,3 @@
-import react, { useState } from "react";
-import BookList from "../components/BookList";
 import '../styles/App.css'
 
 function Admin() {

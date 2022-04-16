@@ -8,27 +8,27 @@ function About() {
   const [aboutText, setAboutText] = useState('')
 
 
-  async function fetchAuthorText(){  
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/about`)    
+  async function fetchAuthorText() {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/about`)
     setAboutText(response.data)
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      fetchAuthorText().finally(() => setLoading(false))
-    }, 1000);
+
+    fetchAuthorText().finally(() => setLoading(false))
+
   }, [])
 
   if (loading) {
-    return <Loader/>
-  }   
-  return(
-  <div>
-    <h1>
+    return <Loader />
+  }
+  return (
+    <div>
+      <h1>
         {aboutText.text}
-    </h1>
-    
-  </div>  
+      </h1>
+
+    </div>
   )
 }
 

@@ -52,7 +52,7 @@ function Pages() {
 
     async function fetchPages() {
         let response = []
-        response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages`)    
+        response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages`)
         dataUpdate(response.data)
     }
 
@@ -89,7 +89,6 @@ function Pages() {
                 case 'fifth':
                     setFifth(obj.text)
                     break;
-
                 default:
                     break;
             }
@@ -98,10 +97,9 @@ function Pages() {
     }
 
     useEffect(() => {
-        setTimeout(() => {
 
-            fetchPages().finally(() => setLoading(false))
-        }, 1000);
+        fetchPages().finally(() => setLoading(false))
+
     }, [])
 
 
@@ -111,54 +109,67 @@ function Pages() {
     return (
 
         <div className="enter">
-            < Form >
-                <Form.Label>Главная страница</Form.Label>
-                <Form.Group className="mb-3" controlId="AuthorDescr">
-                    <Form.Control as="textarea" rows='3' placeholder="" value={mainText} onChange={e => setMainText(e.target.value)} />
-                </Form.Group>
-                <Form.Label>Страница книг</Form.Label>
-                <Form.Group className="mb-3" controlId="AuthorDescr">
-                    <Form.Control as="textarea" rows='3' placeholder="" value={book} onChange={e => setBook(e.target.value)} />
-                </Form.Group>
-                <Form.Label>Страница авторов</Form.Label>
-                <Form.Group className="mb-3" controlId="AuthorDescr">
-                    <Form.Control as="textarea" rows='3' placeholder="" value={author} onChange={e => setAuthor(e.target.value)} />
-                </Form.Group>
-                <Form.Label>Страница о нас</Form.Label>
-                <Form.Group className="mb-3" controlId="AuthorDescr">
-                    <Form.Control as="textarea" rows='3' placeholder="" value={about} onChange={e => setAbout(e.target.value)} />
-                </Form.Group>
-                <Form.Label>Подвал</Form.Label>
-                <Form.Group className="mb-3" controlId="AuthorDescr">
-                    <Form.Control as="textarea" rows='3' placeholder="" value={footer} onChange={e => setFooter(e.target.value)} />
-                </Form.Group>
-                <Form.Label>Банер1</Form.Label>
-                <Form.Group className="mb-3" controlId="AuthorDescr">
-                    <Form.Control as="textarea" rows='3' placeholder="" value={first} onChange={e => setFirst(e.target.value)} />
-                </Form.Group>
-                <Form.Label>Банер2</Form.Label>
-                <Form.Group className="mb-3" controlId="AuthorDescr">
-                    <Form.Control as="textarea" rows='3' placeholder="" value={second} onChange={e => setSecond(e.target.value)} />
-                </Form.Group>
-                <Form.Label>Банер3</Form.Label>
-                <Form.Group className="mb-3" controlId="AuthorDescr">
-                    <Form.Control as="textarea" rows='3' placeholder="" value={third} onChange={e => setThird(e.target.value)} />
-                </Form.Group>
-                <Form.Label>Банер4</Form.Label>
-                <Form.Group className="mb-3" controlId="AuthorDescr">
-                    <Form.Control as="textarea" rows='3' placeholder="" value={fourth} onChange={e => setFourth(e.target.value)} />
-                </Form.Group>
-                <Form.Label>Банер5</Form.Label>
-                <Form.Group className="mb-3" controlId="AuthorDescr">
-                    <Form.Control as="textarea" rows='3' placeholder="" value={fifth} onChange={e => setFifth(e.target.value)} />
-                </Form.Group>
+            <Row className="justify-content-md-center">
+                <Col md-4>
+                    {/* Основная часть, здесь размещать таблицы и проч */}
+                    <div className="subcolumns-left">
+                        <Form>
+                            <Form.Label>Главная страница</Form.Label>
+                            <Form.Group className="mb-3" controlId="AuthorDescr">
+                                <Form.Control as="textarea" rows='3' placeholder="" value={mainText} onChange={e => setMainText(e.target.value)} />
+                            </Form.Group>
+                            <Form.Label>Страница книг</Form.Label>
+                            <Form.Group className="mb-3" controlId="AuthorDescr">
+                                <Form.Control as="textarea" rows='3' placeholder="" value={book} onChange={e => setBook(e.target.value)} />
+                            </Form.Group>
+                            <Form.Label>Страница авторов</Form.Label>
+                            <Form.Group className="mb-3" controlId="AuthorDescr">
+                                <Form.Control as="textarea" rows='3' placeholder="" value={author} onChange={e => setAuthor(e.target.value)} />
+                            </Form.Group>
+                            <Form.Label>Страница о нас</Form.Label>
+                            <Form.Group className="mb-3" controlId="AuthorDescr">
+                                <Form.Control as="textarea" rows='3' placeholder="" value={about} onChange={e => setAbout(e.target.value)} />
+                            </Form.Group>
+                            <Form.Label>Подвал</Form.Label>
+                            <Form.Group className="mb-3" controlId="AuthorDescr">
+                                <Form.Control as="textarea" rows='3' placeholder="" value={footer} onChange={e => setFooter(e.target.value)} />
+                            </Form.Group>
+                            <Form.Label>Банер1</Form.Label>
+                            <Form.Group className="mb-3" controlId="AuthorDescr">
+                                <Form.Control as="textarea" rows='3' placeholder="" value={first} onChange={e => setFirst(e.target.value)} />
+                            </Form.Group>
+                            <Form.Label>Банер2</Form.Label>
+                            <Form.Group className="mb-3" controlId="AuthorDescr">
+                                <Form.Control as="textarea" rows='3' placeholder="" value={second} onChange={e => setSecond(e.target.value)} />
+                            </Form.Group>
+                            <Form.Label>Банер3</Form.Label>
+                            <Form.Group className="mb-3" controlId="AuthorDescr">
+                                <Form.Control as="textarea" rows='3' placeholder="" value={third} onChange={e => setThird(e.target.value)} />
+                            </Form.Group>
+                            <Form.Label>Банер4</Form.Label>
+                            <Form.Group className="mb-3" controlId="AuthorDescr">
+                                <Form.Control as="textarea" rows='3' placeholder="" value={fourth} onChange={e => setFourth(e.target.value)} />
+                            </Form.Group>
+                            <Form.Label>Банер5</Form.Label>
+                            <Form.Group className="mb-3" controlId="AuthorDescr">
+                                <Form.Control as="textarea" rows='3' placeholder="" value={fifth} onChange={e => setFifth(e.target.value)} />
+                            </Form.Group>
+                        </Form >
+                    </div>
+                </Col>
+                <Col md-auto>
+                    {/* А здесь кнопки */}
+                    <div className="subcolumns-right">
+                        <Button variant="secondary" onClick={edtPage}>
+                            Сохранить
+                        </Button>
+                    </div>
 
-                <Button variant="secondary" onClick={edtPage}>
-                    Сохранить
-                </Button>
+                </Col >
+            </Row >
 
 
-            </Form >
+
         </div>
 
 

@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
+import AlertDelete from "../components/modals/AlertDelete";
 
 function AdminTag() {
     const hist = useHistory()
@@ -16,10 +17,10 @@ function AdminTag() {
     const [filterHide, setFilterHide] = useState(true)
     const [filterButton, setFIlterButton] = useState('Показать фильтр')
     const [nameSearch, setNameSearch] = useState('')
+    const [show, setShow] = useState(false)
 
     async function fetchtags() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/tag`)
-        console.log('data', response.data)
         setTags(response.data)
         setFilteredTags(response.data)
     }
@@ -68,12 +69,12 @@ function AdminTag() {
 
     const deletetag = async () => {
         try {
-            let data;
-            //модальное окно опроса
-            data = await dtag();
+
+            let data = await dtag();
             fetchtags()
             Filtr()
-            //alert("удалено")
+            setCurrentTag('')
+
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -114,13 +115,19 @@ function AdminTag() {
                         <Button variant="secondary" onClick={e => hist.push(`/admin/tag/${currentTag}`)}>
                             Изменить
                         </Button>
-                        <Button variant="secondary" onClick={e => deletetag()}>
+                        <Button variant="secondary" onClick={e => {
+                            if (currentTag != '') {
+                                setShow(true)
+                            }
+                        }}>
                             Удалить
                         </Button>
                     </div>
 
                 </Col>
             </Row>
+            <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить тег/жанр ${currentTag}?`} del={() => { deletetag(); setShow(false) }} />
+
 
         </div>
 

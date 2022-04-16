@@ -6,9 +6,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
+import AlertDelete from "../components/modals/AlertDelete";
 
 function AdminAuthor() {
-    const hist=useHistory()
+    const hist = useHistory()
     const [authors, setAuthors] = useState([])
     const [filteredAuthors, setFilteredAuthors] = useState([])
     const [currentAuthor, setCurrentAuthor] = useState('')
@@ -16,6 +17,7 @@ function AdminAuthor() {
     const [filterHide, setFilterHide] = useState(true)
     const [filterButton, setFIlterButton] = useState('Показать фильтр')
     const [nameSearch, setNameSearch] = useState('')
+    const [show, setShow] = useState(false)
 
     async function fetchauthors() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
@@ -69,10 +71,12 @@ function AdminAuthor() {
     const deleteauthor = async () => {
 
         try {
-            let data;
-            data = await dauthor();
+
+            let data = await dauthor();
             fetchauthors()
             Filtr()
+            setCurrentAuthor('')
+
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -116,13 +120,19 @@ function AdminAuthor() {
                         <Button variant="secondary" onClick={e => hist.push(`/admin/author/${currentAuthor}`)}>
                             Изменить
                         </Button>
-                        <Button variant="secondary" onClick={e => deleteauthor()}>
+                        <Button variant="secondary" onClick={e => {
+                            if (currentAuthor != '') {
+                                setShow(true)
+                            }
+                        }}>
                             Удалить
                         </Button>
                     </div>
 
                 </Col>
             </Row>
+            <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить автора ${currentAuthor}?`} del={() => { deleteauthor(); setShow(false) }} />
+
 
         </div>
 

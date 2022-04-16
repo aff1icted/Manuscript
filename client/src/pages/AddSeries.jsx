@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 function AddSeries() {
     const LinkSeriesName = useParams().seriesname
     const [foundation, setFoundation] = useState('')
-    const [oldSeriesPic, setOldSeriesPic] = useState(null)
     const [seriesPic, setSeriesPic] = useState(null)
     const [loading, setLoading] = useState(true)
     const [name, setName] = useState('')
@@ -44,7 +43,6 @@ function AddSeries() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/series/${LinkSeriesName}`)
         setName(response.data.seriesname)
         setFoundation(response.data.foundation) 
-        setOldSeriesPic(response.data.seriespic)
         setSeriesPic(response.data.seriespic)
     }
 
@@ -75,7 +73,6 @@ function AddSeries() {
             formData.append('seriesname', name)
             formData.append('oldseriesname', LinkSeriesName)
             formData.append('foundation', foundation)
-            formData.append('oldseriespic', oldSeriesPic)
             console.log('seriespic',seriesPic)
             formData.append('seriespic', seriesPic)
             let data;

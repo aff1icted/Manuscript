@@ -11,7 +11,6 @@ const NavAdmin = () => {
             <li><Link to="/admin/cover">Переплеты</Link></li>
             <li><Link to="/admin/format">Форматы</Link></li>        
             <li><Link to="/admin/pages">Изменить данные на страницах</Link></li>
-            <li><Link to="/admin/adminbook">Тест</Link></li>
 
         </div>
     );

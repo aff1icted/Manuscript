@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
 import '../styles/Admcss.css'
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Form, FormGroup, Col, Row, Button } from "react-bootstrap";
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AlertMsg from "../components/modals/AlertMsg";
 
 
 function AddTag() {
-
+    const hist= useHistory()
     const LinkTagName = useParams().tagname
-
     const [tag, setTag] = useState('')
     const [loading, setLoading] = useState(true)
     const [titleText, setTitleText] = useState('')
     const [addVisible, setAddVisible] = useState(true)
     const [editVisible, setEditVisible] = useState(true)
+    const [showCreate, setShowCreate] = useState(false)
+    const [showEdit, setShowEdit] = useState(false)
 
     async function create(type) {
         const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/tag`, type)
@@ -27,8 +29,7 @@ function AddTag() {
         try {
             let data;
             data = await create({ tagname: tag });
-            alert("Добавленно")
-            setTag('')
+            setShowCreate(true)
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -49,7 +50,7 @@ function AddTag() {
             formData.append('tagname', tag)
             formData.append('oldtagname', LinkTagName)
             data = await update(formData);
-            alert("Сохранено")
+            setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -107,6 +108,9 @@ function AddTag() {
 
                 </Col>
             </Row>
+
+            <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Тег/жанр ${tag} создан`} />
+            <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Тег/жанр ${LinkTagName} добавлен`} />
 
 
 

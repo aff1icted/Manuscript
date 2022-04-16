@@ -7,22 +7,19 @@ class SeriesController {
     async create(req, res, next) {
         try {
             const { seriesname, foundation } = req.body
+            const candidate = await Series.findOne({ where: { seriesname } })
+            if (candidate) {
+                return next(ApiError.badRequest('Такая серия уже существует'))
+            }
+            const series = await Series.create({ seriesname, foundation})
+
             let fileName
             if (req.files != null) {
                 const { seriespic } = req.files
                 fileName = uuid.v4() + ".jpg"
                 seriespic.mv(path.resolve(__dirname, '..', 'static', fileName))
-            } else {
-                fileName = 'noimg'
-            }
-
-            const candidate = await Series.findOne({ where: { seriesname } })
-            if (candidate) {
-                return next(ApiError.badRequest('Такая серия уже существует'))
-            }
-
-            const series = await Series.create({ seriesname, foundation, seriespic: fileName })
-
+                Series.update({ seriespic: fileName }, { where: { seriesname } })
+            } 
             return res.json({ series })
         } catch (e) {
             next(ApiError.badRequest(e.message))
@@ -47,27 +44,16 @@ class SeriesController {
     }
 
     async update(req, res) {
-        const { oldseriesname, seriesname, foundation, oldseriespic} = req.body
-        let fileName
+        const { oldseriesname, seriesname, foundation} = req.body
+         
+        let  series = await Series.update({ seriesname, foundation}, { where: { seriesname: oldseriesname } })
         if (req.files != null) {
             const { seriespic } = req.files
-            fileName = uuid.v4() + ".jpg"
+            let fileName = uuid.v4() + ".jpg"
             seriespic.mv(path.resolve(__dirname, '..', 'static', fileName))
-        } else {
-            fileName = 'noimg'
+            series = await Series.update({ seriespic: fileName }, { where: { seriesname} })
         }
-
-        let series
-        if (fileName =='noimg') {
-            series =await Series.update({ seriesname, foundation, seriespic: oldseriespic }, { where: { seriesname:oldseriesname } })
-        }else{
-            series =await Series.update({ seriesname, foundation, seriespic: fileName }, { where: { seriesname:oldseriesname } })
-        }
-        
-
         return res.json({ series })
-
-
     }
 
     async delete(req, res) {

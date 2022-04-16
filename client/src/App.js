@@ -1,6 +1,4 @@
-import react, { useState, useContext, useEffect } from "react";
-import BookItem from "./components/BookItem";
-import BookList from "./components/BookList";
+import { useState, useContext, useEffect } from "react";
 import './styles/App.css'
 import './styles/Admcss.css'
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -19,14 +17,7 @@ import AddAuthor from "./pages/AddAuthor";
 import AddTag from "./pages/AddTag";
 import AddCover from "./pages/Addcover";
 import AddFormat from "./pages/AddFormat";
-import EditAuthor from "./pages/EditAuthor";
-import EditTags from "./pages/EditTags";
-import EditSeries from "./pages/EditSeries";
-import EditCover from "./pages/EditCover";
-import EditFormat from "./pages/EditFormat";
-import EditBook from "./pages/EditBook";
 import NavAdmin from "./components/UI/NavAdmin";
-import HeaderAdmin from "./components/UI/HeaderAdmin";
 import Auth from "./pages/Auth";
 import NavUser from "./components/UI/NavUser";
 import { Spinner } from "react-bootstrap";
@@ -36,7 +27,6 @@ import jwt_decode from "jwt-decode";
 import { Context } from "./index"
 import Pages from "./pages/Pages";
 import Main from "./pages/Main";
-import Template from "./pages/Template";
 import AdminBook from "./pages/AdminBook";
 import AdminFormat from "./pages/AdminFormat";
 import AdminCover from "./pages/AdminCover";
@@ -187,55 +177,7 @@ const App = observer(() => {
             <NavAdmin />
             <AddFormat />
           </div>
-        </Route>
-        <Route exact path="/admin/editauthor">
-
-          <div className="blocks">
-            <NavAdmin />
-            <EditAuthor />
-          </div>
-        </Route>
-
-        <Route exact path="/admin/edittags">
-
-          <div className="blocks">
-            <NavAdmin />
-            <EditTags />
-          </div>
-
-        </Route>
-
-        <Route exact path="/admin/editseries">
-
-          <div className="blocks">
-            <NavAdmin />
-            <EditSeries />
-          </div>
-        </Route>
-
-        <Route exact path="/admin/editcover">
-
-          <div className="blocks">
-            <NavAdmin />
-            <EditCover />
-          </div>
-        </Route>
-
-        <Route exact path="/admin/editformat">
-
-          <div className="blocks">
-            <NavAdmin />
-            <EditFormat />
-          </div>
-        </Route>
-
-        <Route exact path="/admin/editbook">
-
-          <div className="blocks">
-            <NavAdmin />
-            <EditBook />
-          </div>
-        </Route>
+        </Route>        
 
         <Route exact path="/admin/pages">
 
@@ -257,14 +199,6 @@ const App = observer(() => {
           <div className="blocks">
             <NavAdmin />
             <AddBook />
-          </div>
-        </Route>
-
-        <Route exact path="/admin/template">
-
-          <div className="blocks">
-            <NavAdmin />
-            <Template />
           </div>
         </Route>
 
@@ -347,7 +281,7 @@ const App = observer(() => {
         <Route path="/error">
           <Error />
         </Route>
-        <Redirect to="/books" />
+        <Redirect to="/main" />
       </Switch>
     </BrowserRouter>
 

@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react";
 import '../styles/Admcss.css'
-import { Form, FormGroup} from "react-bootstrap";
+import { Form, FormGroup } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
 import { Col, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import AlertMsg from "../components/modals/AlertMsg";
 
 
 function AddAuthor() {
-    const LinkFullName=useParams().fullname
+    const hist = useHistory()
+    const LinkFullName = useParams().fullname
     const [description, setDescription] = useState('')
     const [loading, setLoading] = useState(true)
     const [img, setImg] = useState(null)
-    const [oldImg, setOldImg] = useState('')
     const [name, setName] = useState('')
     const [titleText, setTitleText] = useState('')
     const [addVisible, setAddVisible] = useState(true)
     const [editVisible, setEditVisible] = useState(true)
+    const [showCreate,setShowCreate]=useState(false)
+    const [showEdit,setShowEdit]=useState(false)
 
 
 
@@ -37,10 +40,7 @@ function AddAuthor() {
             formData.append('img', img)
             let data;
             data = await create(formData);
-            setName('')
-            setDescription('')
-            setImg(null)
-            alert('Добавленно')
+            setShowCreate(true)
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -55,13 +55,12 @@ function AddAuthor() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author/${LinkFullName}`)
         setName(response.data.fullname)
         setDescription(response.data.about)
-        setImg(response.data.photo)   
-        setOldImg(response.data.photo)       
+        setImg(response.data.photo)
     }
 
     useEffect(() => {
 
-        if (LinkFullName  == "creating") {
+        if (LinkFullName == "creating") {
             setTitleText('Добавление автора')
             setAddVisible(false)
             setLoading(false)
@@ -69,14 +68,14 @@ function AddAuthor() {
             setTitleText('Изменение автора')
             setEditVisible(false)
             fetchAuthor().finally(() => setLoading(false))
-        }    
+        }
 
     }, [])
 
 
 
 
-    
+
 
     async function uauthor(type) {
         const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/author`, type)
@@ -90,10 +89,9 @@ function AddAuthor() {
             formData.append('oldfullname', LinkFullName)
             formData.append('about', description)
             formData.append('img', img)
-            formData.append('oldphoto', oldImg)
             let data;
-            data = await uauthor(formData);            
-            alert('Изменено')
+            data = await uauthor(formData);
+            setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -143,6 +141,8 @@ function AddAuthor() {
 
                 </Col >
             </Row >
+            <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Автор ${name} создан`} />
+            <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Автор ${LinkFullName} добавлен`} />
         </div>
     )
 }

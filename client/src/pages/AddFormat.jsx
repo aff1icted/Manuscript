@@ -5,9 +5,11 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 import { Loader } from "../components/UI/Loader";
 import { Col, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import AlertMsg from "../components/modals/AlertMsg";
 
 function AddFormat() {
+    const hist = useHistory()   
     const LinkFormatName = useParams().name
     const [name, setName] = useState('')
     const [coeff, setCoeff] = useState('')
@@ -15,6 +17,8 @@ function AddFormat() {
     const [titleText, setTitleText] = useState('')
     const [addVisible, setAddVisible] = useState(true)
     const [editVisible, setEditVisible] = useState(true)
+    const [showCreate, setShowCreate] = useState(false)
+    const [showEdit, setShowEdit] = useState(false)
 
 
     async function create(type) {
@@ -26,9 +30,7 @@ function AddFormat() {
         try {
             let data;
             data = await create({ name: name, transfercoeff: coeff });
-            setName('')
-            setCoeff('')
-            alert("Добавленно")
+            setShowCreate(true)
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -67,7 +69,7 @@ function AddFormat() {
             formData.append('transfercoeff', coeff)
             let data;
             data = await uformat(formData);
-            alert("Изменено")
+            setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -111,7 +113,8 @@ function AddFormat() {
                     </div>
                 </Col >
             </Row >
-
+            <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Формат ${name} создан`} />
+            <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Формат ${LinkFormatName} добавлен`} />
 
 
         </div >

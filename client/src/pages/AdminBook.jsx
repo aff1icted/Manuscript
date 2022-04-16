@@ -6,6 +6,7 @@ import axios from "axios";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Button, Col, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import AlertDelete from "../components/modals/AlertDelete";
 
 
 
@@ -13,8 +14,8 @@ import { useHistory } from "react-router-dom";
 function AdminBook() {
     const hist = useHistory()
     const [loading, setLoading] = useState(true)
-    const [books, setBooks] = useState([])    
-    const [currentBook, SetCurrentBook] = useState('')    
+    const [books, setBooks] = useState([])
+    const [currentBook, SetCurrentBook] = useState('')
     const [titleSearch, setTitleSearch] = useState('')
     const [isbnSearch, setIsbnSearch] = useState('')
     const [authorSearch, setAuthorSearch] = useState('')
@@ -22,6 +23,7 @@ function AdminBook() {
     const [authors, setAuthors] = useState([])
     const [filterHide, setFilterHide] = useState(true)
     const [filterButton, setFIlterButton] = useState('Показать фильтр')
+    const [show, setShow] = useState(false)
 
     async function fetchAuthors() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
@@ -57,7 +59,7 @@ function AdminBook() {
         { dataField: "isbn", text: "ISBN" },
         { dataField: "title", text: "Название" },
         { dataField: "authors", text: "Авторы" }
-    ]  
+    ]
 
     const selectRow = {
         mode: 'radio',
@@ -70,7 +72,7 @@ function AdminBook() {
         onClick: (e, row) => {
             SetCurrentBook(row.isbn)
         }
-    } 
+    }
 
     function Filtr() {
         setFilteredBook(books.filter(book => book.title.toLowerCase().includes(titleSearch.toLowerCase()) && book.isbn.toLowerCase().includes(isbnSearch.toLowerCase())
@@ -95,10 +97,12 @@ function AdminBook() {
     const deletebook = async () => {
 
         try {
-            let data;
-            data = await dbook();
+
+            let data = await dbook();
             fetchbooks()
             Filtr()
+            SetCurrentBook('')
+
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -146,12 +150,17 @@ function AdminBook() {
                         <Button variant="secondary" onClick={e => hist.push(`/admin/book/${currentBook}`)}>
                             Изменить
                         </Button>
-                        <Button variant="secondary" onClick={() => deletebook()}>
+                        <Button variant="secondary" onClick={e => {
+                            if (currentBook != '') {
+                                setShow(true)
+                            }
+                        }}>
                             Удалить
                         </Button>
                     </div>
                 </Col>
             </Row>
+            <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить книгу ${currentBook}?`} del={() => { deletebook(); setShow(false) }} />
         </div>
     )
 }

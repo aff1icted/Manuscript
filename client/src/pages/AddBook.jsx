@@ -5,10 +5,12 @@ import { Button } from "react-bootstrap";
 import { Loader } from "../components/UI/Loader";
 import axios from "axios";
 import { Col, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
+import AlertMsg from "../components/modals/AlertMsg";
 
 function AddBook() {
+    const hist = useHistory()
     const LinkIsbn = useParams().isbn
     const [loading, setLoading] = useState(true)
     const [tags, setTags] = useState([])
@@ -31,13 +33,13 @@ function AddBook() {
     const [titleText, setTitleText] = useState('')
     const [addVisible, setAddVisible] = useState(true)
     const [editVisible, setEditVisible] = useState(true)
-
-    const [book, setBook] = useState()
-    const [books, setBooks] = useState([])
-    const [name, setName] = useState('')
-
+    const [oldCoverart, setOldCoverart] = useState(null)
+    const [oldShortpdf, setOldShortpdf] = useState(null)
+    const [oldFullpdf, setOldFullpdf] = useState(null)
     const [selectedCover, setSelectedCover] = useState('Переплет')
     const [selectedFormat, setSelectedFormat] = useState('Формат')
+    const [showCreate,setShowCreate]=useState(false)
+    const [showEdit,setShowEdit]=useState(false)
 
     async function fetchAuthors() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
@@ -63,7 +65,26 @@ function AddBook() {
 
     async function fetchbook() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book/${LinkIsbn}`)
-        setBooks(response.data)
+        setIsbn(response.data.isbn)
+        setTitle(response.data.title)
+        setPublicationdate(response.data.publicationdate)
+        response.data.authors?.map(author => setSelectedAuthor(selectedAuthor => [...selectedAuthor, author.fullname]))
+        response.data.tags?.map(tag => setSelectedTag(selectedTag => [...selectedTag, tag.tagname]))
+        response.data.series?.map(series => setSelectedSeries(selectedSeries => [...selectedSeries, series.seriesname]))
+        setCover(response.data.coverCover)
+        setSelectedCover(response.data.coverCover)
+        setFormat(response.data.formatName)
+        setSelectedFormat(response.data.formatName)
+        setPagenumber(response.data.pagenumber)
+        setEdition(response.data.edition)
+        setPrice(response.data.price)
+        setDescription(response.data.description)
+        setCoverart(response.data.coverart)
+        setShortpdf(response.data.shortpdf)
+        setFullpdf(response.data.fullpdf)
+        setOldCoverart(response.data.coverart)
+        setOldFullpdf(response.data.shortpdf)
+        setOldShortpdf(response.data.fullpdf)
     }
 
     useEffect(() => {
@@ -114,69 +135,42 @@ function AddBook() {
             formData.append('coverCover', cover)
             let data;
             data = await create(formData);
-            setIsbn('')
-            setTitle('')
-            setDescription('')
-            setPagenumber('')
-            setEdition('')
-            setPrice('')
-            setSelectedTag([])
-            setSelectedSeries([])
-            setSelectedAuthor([])
-            alert("Добавленно")
+            setShowCreate(true)            
         } catch (e) {
             alert(e.response.data.message)
         }
-    }
-
-
-
-    async function fetchbook() {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book/${LinkIsbn}`)
-        setIsbn(response.data.isbn)
-        setTitle(response.data.title)
-        setPublicationdate(response.data.publicationdate)
-        response.data.authors?.map(author => setSelectedAuthor(selectedAuthor => [...selectedAuthor, author.fullname]))
-        response.data.tags?.map(tag => setSelectedTag(selectedTag => [...selectedTag, tag.tagname]))
-        response.data.series?.map(series => setSelectedSeries(selectedSeries => [...selectedSeries, series.seriesname]))
-        setCover(response.data.coverCover)
-        setSelectedCover(response.data.coverCover)
-        setFormat(response.data.formatName)
-        setSelectedFormat(response.data.formatName)
-        setPagenumber(response.data.pagenumber)
-        setEdition(response.data.edition)
-        setPrice(response.data.price)
-        setDescription(response.data.description)
-        setCoverart(response.data.coverart)
-        setShortpdf(response.data.shortpdf)
-        setFullpdf(response.data.fullpdf)
-    }
-
+    }  
 
     async function ubook(type) {
         const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/book`, type)
         return data
     }
 
-    //сделать изменение всех данных
     const edtbook = async () => {
         try {
             const formData = new FormData()
-            formData.append('title', book)//переделать
+            formData.append('oldisbn', LinkIsbn)
             formData.append('isbn', isbn)
-            formData.append('pagenumber', pagenumber)
-            formData.append('edition', edition)
-            formData.append('price', price)
+            formData.append('title', title)
+            formData.append('publicationdate', publicationdate)
+            formData.append('edition', `${edition}`)
+            formData.append('pagenumber', `${pagenumber}`)
             formData.append('description', description)
+            formData.append('price', `${price}`)
+            formData.append('tags', JSON.stringify(selectedTag))
+            formData.append('authors', JSON.stringify(selectedAuthor))
+            formData.append('series', JSON.stringify(selectedSeries))
+            formData.append('oldcoverart', oldCoverart)
+            formData.append('coverart', coverart)
+            formData.append('oldshortpdf', oldFullpdf)
+            formData.append('shortpdf', shortpdf)
+            formData.append('oldfullpdf', oldShortpdf)
+            formData.append('fullpdf', fullpdf)
+            formData.append('formatName', format)
+            formData.append('coverCover', cover)            
             let data;
             data = await ubook(formData);
-            setName('')
-            setIsbn('')
-            setPagenumber('')
-            setEdition('')
-            setPrice('')
-            setDescription('')
-            alert("Изменено")
+            setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -379,6 +373,9 @@ function AddBook() {
                     </div>
                 </Col >
             </Row >
+
+           <AlertMsg show={showCreate} onHide={()=>{setShowCreate(false); hist.goBack()}} title={'Оповещение'} body={`Книга ${isbn} создана`} />
+           <AlertMsg show={showEdit} onHide={()=>{setShowEdit(false); hist.goBack()}} title={'Оповещение'} body={`Книга ${LinkIsbn} изменена`} />
 
         </div>
 

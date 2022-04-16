@@ -8,18 +8,9 @@ const ApiError = require('../error/ApiError')
 
 
 
-// переделать на sequelize
+
 
 class BookController {
-    /*async createBook(req,res){
-        
-        const{ISBN, Title, PublicationDate, Format, Cover, CoverArt, ShortPDF, FullPDF, Edition, PageNumber, Description}=req.body
-        //const newBook = await db.query('INSERT INTO "Book" ("ISBN", "Title") values ($1,$2) RETURNING *',[ISBN, Title, PublicationDate, Format, Cover, CoverArt, ShortPDF, FullPDF, Edition, PageNumber, Description])
-        //const newBook = await db.query('INSERT INTO "Book" ("ISBN", "Title") values ($1,$2) RETURNING *',[ISBN, Title])
-        const newBook = await sequelize.query(`INSERT INTO books(isbn, title) 
-            values ($1,$2) RETURNING *`,[ISBN, Title])
-        res.json(newBook.rows[0])
-    }*/
 
     async create(req, res, next) {
 
@@ -28,32 +19,34 @@ class BookController {
         let shortpdfName
         let fullpdfName
 
-        if (req.files != null) {
-            const { coverart, shortpdf, fullpdf } = req.files
-
-            coverartName = uuid.v4() + ".jpg"
-            coverart.mv(path.resolve(__dirname, '..', 'static', coverartName))
-
-            shortpdfName = uuid.v4() + ".pdf"
-            shortpdf.mv(path.resolve(__dirname, '..', 'static', shortpdfName))
-
-            fullpdfName = uuid.v4() + ".pdf"
-            fullpdf.mv(path.resolve(__dirname, '..', 'static', fullpdfName))
-
-        } else {
-            coverartName = 'noimg'
-            shortpdfName = 'nofile'
-            fullpdfName = 'nofile'
-        }
-
-
-
         const candidate = await Book.findOne({ where: { isbn } })
         if (candidate) {
             return next(ApiError.badRequest('Такая книга уже существует'))
         }
 
-        const book = await Book.create({ isbn, title, publicationdate, coverart: coverartName, shortpdf: shortpdfName, fullpdf: fullpdfName, edition, pagenumber, description, price, formatName, coverCover })
+        const book = await Book.create({ isbn, title, publicationdate, edition, pagenumber, description, price, formatName, coverCover })
+
+        if (req.files != null) {
+            const { coverart, shortpdf, fullpdf } = req.files
+
+            if (coverart != undefined) {
+                coverartName = uuid.v4() + ".jpg"
+                coverart.mv(path.resolve(__dirname, '..', 'static', coverartName))
+                await Book.update({ coverart: coverartName }, { where: { isbn } })
+            }
+
+            if (shortpdf != null) {
+                shortpdfName = uuid.v4() + ".pdf"
+                shortpdf.mv(path.resolve(__dirname, '..', 'static', shortpdfName))
+                await Book.update({ shortpdf: shortpdfName }, { where: { isbn } })
+            }
+
+            if (fullpdf != null) {
+                fullpdfName = uuid.v4() + ".pdf"
+                fullpdf.mv(path.resolve(__dirname, '..', 'static', fullpdfName))
+                await Book.update({ fullpdf: fullpdfName }, { where: { isbn } })
+            }
+        }
 
         if (tags) {
             const tag = JSON.parse(tags)
@@ -88,6 +81,7 @@ class BookController {
         return res.json({ book })
 
     }
+
     async getAll(req, res) {
 
         const books = await Book.findAll({ include: [Tags, Authors, Series] })
@@ -106,14 +100,90 @@ class BookController {
     }
     // не рабочая хуита, не знаю как сделать изменения связей
     async update(req, res) {
-        const { isbn, title, pagenumber, edition, price, description} = req.body
-        const book = await Book.update({ title, pagenumber, edition, price, description}, {where: { isbn } })
+        const { oldisbn, isbn, title, publicationdate, edition, pagenumber, description, price, tags, authors, series, formatName, coverCover} = req.body
+        let coverartName
+        let shortpdfName
+        let fullpdfName
+
+        const book = await Book.update({ isbn, title, publicationdate, edition, pagenumber, description, price, formatName, coverCover }, { where: { isbn:oldisbn }})
+
+        if (req.files != null) {
+            const { coverart, shortpdf, fullpdf } = req.files
+            if (coverart != undefined) {
+                coverartName = uuid.v4() + ".jpg"
+                coverart.mv(path.resolve(__dirname, '..', 'static', coverartName))
+                await Book.update({ coverart: coverartName }, { where: { isbn } })
+            }
+
+            if (shortpdf != null) {
+                shortpdfName = uuid.v4() + ".pdf"
+                shortpdf.mv(path.resolve(__dirname, '..', 'static', shortpdfName))
+                await Book.update({ shortpdf: shortpdfName }, { where: { isbn } })
+            }
+
+            if (fullpdf != null) {
+                fullpdfName = uuid.v4() + ".pdf"
+                fullpdf.mv(path.resolve(__dirname, '..', 'static', fullpdfName))
+                await Book.update({ fullpdf: fullpdfName }, { where: { isbn } })
+            }
+        }
+
+        
+        BookTag.destroy(
+            {
+                where: { bookIsbn:isbn }
+            }
+        )
+
+        if (tags) {
+            const tag = JSON.parse(tags)
+            tag.forEach(i => {
+                BookTag.create({
+                    bookIsbn: isbn,
+                    tagTagname: i
+                })
+            });
+        }
+
+        BookAuthor.destroy(
+            {
+                where: {bookIsbn: isbn }
+            }
+        )
+
+        if (authors) {
+            const author = JSON.parse(authors)
+            author.forEach(i => {
+                BookAuthor.create({
+                    bookIsbn: isbn,
+                    authorFullname: i
+                })
+            });
+        }
+
+        BookSeries.destroy(
+            {
+                where: { bookIsbn: isbn }
+            }
+        )
+
+        if (series) {
+            const ser = JSON.parse(series)
+            ser.forEach(i => {
+                BookSeries.create({
+                    bookIsbn: isbn,
+                    seriesSeriesname: i
+                })
+            });
+        }
+
+        return res.json({ book })
         res.json(book)
     }
 
-    
-    
-    
+
+
+
 
 
 
@@ -121,12 +191,12 @@ class BookController {
         const { isbn } = req.params
         const book = await Book.destroy(
             {
-                where: { isbn }                
+                where: { isbn }
             }
         )
         return res.json(book)
-    }    
-   
+    }
+
 }
 
 module.exports = new BookController()

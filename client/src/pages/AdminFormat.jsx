@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
+import AlertDelete from "../components/modals/AlertDelete";
 
 function AdminFormat() {
     const hist = useHistory()
@@ -17,6 +18,7 @@ function AdminFormat() {
     const [filterButton, setFIlterButton] = useState('Показать фильтр')
     const [coeffSearch, setCoeffSearch] = useState('')
     const [nameSearch, setNameSearch] = useState('')
+    const [show, setShow] = useState(false)
 
     async function fetchformats() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/format`)
@@ -75,10 +77,12 @@ function AdminFormat() {
     const deleteFormat = async () => {
 
         try {
-            let data;
-            data = await dformat();
+
+            let data = await dformat();
             fetchformats()
             Filtr()
+            setCurrentFormat('')
+
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -123,15 +127,21 @@ function AdminFormat() {
                         <Button variant="secondary" onClick={e => hist.push(`/admin/format/${currentFormat}`)}>
                             Изменить
                         </Button>
-                        <Button variant="secondary" onClick={e => deleteFormat()}>
+                        <Button variant="secondary" onClick={e => {
+                            if (currentFormat != '') {
+                                setShow(true)
+                            }
+                        }}>
                             Удалить
                         </Button>
                     </div>
 
                 </Col>
             </Row>
+            <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить формат ${currentFormat}?`} del={() => { deleteFormat(); setShow(false) }} />
 
         </div>
+
 
     )
 }

@@ -4,19 +4,20 @@ import { Form, FormGroup, Row, Col } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import { Loader } from "../components/UI/Loader";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import AlertMsg from "../components/modals/AlertMsg";
 
 
 function AddCover() {
-
-    const [covers, setCovers] = useState([])
-    const [cover, setCover] = useState('')
+    const hist = useHistory()    
     const [coverName, setCoverName] = useState('')
     const [loading, setLoading] = useState(true)
     const [titleText, setTitleText] = useState('')
     const [addVisible, setAddVisible] = useState(true)
     const [editVisible, setEditVisible] = useState(true)
     const LinkCover = useParams().cover
+    const [showCreate, setShowCreate] = useState(false)
+    const [showEdit, setShowEdit] = useState(false)
 
     async function create(type) {
         const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/cover`, type)
@@ -27,16 +28,10 @@ function AddCover() {
         try {
             let data;
             data = await create({ cover: coverName });
-            setCover('')
-            alert("Добавленно")
+            setShowCreate(true)
         } catch (e) {
             alert(e.response.data.message)
         }
-    }
-
-    async function fetchcovers() {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/cover`)
-        setCovers(response.data)
     }
 
     useEffect(() => {
@@ -67,17 +62,12 @@ function AddCover() {
             formData.append('cover', coverName)
             formData.append('oldcover', LinkCover)
             data = await update(formData);
-            alert("Сохранено")
+            setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)
         }
     }
-
-
-
-
-
-
+    
     if (loading) {
         return <Loader />
     }
@@ -112,6 +102,8 @@ function AddCover() {
 
                 </Col>
             </Row>
+            <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Переплет ${coverName} создан`} />
+            <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Переплет ${LinkCover} добавлен`} />
 
         </div >
     )
