@@ -83,8 +83,13 @@ class BookController {
     }
 
     async getAll(req, res) {
-
-        const books = await Book.findAll({ include: [Tags, Authors, Series] })
+        const { limit } = req.body
+        let books
+        if (limit == null) {
+            books = await Book.findAll({ include: [Tags, Authors, Series] })
+        } else {
+            books = await Book.findAll({ include: [Tags, Authors, Series], order: ['createdAt'], limit: limit })
+        }
         return res.json(books)
 
     }
@@ -100,12 +105,12 @@ class BookController {
     }
     // не рабочая хуита, не знаю как сделать изменения связей
     async update(req, res) {
-        const { oldisbn, isbn, title, publicationdate, edition, pagenumber, description, price, tags, authors, series, formatName, coverCover} = req.body
+        const { oldisbn, isbn, title, publicationdate, edition, pagenumber, description, price, tags, authors, series, formatName, coverCover } = req.body
         let coverartName
         let shortpdfName
         let fullpdfName
 
-        const book = await Book.update({ isbn, title, publicationdate, edition, pagenumber, description, price, formatName, coverCover }, { where: { isbn:oldisbn }})
+        const book = await Book.update({ isbn, title, publicationdate, edition, pagenumber, description, price, formatName, coverCover }, { where: { isbn: oldisbn } })
 
         if (req.files != null) {
             const { coverart, shortpdf, fullpdf } = req.files
@@ -128,10 +133,10 @@ class BookController {
             }
         }
 
-        
+
         BookTag.destroy(
             {
-                where: { bookIsbn:isbn }
+                where: { bookIsbn: isbn }
             }
         )
 
@@ -147,7 +152,7 @@ class BookController {
 
         BookAuthor.destroy(
             {
-                where: {bookIsbn: isbn }
+                where: { bookIsbn: isbn }
             }
         )
 
@@ -178,14 +183,7 @@ class BookController {
         }
 
         return res.json({ book })
-        res.json(book)
     }
-
-
-
-
-
-
 
     async delete(req, res) {
         const { isbn } = req.params

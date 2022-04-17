@@ -1,5 +1,5 @@
 const uuid = require('uuid')
-const { Type, Authors } = require('../models/models')
+const { Type, Authors, Book } = require('../models/models')
 const path = require('path')
 const ApiError = require('../error/ApiError')
 
@@ -26,7 +26,7 @@ class AuthorsController {
     }
 
     async getAll(req, res) {
-        const authors = await Authors.findAll()
+        const authors = await Authors.findAll({order: ['fullname']})
         return res.json(authors)
     }
 
@@ -34,7 +34,8 @@ class AuthorsController {
         const { fullname } = req.params
         const author = await Authors.findOne(
             {
-                where: { fullname }
+                where: { fullname },
+                include: [Book]
             }
         )
         return res.json(author)
