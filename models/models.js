@@ -62,7 +62,8 @@ const User = sequelize.define('user', {
 const Pages = sequelize.define('pages', {
     item: {type: DataTypes.STRING, primaryKey: true},
     text: {type: DataTypes.TEXT},
-    img: {type: DataTypes.STRING}
+    img: {type: DataTypes.STRING},
+    url: {type: DataTypes.TEXT}
 })
 
 Format.hasMany(Book)

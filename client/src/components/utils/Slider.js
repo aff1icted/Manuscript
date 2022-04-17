@@ -39,7 +39,7 @@ export default function Slider() {
                     className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
                     >
                         <img 
-                        src={process.env.REACT_APP_API_URL + `img${index + 1}.jpeg`} 
+                        src={process.env.REACT_APP_API_URL + `slider${index + 1}.jpg`} 
                         />
                     </div>
                 )

@@ -16,6 +16,16 @@ function Pages() {
     const [author, setAuthor] = useState('')
     const [about, setAbout] = useState('')
     const [footer, setFooter] = useState('')
+    const [firstImg, setFirstImg] = useState(null)
+    const [secondImg, setSecondImg] = useState(null)
+    const [thirdImg, setThirdImg] = useState(null)
+    const [fourthImg, setFourthImg] = useState(null)
+    const [fifthImg, setFifthImg] = useState(null)
+    const [firstUrl, setFirstUrl] = useState('')
+    const [secondUrl, setSecondUrl] = useState('')
+    const [thirdUrl, setThirdUrl] = useState('')
+    const [fourthUrl, setFourthUrl] = useState('')
+    const [fifthUrl, setFifthUrl] = useState('')
     const [first, setFirst] = useState('')
     const [second, setSecond] = useState('')
     const [third, setThird] = useState('')
@@ -40,6 +50,19 @@ function Pages() {
             formData.append('third', third)
             formData.append('fourth', fourth)
             formData.append('fifth', fifth)
+
+            formData.append('firstimg', firstImg)
+            formData.append('secondimg', secondImg)
+            formData.append('thirdimg', thirdImg)
+            formData.append('fourthimg', fourthImg)
+            formData.append('fifthimg', fifthImg)
+
+            formData.append('firsturl', firstUrl)
+            formData.append('secondurl', secondUrl)
+            formData.append('thirdurl', thirdUrl)
+            formData.append('fourthurl', fourthUrl)
+            formData.append('fifthurl', fifthUrl)
+
             let data;
             data = await uPage(formData);
             alert('Сохранено')
@@ -76,18 +99,23 @@ function Pages() {
                     break;
                 case 'first':
                     setFirst(obj.text)
+                    setFirstUrl(obj.url)
                     break;
                 case 'second':
                     setSecond(obj.text)
+                    setSecondUrl(obj.url)
                     break;
                 case 'third':
                     setThird(obj.text)
+                    setSecondUrl(obj.url)
                     break;
                 case 'fourth':
                     setFourth(obj.text)
+                    setSecondUrl(obj.url)
                     break;
                 case 'fifth':
                     setFifth(obj.text)
+                    setSecondUrl(obj.url)
                     break;
                 default:
                     break;
@@ -134,25 +162,36 @@ function Pages() {
                             <Form.Group className="mb-3" controlId="AuthorDescr">
                                 <Form.Control as="textarea" rows='3' placeholder="" value={footer} onChange={e => setFooter(e.target.value)} />
                             </Form.Group>
-                            <Form.Label>Банер1</Form.Label>
+                            <Form.Label>Банер</Form.Label>
+                            <Form.Label>Страница1</Form.Label>
                             <Form.Group className="mb-3" controlId="AuthorDescr">
                                 <Form.Control as="textarea" rows='3' placeholder="" value={first} onChange={e => setFirst(e.target.value)} />
+                                <Form.Control type="file" onChange={e => setFirstImg(e.target.files[0])} />
+                                <Form.Control as="textarea" rows='3' placeholder="" value={firstUrl} onChange={e => setFirstUrl(e.target.value)} />
                             </Form.Group>
-                            <Form.Label>Банер2</Form.Label>
+                            <Form.Label>Страница2</Form.Label>
                             <Form.Group className="mb-3" controlId="AuthorDescr">
                                 <Form.Control as="textarea" rows='3' placeholder="" value={second} onChange={e => setSecond(e.target.value)} />
+                                <Form.Control type="file" onChange={e => setSecondImg(e.target.files[0])} />
+                                <Form.Control as="textarea" rows='3' placeholder="" value={secondUrl} onChange={e => setSecondUrl(e.target.value)} />
                             </Form.Group>
-                            <Form.Label>Банер3</Form.Label>
+                            <Form.Label>Страница3</Form.Label>
                             <Form.Group className="mb-3" controlId="AuthorDescr">
                                 <Form.Control as="textarea" rows='3' placeholder="" value={third} onChange={e => setThird(e.target.value)} />
+                                <Form.Control type="file" onChange={e => setThirdImg(e.target.files[0])} />
+                                <Form.Control as="textarea" rows='3' placeholder="" value={thirdUrl} onChange={e => setThirdUrl(e.target.value)} />
                             </Form.Group>
-                            <Form.Label>Банер4</Form.Label>
+                            <Form.Label>Страница4</Form.Label>
                             <Form.Group className="mb-3" controlId="AuthorDescr">
                                 <Form.Control as="textarea" rows='3' placeholder="" value={fourth} onChange={e => setFourth(e.target.value)} />
+                                <Form.Control type="file" onChange={e => setFourthImg(e.target.files[0])} />
+                                <Form.Control as="textarea" rows='3' placeholder="" value={fourthUrl} onChange={e => setFourthUrl(e.target.value)} />
                             </Form.Group>
-                            <Form.Label>Банер5</Form.Label>
+                            <Form.Label>Страница5</Form.Label>
                             <Form.Group className="mb-3" controlId="AuthorDescr">
                                 <Form.Control as="textarea" rows='3' placeholder="" value={fifth} onChange={e => setFifth(e.target.value)} />
+                                <Form.Control type="file" onChange={e => setFifthImg(e.target.files[0])} />
+                                <Form.Control as="textarea" rows='3' placeholder="" value={fifthUrl} onChange={e => setFifthUrl(e.target.value)} />
                             </Form.Group>
                         </Form >
                     </div>
