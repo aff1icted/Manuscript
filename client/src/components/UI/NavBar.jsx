@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 /* авыаваыв*/
 const NavBar = () =>{
   return (
-    <div class="nav d-flex justify-content-around">
+    <div className="nav d-flex justify-content-around">
 		  <ul class="menu">					
 			  <li><Link to="/books">КНИГИ</Link></li>
         <li><Link to="/author">АВТОРЫ</Link></li>
