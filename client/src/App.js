@@ -33,6 +33,7 @@ import AdminCover from "./pages/AdminCover";
 import AdminTag from "./pages/AdminTag";
 import AdminSeries from "./pages/AdminSeries";
 import AdminAuthor from "./pages/AdminAuthor";
+import AuthorPage from "./pages/AuthorPage";
 
 
 
@@ -113,7 +114,7 @@ const App = observer(() => {
           <Footer />
 
         </Route>
-        <Route path="/author">
+        <Route exact path="/author">
           <div className="content">
             <NavBar />
             <Author />
@@ -121,6 +122,16 @@ const App = observer(() => {
           <Footer />
 
         </Route>
+
+        <Route exact path="/author/:fullname">
+          <div className="content">
+            <NavBar />
+            <AuthorPage />
+          </div>
+          <Footer />
+
+        </Route>
+
         <Route path="/order">
           <div className="content">
             <NavBar />
