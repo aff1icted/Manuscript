@@ -1,10 +1,7 @@
-import react, { useEffect, useMemo, useState } from "react";
+import { useEffect,  useState } from "react";
 import BookList from "../components/BookList";
-import Filter from "../components/Filter";
-import { useBooks } from "../components/hooks/useBooks";
 import '../styles/App.css'
 import axios from 'axios'
-import { useHttp } from "../components/hooks/html.hook";
 import { Loader } from "../components/UI/Loader";
 
 function Books() {
@@ -18,7 +15,7 @@ function Books() {
   }
 
   async function fetchBookText() {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/book`)
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/elem/book`)
     setBookText(response.data)
   }
 

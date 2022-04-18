@@ -28,12 +28,7 @@ function AddSeries() {
             formData.append('seriesname', name)
             formData.append('foundation', foundation)
             formData.append('seriespic', seriesPic)
-            let data;
-            data = await create(formData);
-            setName('')
-            setFoundation('')
-            setSeriesPic(null)
-            alert('Добавленно')
+            await create(formData);            
         } catch (e) {
             alert(e.response.data.message)
         }

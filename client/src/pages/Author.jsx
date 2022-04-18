@@ -13,7 +13,7 @@ function Author() {
 
 
   async function fetchAuthorText() {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/author`)
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/elem/author`)
     setAuthorText(response.data)
   }
   async function fetchAuthors() {

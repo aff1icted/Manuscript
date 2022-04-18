@@ -38,8 +38,7 @@ function AddAuthor() {
             formData.append('fullname', name)
             formData.append('about', description)
             formData.append('img', img)
-            let data;
-            data = await create(formData);
+            await create(formData);
             setShowCreate(true)
         } catch (e) {
             alert(e.response.data.message)
@@ -60,7 +59,7 @@ function AddAuthor() {
 
     useEffect(() => {
 
-        if (LinkFullName == "creating") {
+        if (LinkFullName === "creating") {
             setTitleText('Добавление автора')
             setAddVisible(false)
             setLoading(false)
@@ -89,8 +88,7 @@ function AddAuthor() {
             formData.append('oldfullname', LinkFullName)
             formData.append('about', description)
             formData.append('img', img)
-            let data;
-            data = await uauthor(formData);
+            await uauthor(formData);
             setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)

@@ -18,7 +18,7 @@ const BookPage = (props) => {
         {/*<Image  width={100}height={200}scr={process.env.REACT_APP_API_URL+props.Book.coverart}/>*/}
         <img src={process.env.REACT_APP_API_URL + props.Book.coverart} />
         <div className="infosdet">
-          
+
           <div>{props.Book.title}</div>
           <div>{props.Book.isbn}</div>
           <TagList tags={props.Book.tags} />
@@ -32,15 +32,15 @@ const BookPage = (props) => {
       <div className="lowerbook">
         цена:{props.Book.price}
         <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.shortpdf}>отрывок</a>
-        <a  className="mr-3"href={process.env.REACT_APP_API_URL + props.Book.fullpdf}>читать полностью</a>
+        <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.fullpdf}>читать полностью</a>
 
       </div>
       <div className="lowerbook">
-        
-        
+
+
         <button>в корзину</button>
-        
-        
+
+
       </div>
     </div>
 

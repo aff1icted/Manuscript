@@ -9,7 +9,7 @@ function About() {
 
 
   async function fetchAuthorText() {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/about`)
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/elem/about`)
     setAboutText(response.data)
   }
 

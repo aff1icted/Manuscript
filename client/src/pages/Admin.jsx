@@ -1,4 +1,3 @@
-import { Navbar } from 'react-bootstrap';
 import '../styles/App.css'
 
 function Admin() {

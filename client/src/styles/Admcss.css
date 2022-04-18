@@ -80,14 +80,14 @@
     height: 200px;
     display: flex;
     flex-direction: column;
-    background: red;
+    /* background: red;  */
     justify-content: space-between;
 }
 
 .subcolumns-left
 {
     padding: 10px;
-    background: violet;
+     /* background: violet;  */
     width: 600px;
 
 }

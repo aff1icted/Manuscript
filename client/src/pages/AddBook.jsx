@@ -88,7 +88,7 @@ function AddBook() {
     }
 
     useEffect(() => {
-        if (LinkIsbn == "creating") {
+        if (LinkIsbn === "creating") {
             setTitleText('Добавление книги')
             setAddVisible(false)
             fetchformats()

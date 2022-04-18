@@ -1,3 +1,4 @@
+export const MAIN_ROUTE='/main'
 export const ABOUT_ROUTE='/about'
 export const BOOKS_ROUTE='/books'
 export const AUTHOR_ROUTE='/author'
