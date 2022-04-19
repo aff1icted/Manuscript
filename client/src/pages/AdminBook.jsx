@@ -118,17 +118,35 @@ function AdminBook() {
             <Row className="justify-content-md-center">
                 <Col md-4>
                     <div className="subcolumns-left">
-                        <div hidden={filterHide}>
-                            <input value={isbnSearch} onChange={e => setIsbnSearch(e.target.value)} placeholder="Поиск по ISBN" />
-                            <input value={titleSearch} onChange={e => setTitleSearch(e.target.value)} placeholder="Поиск по названию" />
-                            <select onChange={(e) => setAuthorSearch(e.target.value)}>
-                                <option selected="true" value={''}>{''}</option>
-                                {authors.map(option =>
-                                    <option key={option.fullname} value={option.fullname}>
-                                        {option.fullname}
-                                    </option>
-                                )}
-                            </select>
+                        <div hidden={filterHide} >
+                            <div>
+                                Поиск по ISBN
+                            </div>
+                            <div>
+                                <input value={isbnSearch} onChange={e => setIsbnSearch(e.target.value)} placeholder="Поиск по ISBN" />
+                            </div>
+                            <div>
+                                Поиск по названию
+                            </div>
+                            <div>
+                                <input value={titleSearch} onChange={e => setTitleSearch(e.target.value)} placeholder="Поиск по названию" />
+                            </div>
+                            <div>
+                                Поиск по автору
+                            </div>
+                            <div>
+                                <select onChange={(e) => setAuthorSearch(e.target.value)}>
+                                    <option selected="true" value={''}>{''}</option>
+                                    {authors.map(option =>
+                                        <option key={option.fullname} value={option.fullname}>
+                                            {option.fullname}
+                                        </option>
+                                    )}
+                                </select>
+                            </div>
+
+
+
                             <Button onClick={Filtr}>Поиск</Button>
                         </div>
                         <Button onClick={FilterClic}>{filterButton}</Button>

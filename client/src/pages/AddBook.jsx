@@ -180,7 +180,7 @@ function AddBook() {
     const [selectedAuthor, setSelectedAuthor] = useState([])
 
     const columnsAuthor = [
-        { dataField: "fullname", text: "Авторы" }
+        { dataField: "fullname"}
     ]
 
     const selectRowAuthor = {
@@ -201,7 +201,7 @@ function AddBook() {
     const [selectedTag, setSelectedTag] = useState([])
 
     const columnsTag = [
-        { dataField: "tagname", text: "Теги/жанры" }
+        { dataField: "tagname"}
     ]
 
     const selectRowTag = {
@@ -223,7 +223,7 @@ function AddBook() {
     const [selectedSeries, setSelectedSeries] = useState([])
 
     const columnsSeries = [
-        { dataField: "seriesname", text: "Серии" }
+        { dataField: "seriesname"}
     ]
 
     const selectRowSeries = {
@@ -273,7 +273,8 @@ function AddBook() {
                                 <Form.Label>Дата выпуска</Form.Label>
                                 <Form.Control required type="date" value={publicationdate} onChange={e => setPublicationdate(e.target.value)} />
                             </FormGroup>
-
+                            <Form.Label>Авторы</Form.Label>
+                            <div style={{height:"150px",overflow: "auto"}}>
                             <BootstrapTable
                                 keyField="fullname"
                                 data={authors}
@@ -282,7 +283,9 @@ function AddBook() {
                                 selectRow={selectRowAuthor}
                                 selected={selectedAuthor}
                             />
-
+                            </div>
+                            <Form.Label>Теги/Жанры</Form.Label>
+                            <div style={{height:"150px",overflow: "auto"}}>
                             <BootstrapTable
                                 keyField="tagname"
                                 data={tags}
@@ -291,7 +294,9 @@ function AddBook() {
                                 selectRow={selectRowTag}
                                 selected={selectedTag}
                             />
-
+                            </div>
+                            <Form.Label>Серии</Form.Label>
+                            <div style={{height:"150px",overflow: "auto"}}>
                             <BootstrapTable
                                 keyField="seriesname"
                                 data={series}
@@ -300,6 +305,7 @@ function AddBook() {
                                 selectRow={selectRowSeries}
                                 selected={selectedSeries}
                             />
+                            </div>
 
                             <FormGroup className="mb-3" controlId="bookdate">
                                 Переплет
