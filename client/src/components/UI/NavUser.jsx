@@ -15,20 +15,33 @@ const NavUser = observer(() => {
     const logOut = () => {
         user.setUser({})
         user.setIsAuth(false)
+        user.setIsAdmin(false)
+        localStorage.setItem('token', '')
     }
 
     return (
-            <Navbar className='col-12' bg="dark" variant="dark">
-                <Container>
-                    <NavLink style={{ color: 'white' }} to={MAIN_ROUTE}>лого</NavLink>
-                    {user.isAuth ?
-                        <Nav className="ml-auto" style={{ color: 'white' }}>
-                            <Button
+        <Navbar className='col-12' bg="dark" variant="dark">
+            <Container>
+                <NavLink style={{ color: 'white' }} to={MAIN_ROUTE}>лого</NavLink>
+                {user.isAuth ?
+                    <Nav className="ml-auto" style={{ color: 'white' }}>
+                        {user.isAdmin ?
+                            <div><Button
                                 variant={"outline-light"}
                                 onClick={() => history.push(ADMIN_ROUTE)}
                             >
                                 Админ панель
-                            </Button>
+                            </Button><Button
+                                variant={"outline-light"}
+                                onClick={() => logOut()}
+                                className="ml-2"
+                            >
+                                    Выйти
+                                </Button></div>
+
+
+
+                            :
                             <Button
                                 variant={"outline-light"}
                                 onClick={() => logOut()}
@@ -36,14 +49,15 @@ const NavUser = observer(() => {
                             >
                                 Выйти
                             </Button>
-                        </Nav>
-                        :
-                        <Nav className="ml-auto" style={{ color: 'white' }}>
-                            <Button variant={"outline-light"} onClick={() => history.push(LOGIN_ROUTE)}>Авторизация</Button>
-                        </Nav>
-                    }
-                </Container>
-            </Navbar>
+                        }
+                    </Nav>
+                    :
+                    <Nav className="ml-auto" style={{ color: 'white' }}>
+                        <Button variant={"outline-light"} onClick={() => history.push(LOGIN_ROUTE)}>Авторизация</Button>
+                    </Nav>
+                }
+            </Container>
+        </Navbar>
 
     );
 });

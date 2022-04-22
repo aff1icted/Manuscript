@@ -7,6 +7,7 @@ import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "../components/modals/AlertDelete";
+import NavAdmin from "../components/UI/NavAdmin";
 
 function AdminTag() {
     const hist = useHistory()
@@ -86,49 +87,52 @@ function AdminTag() {
         return <Loader />
     }
     return (
-        <div className="enter">
-            <Row className="justify-content-md-center">
-                <Col md-4>
-                    {/* Основная часть, здесь размещать таблицы и проч */}
-                    <div className="subcolumns-left">
-                        <div hidden={filterHide}>
-                            <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
-                            <Button onClick={Filtr}>Поиск</Button>
+        <div className="blocks">
+            <NavAdmin />
+            <div className="enter">
+                <Row className="justify-content-md-center">
+                    <Col md-4>
+                        {/* Основная часть, здесь размещать таблицы и проч */}
+                        <div className="subcolumns-left">
+                            <div hidden={filterHide}>
+                                <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
+                                <Button onClick={Filtr}>Поиск</Button>
+                            </div>
+                            <Button onClick={FilterClic}>{filterButton}</Button>
+                            <BootstrapTable
+                                keyField="tagname"
+                                data={filteredTags}
+                                columns={columns}
+                                hover="true"
+                                selectRow={selectRow}
+                                rowEvents={rowEvents}
+                            />
                         </div>
-                        <Button onClick={FilterClic}>{filterButton}</Button>
-                        <BootstrapTable
-                            keyField="tagname"
-                            data={filteredTags}
-                            columns={columns}
-                            hover="true"
-                            selectRow={selectRow}
-                            rowEvents={rowEvents}
-                        />
-                    </div>
-                </Col>
-                <Col md-auto>
-                    {/* А здесь кнопки */}
-                    <div className="subcolumns-right">
-                        <Button variant="secondary" onClick={e => hist.push('/admin/tag/creating')}>
-                            Добавить
-                        </Button>
-                        <Button variant="secondary" onClick={e => hist.push(`/admin/tag/${currentTag}`)}>
-                            Изменить
-                        </Button>
-                        <Button variant="secondary" onClick={e => {
-                            if (currentTag != '') {
-                                setShow(true)
-                            }
-                        }}>
-                            Удалить
-                        </Button>
-                    </div>
+                    </Col>
+                    <Col md-auto>
+                        {/* А здесь кнопки */}
+                        <div className="subcolumns-right">
+                            <Button variant="secondary" onClick={e => hist.push('/admin/tag/creating')}>
+                                Добавить
+                            </Button>
+                            <Button variant="secondary" onClick={e => hist.push(`/admin/tag/${currentTag}`)}>
+                                Изменить
+                            </Button>
+                            <Button variant="secondary" onClick={e => {
+                                if (currentTag != '') {
+                                    setShow(true)
+                                }
+                            }}>
+                                Удалить
+                            </Button>
+                        </div>
 
-                </Col>
-            </Row>
-            <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить тег/жанр ${currentTag}?`} del={() => { deletetag(); setShow(false) }} />
+                    </Col>
+                </Row>
+                <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить тег/жанр ${currentTag}?`} del={() => { deletetag(); setShow(false) }} />
 
 
+            </div>
         </div>
 
     )

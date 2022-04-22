@@ -7,6 +7,7 @@ import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "../components/modals/AlertDelete";
+import NavAdmin from "../components/UI/NavAdmin";
 
 function AdminAuthor() {
     const hist = useHistory()
@@ -86,54 +87,57 @@ function AdminAuthor() {
         return <Loader />
     }
     return (
-        <div className="enter">
-            <Row className="justify-content-md-center">
-                <Col md-4>
-                    {/* Основная часть, здесь размещать таблицы и проч */}
-                    <div className="subcolumns-left">
-                        <div hidden={filterHide}>
-                            <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по ФИО" />
-                            <Button onClick={Filtr}>Поиск</Button>
+        <div className="blocks">
+            <NavAdmin />
+            <div className="enter">
+                <Row className="justify-content-md-center">
+                    <Col md-4>
+                        {/* Основная часть, здесь размещать таблицы и проч */}
+                        <div className="subcolumns-left">
+                            <div hidden={filterHide}>
+                                <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по ФИО" />
+                                <Button onClick={Filtr}>Поиск</Button>
+                            </div>
+                            <Button onClick={FilterClic}>{filterButton}</Button>
+                            <BootstrapTable
+                                keyField="fullname"
+                                data={filteredAuthors}
+                                columns={columns}
+                                hover="true"
+                                selectRow={selectRow}
+                                rowEvents={rowEvents}
+                            />
+
+
                         </div>
-                        <Button onClick={FilterClic}>{filterButton}</Button>
-                        <BootstrapTable
-                            keyField="fullname"
-                            data={filteredAuthors}
-                            columns={columns}
-                            hover="true"
-                            selectRow={selectRow}
-                            rowEvents={rowEvents}
-                        />
+
+                    </Col>
+
+                    <Col md-auto>
+
+                        {/* А здесь кнопки */}
+                        <div className="subcolumns-right">
+                            <Button variant="secondary" onClick={e => hist.push('/admin/author/creating')}>
+                                Добавить
+                            </Button>
+                            <Button variant="secondary" onClick={e => hist.push(`/admin/author/${currentAuthor}`)}>
+                                Изменить
+                            </Button>
+                            <Button variant="secondary" onClick={e => {
+                                if (currentAuthor != '') {
+                                    setShow(true)
+                                }
+                            }}>
+                                Удалить
+                            </Button>
+                        </div>
+
+                    </Col>
+                </Row>
+                <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить автора ${currentAuthor}?`} del={() => { deleteauthor(); setShow(false) }} />
 
 
-                    </div>
-
-                </Col>
-
-                <Col md-auto>
-
-                    {/* А здесь кнопки */}
-                    <div className="subcolumns-right">
-                        <Button variant="secondary" onClick={e => hist.push('/admin/author/creating')}>
-                            Добавить
-                        </Button>
-                        <Button variant="secondary" onClick={e => hist.push(`/admin/author/${currentAuthor}`)}>
-                            Изменить
-                        </Button>
-                        <Button variant="secondary" onClick={e => {
-                            if (currentAuthor != '') {
-                                setShow(true)
-                            }
-                        }}>
-                            Удалить
-                        </Button>
-                    </div>
-
-                </Col>
-            </Row>
-            <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить автора ${currentAuthor}?`} del={() => { deleteauthor(); setShow(false) }} />
-
-
+            </div>
         </div>
 
     )

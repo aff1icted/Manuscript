@@ -1,9 +1,11 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import '../styles/App.css'
 import { useParams } from 'react-router';
 import { Loader } from "../components/UI/Loader";
 import BookPage from "../components/Bookpage";
 import axios from 'axios'
+import NavBar from "../components/UI/NavBar";
+import Footer from "../components/UI/Footer";
 
 
 function Bookid() {
@@ -14,7 +16,6 @@ function Bookid() {
 
   async function fetchBook() {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book/${LinkISBN}`)
-    console.log('data', response.data)
     setBook(response.data)
   }
 
@@ -29,11 +30,18 @@ function Bookid() {
     return (
       <Loader />
     )
-  } else {
-    return (
-      <BookPage Book={Book} />
-    )
   }
+  return (
+
+    <div>
+      <div className="content">
+        <NavBar />
+        <BookPage Book={Book} />
+      </div>
+      <Footer />
+    </div>
+  )
+
 }
 
 export default Bookid;

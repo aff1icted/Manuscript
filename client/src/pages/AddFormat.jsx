@@ -7,9 +7,10 @@ import { Loader } from "../components/UI/Loader";
 import { Col, Row } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import AlertMsg from "../components/modals/AlertMsg";
+import NavAdmin from "../components/UI/NavAdmin";
 
 function AddFormat() {
-    const hist = useHistory()   
+    const hist = useHistory()
     const LinkFormatName = useParams().name
     const [name, setName] = useState('')
     const [coeff, setCoeff] = useState('')
@@ -80,44 +81,47 @@ function AddFormat() {
         return <Loader />
     }
     return (
-        <div className="enter">
-            <Row className="justify-content-md-center">
-                <Col md-4>
-                    {/* Основная часть, здесь размещать таблицы и проч */}
-                    <div className="subcolumns-left">
-                        <Form>
-                            <h2>{titleText}</h2>
-                            <FormGroup className="mb-3" controlId="formatname">
-                                Название формата
-                                <Form.Control required type="text" placeholder="Название формата" value={name} onChange={e => setName(e.target.value)} />
-                            </FormGroup>
+        <div className="blocks">
+            <NavAdmin />
+            <div className="enter">
+                <Row className="justify-content-md-center">
+                    <Col md-4>
+                        {/* Основная часть, здесь размещать таблицы и проч */}
+                        <div className="subcolumns-left">
+                            <Form>
+                                <h2>{titleText}</h2>
+                                <FormGroup className="mb-3" controlId="formatname">
+                                    Название формата
+                                    <Form.Control required type="text" placeholder="Название формата" value={name} onChange={e => setName(e.target.value)} />
+                                </FormGroup>
 
-                            <FormGroup className="mb-3" controlId="formratio">
-                                Коэффициент
-                                <Form.Control required type="text" placeholder="коэффициент" value={coeff} onChange={e => setCoeff(e.target.value)} />
-                            </FormGroup>
-                        </Form>
-                    </div>
-                </Col>
-                <Col md-auto>
-                    {/* А здесь кнопки */}
-                    <div className="subcolumns-right">
+                                <FormGroup className="mb-3" controlId="formratio">
+                                    Коэффициент
+                                    <Form.Control required type="text" placeholder="коэффициент" value={coeff} onChange={e => setCoeff(e.target.value)} />
+                                </FormGroup>
+                            </Form>
+                        </div>
+                    </Col>
+                    <Col md-auto>
+                        {/* А здесь кнопки */}
+                        <div className="subcolumns-right">
 
-                        <Button variant="secondary" hidden={addVisible} onClick={e => addformat()}>
-                            Добавить
-                        </Button>
+                            <Button variant="secondary" hidden={addVisible} onClick={e => addformat()}>
+                                Добавить
+                            </Button>
 
-                        <Button variant="secondary" hidden={editVisible} onClick={e => edtformat()} >
-                            Сохранить
-                        </Button>
-                    </div>
-                </Col >
-            </Row >
-            <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Формат ${name} создан`} />
-            <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Формат ${LinkFormatName} добавлен`} />
+                            <Button variant="secondary" hidden={editVisible} onClick={e => edtformat()} >
+                                Сохранить
+                            </Button>
+                        </div>
+                    </Col >
+                </Row >
+                <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Формат ${name} создан`} />
+                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Формат ${LinkFormatName} добавлен`} />
 
 
-        </div >
+            </div >
+        </div>
     )
 }
 

@@ -6,10 +6,11 @@ import axios from "axios";
 import { Loader } from "../components/UI/Loader";
 import { useParams, useHistory } from "react-router-dom";
 import AlertMsg from "../components/modals/AlertMsg";
+import NavAdmin from "../components/UI/NavAdmin";
 
 
 function AddCover() {
-    const hist = useHistory()    
+    const hist = useHistory()
     const [coverName, setCoverName] = useState('')
     const [loading, setLoading] = useState(true)
     const [titleText, setTitleText] = useState('')
@@ -67,45 +68,48 @@ function AddCover() {
             alert(e.response.data.message)
         }
     }
-    
+
     if (loading) {
         return <Loader />
     }
     return (
-        <div className="enter">
-            <Row className="justify-content-md-center">
-                <Col md-4>
-                    {/* Основная часть, здесь размещать таблицы и проч */}
-                    <div className="subcolumns-left">
-                        <Form>
-                            <h2>{titleText}</h2>
-                            <FormGroup className="mb-3" controlId="covername">
-                                Название переплета
-                                <Form.Control required type="text" placeholder="Название" value={coverName} onChange={e => setCoverName(e.target.value)} />
-                            </FormGroup>
-                        </Form>
-                    </div>
-                </Col>
-                <Col md-auto>
-                    {/* А здесь кнопки */}
-                    <div className="subcolumns-right">
+        <div className="blocks">
+            <NavAdmin />
+            <div className="enter">
+                <Row className="justify-content-md-center">
+                    <Col md-4>
+                        {/* Основная часть, здесь размещать таблицы и проч */}
+                        <div className="subcolumns-left">
+                            <Form>
+                                <h2>{titleText}</h2>
+                                <FormGroup className="mb-3" controlId="covername">
+                                    Название переплета
+                                    <Form.Control required type="text" placeholder="Название" value={coverName} onChange={e => setCoverName(e.target.value)} />
+                                </FormGroup>
+                            </Form>
+                        </div>
+                    </Col>
+                    <Col md-auto>
+                        {/* А здесь кнопки */}
+                        <div className="subcolumns-right">
 
-                        <Button variant="secondary" hidden={addVisible} onClick={e => addCover()}>
-                            Добавить
-                        </Button>
+                            <Button variant="secondary" hidden={addVisible} onClick={e => addCover()}>
+                                Добавить
+                            </Button>
 
-                        <Button variant="secondary" hidden={editVisible} onClick={e => edtCover()} >
-                            Сохранить
-                        </Button>
+                            <Button variant="secondary" hidden={editVisible} onClick={e => edtCover()} >
+                                Сохранить
+                            </Button>
 
-                    </div>
+                        </div>
 
-                </Col>
-            </Row>
-            <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Переплет ${coverName} создан`} />
-            <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Переплет ${LinkCover} добавлен`} />
+                    </Col>
+                </Row>
+                <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Переплет ${coverName} создан`} />
+                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Переплет ${LinkCover} добавлен`} />
 
-        </div >
+            </div >
+        </div>
     )
 }
 

@@ -1,14 +1,15 @@
-import react from "react"
+
 import { Link } from "react-router-dom";
-/* авыаваыв*/
+import { ABOUT_ROUTE, AUTHOR_ROUTE, BOOKS_ROUTE, ORDER_ROUTE } from "../utils/consts";
+
 const NavBar = () =>{
   return (
     <div className="nav d-flex justify-content-around">
 		  <ul class="menu">					
-			  <li><Link to="/books">КНИГИ</Link></li>
-        <li><Link to="/author">АВТОРЫ</Link></li>
-        <li><Link to="/order">ЗАКАЗАТЬ</Link></li>
-        <li><Link to="/about">О НАС</Link></li>
+			  <li><Link to={BOOKS_ROUTE}>КНИГИ</Link></li>
+        <li><Link to={AUTHOR_ROUTE}>АВТОРЫ</Link></li>
+        <li><Link to={ORDER_ROUTE}>ЗАКАЗАТЬ</Link></li>
+        <li><Link to={ABOUT_ROUTE}>О НАС</Link></li>
 		  </ul>
 	  </div>
 

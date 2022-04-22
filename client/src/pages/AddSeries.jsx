@@ -6,6 +6,7 @@ import axios from "axios"
 import { Loader } from "../components/UI/Loader";
 import { Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import NavAdmin from "../components/UI/NavAdmin";
 
 function AddSeries() {
     const LinkSeriesName = useParams().seriesname
@@ -28,7 +29,7 @@ function AddSeries() {
             formData.append('seriesname', name)
             formData.append('foundation', foundation)
             formData.append('seriespic', seriesPic)
-            await create(formData);            
+            await create(formData);
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -37,7 +38,7 @@ function AddSeries() {
     async function fetchSeries() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/series/${LinkSeriesName}`)
         setName(response.data.seriesname)
-        setFoundation(response.data.foundation) 
+        setFoundation(response.data.foundation)
         setSeriesPic(response.data.seriespic)
     }
 
@@ -68,7 +69,7 @@ function AddSeries() {
             formData.append('seriesname', name)
             formData.append('oldseriesname', LinkSeriesName)
             formData.append('foundation', foundation)
-            console.log('seriespic',seriesPic)
+            console.log('seriespic', seriesPic)
             formData.append('seriespic', seriesPic)
             let data;
             data = await useries(formData);
@@ -82,43 +83,46 @@ function AddSeries() {
         return <Loader />
     }
     return (
-        <div className="enter">
-            <Row className="justify-content-md-center">
-                <Col md-4>
-                    {/* Основная часть, здесь размещать таблицы и проч */}
-                    <div className="subcolumns-left">
-                        <Form>
-                            <h2>{titleText}</h2>
-                            <FormGroup className="mb-3" controlId="sername">
-                                Название
-                                <Form.Control required type="text" placeholder="Название" value={name} onChange={e => setName(e.target.value)} />
-                            </FormGroup>
-                            <Form.Group controlId="serimg" className="mb-3">
-                                <Form.Label>Иллюстрация к серии</Form.Label>
-                                <Form.Control type="file" filename={seriesPic} onChange={e => setSeriesPic(e.target.files[0])} />{/*сделать получение имени файла или сделать отображение изображения*/}
-                            </Form.Group>                                                      
-                            <Form.Group controlId="serdate" className="mb-3">
-                                <Form.Label>Дата основания серии</Form.Label>
-                                <Form.Control required type="date" value={foundation} onChange={e => setFoundation(e.target.value)} />
-                            </Form.Group>
-                        </Form>
-                    </div>
-                </Col>
-                <Col md-auto>
-                    {/* А здесь кнопки */}
-                    <div className="subcolumns-right">
-                        <Button variant="secondary" hidden={addVisible} onClick={e => addSeries()}>
-                            Добавить
-                        </Button>
+        <div className="blocks">
+            <NavAdmin />
+            <div className="enter">
+                <Row className="justify-content-md-center">
+                    <Col md-4>
+                        {/* Основная часть, здесь размещать таблицы и проч */}
+                        <div className="subcolumns-left">
+                            <Form>
+                                <h2>{titleText}</h2>
+                                <FormGroup className="mb-3" controlId="sername">
+                                    Название
+                                    <Form.Control required type="text" placeholder="Название" value={name} onChange={e => setName(e.target.value)} />
+                                </FormGroup>
+                                <Form.Group controlId="serimg" className="mb-3">
+                                    <Form.Label>Иллюстрация к серии</Form.Label>
+                                    <Form.Control type="file" filename={seriesPic} onChange={e => setSeriesPic(e.target.files[0])} />{/*сделать получение имени файла или сделать отображение изображения*/}
+                                </Form.Group>
+                                <Form.Group controlId="serdate" className="mb-3">
+                                    <Form.Label>Дата основания серии</Form.Label>
+                                    <Form.Control required type="date" value={foundation} onChange={e => setFoundation(e.target.value)} />
+                                </Form.Group>
+                            </Form>
+                        </div>
+                    </Col>
+                    <Col md-auto>
+                        {/* А здесь кнопки */}
+                        <div className="subcolumns-right">
+                            <Button variant="secondary" hidden={addVisible} onClick={e => addSeries()}>
+                                Добавить
+                            </Button>
 
-                        <Button variant="secondary" hidden={editVisible} onClick={e => edtSeries()} >
-                            Сохранить
-                        </Button>
-                    </div>
-                </Col >
-            </Row >
+                            <Button variant="secondary" hidden={editVisible} onClick={e => edtSeries()} >
+                                Сохранить
+                            </Button>
+                        </div>
+                    </Col >
+                </Row >
 
 
+            </div>
         </div>
 
     )

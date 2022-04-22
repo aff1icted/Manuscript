@@ -6,10 +6,11 @@ import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AlertMsg from "../components/modals/AlertMsg";
+import NavAdmin from "../components/UI/NavAdmin";
 
 
 function AddTag() {
-    const hist= useHistory()
+    const hist = useHistory()
     const LinkTagName = useParams().tagname
     const [tag, setTag] = useState('')
     const [loading, setLoading] = useState(true)
@@ -76,45 +77,48 @@ function AddTag() {
         return <Loader />
     }
     return (
-        <div className="enter">
-            <Row className="justify-content-md-center">
-                <Col md-4>
-                    {/* Основная часть, здесь размещать таблицы и проч */}
-                    <div className="subcolumns-left">
-                        <Form>
-                            <h2>{titleText}</h2>
-                            <FormGroup className="mb-3" controlId="Tagname">
-                                Название тега/жанра
-                                <Form.Control required type="text" placeholder="Название тега" value={tag} onChange={e => setTag(e.target.value)} />
-                            </FormGroup>
+        <div className="blocks">
+            <NavAdmin />
+            <div className="enter">
+                <Row className="justify-content-md-center">
+                    <Col md-4>
+                        {/* Основная часть, здесь размещать таблицы и проч */}
+                        <div className="subcolumns-left">
+                            <Form>
+                                <h2>{titleText}</h2>
+                                <FormGroup className="mb-3" controlId="Tagname">
+                                    Название тега/жанра
+                                    <Form.Control required type="text" placeholder="Название тега" value={tag} onChange={e => setTag(e.target.value)} />
+                                </FormGroup>
 
-                        </Form>
-                    </div>
-                </Col>
-                <Col md-auto>
+                            </Form>
+                        </div>
+                    </Col>
+                    <Col md-auto>
 
-                    {/* А здесь кнопки */}
-                    <div className="subcolumns-right">
+                        {/* А здесь кнопки */}
+                        <div className="subcolumns-right">
 
-                        <Button variant="secondary" hidden={addVisible} onClick={e => addTag()}>
-                            Добавить
-                        </Button>
+                            <Button variant="secondary" hidden={addVisible} onClick={e => addTag()}>
+                                Добавить
+                            </Button>
 
-                        <Button variant="secondary" hidden={editVisible} onClick={e => edtTag()} >
-                            Сохранить
-                        </Button>
+                            <Button variant="secondary" hidden={editVisible} onClick={e => edtTag()} >
+                                Сохранить
+                            </Button>
 
-                    </div>
+                        </div>
 
-                </Col>
-            </Row>
+                    </Col>
+                </Row>
 
-            <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Тег/жанр ${tag} создан`} />
-            <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Тег/жанр ${LinkTagName} добавлен`} />
+                <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Тег/жанр ${tag} создан`} />
+                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Тег/жанр ${LinkTagName} добавлен`} />
 
 
 
-        </div >
+            </div >
+        </div>
     )
 }
 

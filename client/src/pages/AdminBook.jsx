@@ -7,6 +7,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import { Button, Col, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "../components/modals/AlertDelete";
+import NavAdmin from "../components/UI/NavAdmin";
 
 
 
@@ -113,72 +114,75 @@ function AdminBook() {
         return <Loader />
     }
     return (
-        <div className="enter">
+        <div className="blocks">
+            <NavAdmin />
+            <div className="enter">
 
-            <Row className="justify-content-md-center">
-                <Col md-4>
-                    <div className="subcolumns-left">
-                        <div hidden={filterHide} >
-                            <div>
-                                Поиск по ISBN
-                            </div>
-                            <div>
-                                <input value={isbnSearch} onChange={e => setIsbnSearch(e.target.value)} placeholder="Поиск по ISBN" />
-                            </div>
-                            <div>
-                                Поиск по названию
-                            </div>
-                            <div>
-                                <input value={titleSearch} onChange={e => setTitleSearch(e.target.value)} placeholder="Поиск по названию" />
-                            </div>
-                            <div>
-                                Поиск по автору
-                            </div>
-                            <div>
-                                <select onChange={(e) => setAuthorSearch(e.target.value)}>
-                                    <option selected="true" value={''}>{''}</option>
-                                    {authors.map(option =>
-                                        <option key={option.fullname} value={option.fullname}>
-                                            {option.fullname}
-                                        </option>
-                                    )}
-                                </select>
-                            </div>
+                <Row className="justify-content-md-center">
+                    <Col md-4>
+                        <div className="subcolumns-left">
+                            <div hidden={filterHide} >
+                                <div>
+                                    Поиск по ISBN
+                                </div>
+                                <div>
+                                    <input value={isbnSearch} onChange={e => setIsbnSearch(e.target.value)} placeholder="Поиск по ISBN" />
+                                </div>
+                                <div>
+                                    Поиск по названию
+                                </div>
+                                <div>
+                                    <input value={titleSearch} onChange={e => setTitleSearch(e.target.value)} placeholder="Поиск по названию" />
+                                </div>
+                                <div>
+                                    Поиск по автору
+                                </div>
+                                <div>
+                                    <select onChange={(e) => setAuthorSearch(e.target.value)}>
+                                        <option selected="true" value={''}>{''}</option>
+                                        {authors.map(option =>
+                                            <option key={option.fullname} value={option.fullname}>
+                                                {option.fullname}
+                                            </option>
+                                        )}
+                                    </select>
+                                </div>
 
 
 
-                            <Button onClick={Filtr}>Поиск</Button>
+                                <Button onClick={Filtr}>Поиск</Button>
+                            </div>
+                            <Button onClick={FilterClic}>{filterButton}</Button>
+                            <BootstrapTable
+                                keyField="isbn"
+                                data={filteredBook}
+                                columns={columns}
+                                hover="true"
+                                selectRow={selectRow}
+                                rowEvents={rowEvents}
+                            />
                         </div>
-                        <Button onClick={FilterClic}>{filterButton}</Button>
-                        <BootstrapTable
-                            keyField="isbn"
-                            data={filteredBook}
-                            columns={columns}
-                            hover="true"
-                            selectRow={selectRow}
-                            rowEvents={rowEvents}
-                        />
-                    </div>
-                </Col>
-                <Col md-auto>
-                    <div className="subcolumns-right">
-                        <Button variant="secondary" onClick={e => hist.push('/admin/book/creating')}>
-                            Добавить
-                        </Button>
-                        <Button variant="secondary" onClick={e => hist.push(`/admin/book/${currentBook}`)}>
-                            Изменить
-                        </Button>
-                        <Button variant="secondary" onClick={e => {
-                            if (currentBook != '') {
-                                setShow(true)
-                            }
-                        }}>
-                            Удалить
-                        </Button>
-                    </div>
-                </Col>
-            </Row>
-            <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить книгу ${currentBook}?`} del={() => { deletebook(); setShow(false) }} />
+                    </Col>
+                    <Col md-auto>
+                        <div className="subcolumns-right">
+                            <Button variant="secondary" onClick={e => hist.push('/admin/book/creating')}>
+                                Добавить
+                            </Button>
+                            <Button variant="secondary" onClick={e => hist.push(`/admin/book/${currentBook}`)}>
+                                Изменить
+                            </Button>
+                            <Button variant="secondary" onClick={e => {
+                                if (currentBook != '') {
+                                    setShow(true)
+                                }
+                            }}>
+                                Удалить
+                            </Button>
+                        </div>
+                    </Col>
+                </Row>
+                <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить книгу ${currentBook}?`} del={() => { deletebook(); setShow(false) }} />
+            </div>
         </div>
     )
 }

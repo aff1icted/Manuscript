@@ -8,6 +8,7 @@ import { Col, Row } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import AlertMsg from "../components/modals/AlertMsg";
+import NavAdmin from "../components/UI/NavAdmin";
 
 function AddBook() {
     const hist = useHistory()
@@ -38,8 +39,8 @@ function AddBook() {
     const [oldFullpdf, setOldFullpdf] = useState(null)
     const [selectedCover, setSelectedCover] = useState('Переплет')
     const [selectedFormat, setSelectedFormat] = useState('Формат')
-    const [showCreate,setShowCreate]=useState(false)
-    const [showEdit,setShowEdit]=useState(false)
+    const [showCreate, setShowCreate] = useState(false)
+    const [showEdit, setShowEdit] = useState(false)
 
     async function fetchAuthors() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
@@ -135,11 +136,11 @@ function AddBook() {
             formData.append('coverCover', cover)
             let data;
             data = await create(formData);
-            setShowCreate(true)            
+            setShowCreate(true)
         } catch (e) {
             alert(e.response.data.message)
         }
-    }  
+    }
 
     async function ubook(type) {
         const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/book`, type)
@@ -167,7 +168,7 @@ function AddBook() {
             formData.append('oldfullpdf', oldShortpdf)
             formData.append('fullpdf', fullpdf)
             formData.append('formatName', format)
-            formData.append('coverCover', cover)            
+            formData.append('coverCover', cover)
             let data;
             data = await ubook(formData);
             setShowEdit(true)
@@ -180,7 +181,7 @@ function AddBook() {
     const [selectedAuthor, setSelectedAuthor] = useState([])
 
     const columnsAuthor = [
-        { dataField: "fullname"}
+        { dataField: "fullname" }
     ]
 
     const selectRowAuthor = {
@@ -201,7 +202,7 @@ function AddBook() {
     const [selectedTag, setSelectedTag] = useState([])
 
     const columnsTag = [
-        { dataField: "tagname"}
+        { dataField: "tagname" }
     ]
 
     const selectRowTag = {
@@ -223,7 +224,7 @@ function AddBook() {
     const [selectedSeries, setSelectedSeries] = useState([])
 
     const columnsSeries = [
-        { dataField: "seriesname"}
+        { dataField: "seriesname" }
     ]
 
     const selectRowSeries = {
@@ -247,142 +248,145 @@ function AddBook() {
         return <Loader />
     }
     return (
+        <div className="blocks">
+            <NavAdmin />
 
 
-        <div className="enter">
-
-
-
-            <Row className="justify-content-md-center">
-                <Col md-4>
-                    {/* Основная часть, здесь размещать таблицы и проч */}
-                    <div className="subcolumns-left">
-                        <Form>
-                            <h2>{titleText}</h2>
-                            <FormGroup className="mb-3" controlId="isbn">
-                                ISBN
-                                <Form.Control required type="text" placeholder="ISBN" value={isbn} onChange={e => setIsbn(e.target.value)} />
-                            </FormGroup>
-
-                            <FormGroup className="mb-3" controlId="bookname">
-                                Название книги
-                                <Form.Control required type="text" placeholder="Название книги" value={title} onChange={e => setTitle(e.target.value)} />
-                            </FormGroup>
-
-                            <FormGroup className="mb-3" controlId="bookdate">
-                                <Form.Label>Дата выпуска</Form.Label>
-                                <Form.Control required type="date" value={publicationdate} onChange={e => setPublicationdate(e.target.value)} />
-                            </FormGroup>
-                            <Form.Label>Авторы</Form.Label>
-                            <div style={{height:"150px",overflow: "auto"}}>
-                            <BootstrapTable
-                                keyField="fullname"
-                                data={authors}
-                                columns={columnsAuthor}
-                                hover="true"
-                                selectRow={selectRowAuthor}
-                                selected={selectedAuthor}
-                            />
-                            </div>
-                            <Form.Label>Теги/Жанры</Form.Label>
-                            <div style={{height:"150px",overflow: "auto"}}>
-                            <BootstrapTable
-                                keyField="tagname"
-                                data={tags}
-                                columns={columnsTag}
-                                hover="true"
-                                selectRow={selectRowTag}
-                                selected={selectedTag}
-                            />
-                            </div>
-                            <Form.Label>Серии</Form.Label>
-                            <div style={{height:"150px",overflow: "auto"}}>
-                            <BootstrapTable
-                                keyField="seriesname"
-                                data={series}
-                                columns={columnsSeries}
-                                hover="true"
-                                selectRow={selectRowSeries}
-                                selected={selectedSeries}
-                            />
-                            </div>
-
-                            <FormGroup className="mb-3" controlId="bookdate">
-                                Переплет
-                                <Form.Select onChange={(e) => setCover(e.target.value)}>
-                                    <option selected="true" disabled="disabled">{selectedCover}</option>
-                                    {covers.map(option =>
-                                        <option key={option.cover} value={option.cover}>
-                                            {option.cover}
-                                        </option>
-                                    )}
-                                </Form.Select>
-                            </FormGroup>
-
-                            <FormGroup className="mb-3" controlId="bookdate">
-                                Формат
-                                <Form.Select onChange={(e) => setFormat(e.target.value)}>
-                                    <option selected="true" disabled="disabled">{selectedFormat}</option>
-                                    {formats.map(option =>
-                                        <option key={option.name} value={option.name}>
-                                            {option.name}
-                                        </option>
-                                    )}
-                                </Form.Select>
-                            </FormGroup>
-
-                            <FormGroup className="mb-3" controlId="isbn">
-                                Количество страниц
-                                <Form.Control required type="text" placeholder="Количество страниц" value={pagenumber} onChange={e => setPagenumber(e.target.value)} />
-                            </FormGroup>
-
-                            <FormGroup className="mb-3" controlId="isbn">
-                                Тираж
-                                <Form.Control required type="text" placeholder="Тираж" value={edition} onChange={e => setEdition(e.target.value)} />
-                            </FormGroup>
-                            <FormGroup className="mb-3" controlId="isbn">
-                                Цена
-                                <Form.Control required type="text" placeholder="Цена" value={price} onChange={e => setPrice(e.target.value)} />
-                            </FormGroup>
+            <div className="enter">
 
 
 
-                            <Form.Group className="mb-3" controlId="BookDescr">
-                                Описание
-                                <Form.Control required as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
-                            </Form.Group>
-                            <Form.Group controlId="bookimg" className="mb-3">
-                                <Form.Label>Обложка книги</Form.Label>
-                                <Form.Control type="file" onChange={e => setCoverart(e.target.files[0])} />
-                            </Form.Group>
-                            <Form.Group controlId="bookimg" className="mb-3">
-                                <Form.Label>Короткий PDF</Form.Label>
-                                <Form.Control type="file" onChange={e => setShortpdf(e.target.files[0])} />
-                            </Form.Group>
-                            <Form.Group controlId="bookimg" className="mb-3">
-                                <Form.Label>Полный PDF</Form.Label>
-                                <Form.Control type="file" onChange={e => setFullpdf(e.target.files[0])} />
-                            </Form.Group>
-                        </Form>
-                    </div>
-                </Col>
-                <Col md-auto>
-                    {/* А здесь кнопки */}
-                    <div className="subcolumns-right">
-                        <Button variant="secondary" hidden={addVisible} onClick={e => addBook()}>
-                            Добавить
-                        </Button>
+                <Row className="justify-content-md-center">
+                    <Col md-4>
+                        {/* Основная часть, здесь размещать таблицы и проч */}
+                        <div className="subcolumns-left">
+                            <Form>
+                                <h2>{titleText}</h2>
+                                <FormGroup className="mb-3" controlId="isbn">
+                                    ISBN
+                                    <Form.Control required type="text" placeholder="ISBN" value={isbn} onChange={e => setIsbn(e.target.value)} />
+                                </FormGroup>
 
-                        <Button variant="secondary" hidden={editVisible} onClick={e => edtbook()} >
-                            Сохранить
-                        </Button>
-                    </div>
-                </Col >
-            </Row >
+                                <FormGroup className="mb-3" controlId="bookname">
+                                    Название книги
+                                    <Form.Control required type="text" placeholder="Название книги" value={title} onChange={e => setTitle(e.target.value)} />
+                                </FormGroup>
 
-           <AlertMsg show={showCreate} onHide={()=>{setShowCreate(false); hist.goBack()}} title={'Оповещение'} body={`Книга ${isbn} создана`} />
-           <AlertMsg show={showEdit} onHide={()=>{setShowEdit(false); hist.goBack()}} title={'Оповещение'} body={`Книга ${LinkIsbn} изменена`} />
+                                <FormGroup className="mb-3" controlId="bookdate">
+                                    <Form.Label>Дата выпуска</Form.Label>
+                                    <Form.Control required type="date" value={publicationdate} onChange={e => setPublicationdate(e.target.value)} />
+                                </FormGroup>
+                                <Form.Label>Авторы</Form.Label>
+                                <div style={{ height: "150px", overflow: "auto" }}>
+                                    <BootstrapTable
+                                        keyField="fullname"
+                                        data={authors}
+                                        columns={columnsAuthor}
+                                        hover="true"
+                                        selectRow={selectRowAuthor}
+                                        selected={selectedAuthor}
+                                    />
+                                </div>
+                                <Form.Label>Теги/Жанры</Form.Label>
+                                <div style={{ height: "150px", overflow: "auto" }}>
+                                    <BootstrapTable
+                                        keyField="tagname"
+                                        data={tags}
+                                        columns={columnsTag}
+                                        hover="true"
+                                        selectRow={selectRowTag}
+                                        selected={selectedTag}
+                                    />
+                                </div>
+                                <Form.Label>Серии</Form.Label>
+                                <div style={{ height: "150px", overflow: "auto" }}>
+                                    <BootstrapTable
+                                        keyField="seriesname"
+                                        data={series}
+                                        columns={columnsSeries}
+                                        hover="true"
+                                        selectRow={selectRowSeries}
+                                        selected={selectedSeries}
+                                    />
+                                </div>
 
+                                <FormGroup className="mb-3" controlId="bookdate">
+                                    Переплет
+                                    <Form.Select onChange={(e) => setCover(e.target.value)}>
+                                        <option selected="true" disabled="disabled">{selectedCover}</option>
+                                        {covers.map(option =>
+                                            <option key={option.cover} value={option.cover}>
+                                                {option.cover}
+                                            </option>
+                                        )}
+                                    </Form.Select>
+                                </FormGroup>
+
+                                <FormGroup className="mb-3" controlId="bookdate">
+                                    Формат
+                                    <Form.Select onChange={(e) => setFormat(e.target.value)}>
+                                        <option selected="true" disabled="disabled">{selectedFormat}</option>
+                                        {formats.map(option =>
+                                            <option key={option.name} value={option.name}>
+                                                {option.name}
+                                            </option>
+                                        )}
+                                    </Form.Select>
+                                </FormGroup>
+
+                                <FormGroup className="mb-3" controlId="isbn">
+                                    Количество страниц
+                                    <Form.Control required type="text" placeholder="Количество страниц" value={pagenumber} onChange={e => setPagenumber(e.target.value)} />
+                                </FormGroup>
+
+                                <FormGroup className="mb-3" controlId="isbn">
+                                    Тираж
+                                    <Form.Control required type="text" placeholder="Тираж" value={edition} onChange={e => setEdition(e.target.value)} />
+                                </FormGroup>
+                                <FormGroup className="mb-3" controlId="isbn">
+                                    Цена
+                                    <Form.Control required type="text" placeholder="Цена" value={price} onChange={e => setPrice(e.target.value)} />
+                                </FormGroup>
+
+
+
+                                <Form.Group className="mb-3" controlId="BookDescr">
+                                    Описание
+                                    <Form.Control required as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
+                                </Form.Group>
+                                <Form.Group controlId="bookimg" className="mb-3">
+                                    <Form.Label>Обложка книги</Form.Label>
+                                    <Form.Control type="file" onChange={e => setCoverart(e.target.files[0])} />
+                                </Form.Group>
+                                <Form.Group controlId="bookimg" className="mb-3">
+                                    <Form.Label>Короткий PDF</Form.Label>
+                                    <Form.Control type="file" onChange={e => setShortpdf(e.target.files[0])} />
+                                </Form.Group>
+                                <Form.Group controlId="bookimg" className="mb-3">
+                                    <Form.Label>Полный PDF</Form.Label>
+                                    <Form.Control type="file" onChange={e => setFullpdf(e.target.files[0])} />
+                                </Form.Group>
+                            </Form>
+                        </div>
+                    </Col>
+                    <Col md-auto>
+                        {/* А здесь кнопки */}
+                        <div className="subcolumns-right">
+                            <Button variant="secondary" hidden={addVisible} onClick={e => addBook()}>
+                                Добавить
+                            </Button>
+
+                            <Button variant="secondary" hidden={editVisible} onClick={e => edtbook()} >
+                                Сохранить
+                            </Button>
+                        </div>
+                    </Col >
+                </Row >
+
+                <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Книга ${isbn} создана`} />
+                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Книга ${LinkIsbn} изменена`} />
+
+            </div>
         </div>
 
 

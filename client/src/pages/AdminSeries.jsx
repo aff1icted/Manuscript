@@ -7,6 +7,7 @@ import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "../components/modals/AlertDelete";
+import NavAdmin from "../components/UI/NavAdmin";
 
 function AdminSeries() {
     const hist = useHistory()
@@ -21,7 +22,7 @@ function AdminSeries() {
     const [show, setShow] = useState(false)
 
     async function fetchSeries() {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/series`)        
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/series`)
         setSeries(response.data)
         setFilteredSeries(response.data)
     }
@@ -91,55 +92,58 @@ function AdminSeries() {
         return <Loader />
     }
     return (
-        <div className="enter">
-            <Row className="justify-content-md-center">
-                <Col md-4>
-                    {/* Основная часть, здесь размещать таблицы и проч */}
-                    <div className="subcolumns-left">
-                        <div hidden={filterHide}>
-                            <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
-                            {/*переделать на поле с датой*/}
-                            <input value={foundationSearch} onChange={e => setFoundationSearch(e.target.value)} placeholder="Поиск по дате основания" />
-                            <Button onClick={Filtr}>Поиск</Button>
+        <div className="blocks">
+            <NavAdmin />
+            <div className="enter">
+                <Row className="justify-content-md-center">
+                    <Col md-4>
+                        {/* Основная часть, здесь размещать таблицы и проч */}
+                        <div className="subcolumns-left">
+                            <div hidden={filterHide}>
+                                <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
+                                {/*переделать на поле с датой*/}
+                                <input value={foundationSearch} onChange={e => setFoundationSearch(e.target.value)} placeholder="Поиск по дате основания" />
+                                <Button onClick={Filtr}>Поиск</Button>
+                            </div>
+                            <Button onClick={FilterClic}>{filterButton}</Button>
+                            <BootstrapTable
+                                keyField="seriesname"
+                                data={filteredSeries}
+                                columns={columns}
+                                hover="true"
+                                selectRow={selectRow}
+                                rowEvents={rowEvents}
+                            />
+
+
                         </div>
-                        <Button onClick={FilterClic}>{filterButton}</Button>
-                        <BootstrapTable
-                            keyField="seriesname"
-                            data={filteredSeries}
-                            columns={columns}
-                            hover="true"
-                            selectRow={selectRow}
-                            rowEvents={rowEvents}
-                        />
 
+                    </Col>
 
-                    </div>
+                    <Col md-auto>
 
-                </Col>
+                        {/* А здесь кнопки */}
+                        <div className="subcolumns-right">
+                            <Button variant="secondary" onClick={e => hist.push('/admin/series/creating')}>
+                                Добавить
+                            </Button>
+                            <Button variant="secondary" onClick={e => hist.push(`/admin/series/${currentSeries}`)}>
+                                Изменить
+                            </Button>
+                            <Button variant="secondary" onClick={e => {
+                                if (currentSeries != '') {
+                                    setShow(true)
+                                }
+                            }}>
+                                Удалить
+                            </Button>
+                        </div>
 
-                <Col md-auto>
+                    </Col>
+                </Row>
+                <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить серию ${currentSeries}?`} del={() => { deleteseries(); setShow(false) }} />
 
-                    {/* А здесь кнопки */}
-                    <div className="subcolumns-right">
-                        <Button variant="secondary" onClick={e => hist.push('/admin/series/creating')}>
-                            Добавить
-                        </Button>
-                        <Button variant="secondary" onClick={e => hist.push(`/admin/series/${currentSeries}`)}>
-                            Изменить
-                        </Button>
-                        <Button variant="secondary" onClick={e => {
-                            if (currentSeries != '') {
-                                setShow(true)
-                            }
-                        }}>
-                            Удалить
-                        </Button>
-                    </div>
-
-                </Col>
-            </Row>
-            <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить серию ${currentSeries}?`} del={() => { deleteseries(); setShow(false) }} />
-
+            </div>
         </div>
 
     )

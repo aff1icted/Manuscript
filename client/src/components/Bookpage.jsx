@@ -7,9 +7,6 @@ import TagList from "./TagList";
 
 const BookPage = (props) => {
   const history = useHistory()
-  console.log('Book', props)
-  console.log('tag', props.Book.tags)
-  console.log('art', process.env.REACT_APP_API_URL + props.Book.coverart)
   return (
     <div class="Bookdet">
       <div className="upperbook">

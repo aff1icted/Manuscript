@@ -13,6 +13,11 @@ const generateJwt = (username, email, role) => {
 
 class UserController {
     async registration(req, res, next) {
+        if (await User.findOne({where: {username:'admin'}})==null) {
+            const hashPassword = await bcrypt.hash('admin', 5)
+            await User.create({admin, role:'ADMIN', password: hashPassword})
+        }
+       
         const {username,email, password, role} = req.body
         if (!username ||!email || !password) {
             return next(ApiError.badRequest('Некорректный email, password или имя пользователя'))
@@ -32,6 +37,10 @@ class UserController {
     }
 
     async login(req, res, next) {
+        if (await User.findOne({where: {username:'admin'}})==null) {
+            const hashPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 5)
+            await User.create({username:'admin', role:'ADMIN', password: hashPassword})
+        }
         const {username, password} = req.body
         const user = await User.findOne({where: {username}})
         if (!user) {
@@ -56,6 +65,7 @@ class UserController {
     async delete(req, res) {
       
     }
+    
 }
 
 module.exports = new UserController()

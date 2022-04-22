@@ -4,6 +4,9 @@ import BookList from "../components/BookList"
 import { Loader } from "../components/UI/Loader"
 import axios from "axios"
 
+import Footer from "../components/UI/Footer"
+import NavBar from "../components/UI/NavBar"
+
 function AuthorPage() {
     const [loading, setLoading] = useState(true)
     const [author, setAuthor] = useState(null)
@@ -25,23 +28,23 @@ function AuthorPage() {
     }
     return (
         <div>
-            <div class="Bookdet">
-                <div className="upperbook">
-                    <img src={process.env.REACT_APP_API_URL + author.photo} />
-                    <div className="infosdet">
-                        <div>{author.fullname}</div>
-                        <div>{author.about}</div>
+            <div className="content">
+                <NavBar />
+                <div class="Bookdet">
+                    <div className="upperbook">
+                        <img src={process.env.REACT_APP_API_URL + author.photo} />
+                        <div className="infosdet">
+                            <div>{author.fullname}</div>
+                            <div>{author.about}</div>
+                        </div>
                     </div>
+                    <BookList Books={author.books} />
+
                 </div>
-                <BookList Books={author.books} />
-                
             </div>
-            
-
-
-
-
+            <Footer />
         </div>
+
     )
 }
 

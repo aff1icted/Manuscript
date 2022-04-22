@@ -3,6 +3,8 @@ import '../styles/App.css'
 import axios from "axios";
 import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
+import NavBar from "../components/UI/NavBar";
+import Footer from "../components/UI/Footer";
 
 
 function Author() {
@@ -32,17 +34,18 @@ function Author() {
     return <Loader />
   }
   return (
+
     <div>
-      <h1>{authorText.text}</h1>
-      {console.log('authors', authors)}
-
-      {authors.map(author => <div onClick={e => hist.push(`/author/${author.fullname}`)}>{author.fullname}</div>)}
-
-
-
-
-
+      <div className="content">
+        <NavBar />
+        <div>
+          <h1>{authorText.text}</h1>
+          {authors.map(author => <div onClick={e => hist.push(`/author/${author.fullname}`)}>{author.fullname}</div>)}
+        </div>
+      </div>
+      <Footer />
     </div>
+
   )
 }
 

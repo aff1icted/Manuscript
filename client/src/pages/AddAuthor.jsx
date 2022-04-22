@@ -8,6 +8,7 @@ import { Loader } from "../components/UI/Loader";
 import { Col, Row } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import AlertMsg from "../components/modals/AlertMsg";
+import NavAdmin from "../components/UI/NavAdmin";
 
 
 function AddAuthor() {
@@ -20,8 +21,8 @@ function AddAuthor() {
     const [titleText, setTitleText] = useState('')
     const [addVisible, setAddVisible] = useState(true)
     const [editVisible, setEditVisible] = useState(true)
-    const [showCreate,setShowCreate]=useState(false)
-    const [showEdit,setShowEdit]=useState(false)
+    const [showCreate, setShowCreate] = useState(false)
+    const [showEdit, setShowEdit] = useState(false)
 
 
 
@@ -99,48 +100,51 @@ function AddAuthor() {
         return <Loader />
     }
     return (
-        <div className="enter">
+        <div className="blocks">
+            <NavAdmin />
+            <div className="enter">
 
-            <Row className="justify-content-md-center">
-                <Col md-4>
-                    {/* Основная часть, здесь размещать таблицы и проч */}
-                    <div className="subcolumns-left">
-                        <Form>
-                            <h2>{titleText}</h2>
-                            <FormGroup className="mb-3" controlId="AuthorFullName">
-                                Полное имя
-                                <Form.Control required type="text" placeholder="Полное имя" value={name} onChange={e => setName(e.target.value)} />
-                            </FormGroup>
-                            <Form.Group className="mb-3" controlId="AuthorDescr">
-                                Описание
-                                <Form.Control as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
-                            </Form.Group>
-                            <Form.Group controlId="authimg" className="mb-3">
-                                <Form.Label>Фотография автора</Form.Label>
-                                <Form.Control type="file" onChange={e => setImg(e.target.files[0])} />
-                            </Form.Group>
-                        </Form >
-                    </div>
-                </Col>
-                <Col md-auto>
-                    {/* А здесь кнопки */}
-                    <div className="subcolumns-right">
+                <Row className="justify-content-md-center">
+                    <Col md-4>
+                        {/* Основная часть, здесь размещать таблицы и проч */}
+                        <div className="subcolumns-left">
+                            <Form>
+                                <h2>{titleText}</h2>
+                                <FormGroup className="mb-3" controlId="AuthorFullName">
+                                    Полное имя
+                                    <Form.Control required type="text" placeholder="Полное имя" value={name} onChange={e => setName(e.target.value)} />
+                                </FormGroup>
+                                <Form.Group className="mb-3" controlId="AuthorDescr">
+                                    Описание
+                                    <Form.Control as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
+                                </Form.Group>
+                                <Form.Group controlId="authimg" className="mb-3">
+                                    <Form.Label>Фотография автора</Form.Label>
+                                    <Form.Control type="file" onChange={e => setImg(e.target.files[0])} />
+                                </Form.Group>
+                            </Form >
+                        </div>
+                    </Col>
+                    <Col md-auto>
+                        {/* А здесь кнопки */}
+                        <div className="subcolumns-right">
 
-                        <Button variant="secondary" hidden={addVisible} onClick={e => addAuthor()}>
-                            Добавить
-                        </Button>
+                            <Button variant="secondary" hidden={addVisible} onClick={e => addAuthor()}>
+                                Добавить
+                            </Button>
 
-                        <Button variant="secondary" hidden={editVisible} onClick={e => edtAuthor()} >
-                            Сохранить
-                        </Button>
+                            <Button variant="secondary" hidden={editVisible} onClick={e => edtAuthor()} >
+                                Сохранить
+                            </Button>
 
 
-                    </div>
+                        </div>
 
-                </Col >
-            </Row >
-            <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Автор ${name} создан`} />
-            <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Автор ${LinkFullName} добавлен`} />
+                    </Col >
+                </Row >
+                <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Автор ${name} создан`} />
+                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Автор ${LinkFullName} добавлен`} />
+            </div>
         </div>
     )
 }

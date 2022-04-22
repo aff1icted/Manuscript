@@ -9,7 +9,6 @@ import LeftArrow from '../../static/angle-left.svg'
 import RightArrow from '../../static/angle-right.svg'
 
 export default function BtnSlider({ direction, moveSlide }) {
-  console.log(direction, moveSlide);
   return (
     <button
       onClick={moveSlide}

@@ -1,8 +1,10 @@
-import { useEffect,  useState } from "react";
+import { useEffect, useState } from "react";
 import BookList from "../components/BookList";
 import '../styles/App.css'
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
+import NavBar from "../components/UI/NavBar";
+import Footer from "../components/UI/Footer";
 
 function Books() {
   const [Books, setBook] = useState([])
@@ -24,17 +26,23 @@ function Books() {
     fetchBooks().finally(() => setLoading(false))
   }, [])
 
-  //  <Filter filter={filter} setFilter={setFilter}></Filter>   
   if (loading) {
     return <Loader />
-  } else {
-    return (
-      <div className="App">
-        <div>{bookText.text}</div>
-        <BookList Books={Books} />
-      </div>
-    )
   }
+  return (
+    <div>
+      <div className="content">
+        <NavBar />
+        <div className="App">
+          <div>{bookText.text}</div>
+          <BookList Books={Books} />
+        </div>
+      </div>
+      <Footer />
+    </div>
+
+  )
+
 
 }
 

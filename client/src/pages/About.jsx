@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Loader } from "../components/UI/Loader";
+import Footer from "../components/UI/Footer";
+import NavBar from "../components/UI/NavBar";
+
 
 
 function About() {
@@ -24,11 +27,18 @@ function About() {
   }
   return (
     <div>
-      <h1>
-        {aboutText.text}
-      </h1>
+      <div className="content">
+        <NavBar />
+        <div>
+          <h1>
+            {aboutText.text}
+          </h1>
 
+        </div>
+      </div>
+      <Footer />
     </div>
+
   )
 }
 
