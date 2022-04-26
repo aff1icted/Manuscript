@@ -6,8 +6,8 @@ import axios from "axios";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Button, Col, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import AlertDelete from "../components/modals/AlertDelete";
 import NavAdmin from "../components/UI/NavAdmin";
+import AlertButton from "../components/modals/AlertButton";
 
 
 
@@ -181,7 +181,7 @@ function AdminBook() {
                         </div>
                     </Col>
                 </Row>
-                <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить книгу ${currentBook}?`} del={() => { deletebook(); setShow(false) }} />
+                <AlertButton show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить книгу ${currentBook}?`} buttontext='Да, удалить' buttonfunc={() => { deletebook(); setShow(false) }} />
             </div>
         </div>
     )

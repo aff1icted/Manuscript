@@ -1,4 +1,4 @@
-import { ABOUT_ROUTE, ADDAUTHOR_ROUTE, ADDBOOK_ROUTE, ADDSERIES_ROUTE, ADDTAG_ROUTE, ADMIN_AUTHOR_ROUTE, ADMIN_BOOK_ROUTE, ADMIN_COVER_ROUTE, ADMIN_FORMAT_ROUTE, ADMIN_PAGE_ROUTE, ADMIN_ROUTE, ADMIN_SERIES_ROUTE, ADMIN_TAG_ROUTE, AUTHOR_ROUTE, BOOKS_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, ORDER_ROUTE, REGISTRATION_ROUTE } from "./components/utils/consts";
+import { ABOUT_ROUTE, ADDAUTHOR_ROUTE, ADDBOOK_ROUTE, ADDSERIES_ROUTE, ADDTAG_ROUTE, ADMIN_AUTHOR_ROUTE, ADMIN_BOOK_ROUTE, ADMIN_COVER_ROUTE, ADMIN_FORMAT_ROUTE, ADMIN_PAGE_ROUTE, ADMIN_ROUTE, ADMIN_SERIES_ROUTE, ADMIN_TAG_ROUTE, AUTHOR_ROUTE, BOOKS_ROUTE, Cart_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, ORDER_ROUTE, REGISTRATION_ROUTE } from "./components/utils/consts";
 import About from "./pages/About";
 import AddAuthor from "./pages/AddAuthor";
 import AddBook from "./pages/AddBook";
@@ -18,9 +18,11 @@ import Author from "./pages/Author";
 import AuthorPage from "./pages/AuthorPage";
 import Bookid from "./pages/Bookid";
 import Books from "./pages/Books";
+import Cart from "./pages/Cart";
 import Main from "./pages/Main";
 import Order from "./pages/Order";
 import Pages from "./pages/Pages";
+
 
 export const adminRoutes = [
     {
@@ -82,7 +84,10 @@ export const adminRoutes = [
 ]
 
 export const authRoutes = [
-    
+    {
+        path: Cart_ROUTE,
+        Component: Cart
+    }   
 
 ]
 

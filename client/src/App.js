@@ -21,6 +21,7 @@ const App = observer(() => {
     check().then(data => {
       user.setUser(data)
       user.setIsAuth(true)
+      //console.log('data',data)
       if (data.role == 'ADMIN') {
         user.setIsAdmin(true)
       }

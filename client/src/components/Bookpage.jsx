@@ -1,21 +1,57 @@
-import e from "cors";
-import react, { useState, useEffect } from "react"
 import { useHistory } from "react-router";
 import AuthorList from "./AuthorList";
-import { Image } from "react-bootstrap";
 import TagList from "./TagList";
+import { observer } from "mobx-react-lite";
+import { useContext, useState } from "react";
+import AlertMsg from "./modals/AlertMsg";
+import { Context } from "../index";
+import AlertButton from "./modals/AlertButton";
+import { LOGIN_ROUTE } from "./utils/consts";
+import axios from "axios";
 
-const BookPage = (props) => {
+const BookPage = observer((props) => {
   const history = useHistory()
+  const { user } = useContext(Context)
+  const [alertShow, setAlertShow] = useState(false)
+  const [alertButtonShow, setAlertButtonShow] = useState(false)
+  const [amount, setAmount] = useState(1)
+
+  async function click() {
+    if (user.isAuth) {
+      addStaff()      
+    } else {
+      setAlertButtonShow(true)
+    }
+  }
+
+  async function create(staff) {
+    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/staff`, staff)
+    return data
+  }
+
+
+  const addStaff = async () => {
+    try {
+      const formData = new FormData()
+      console.log('bookIsbn', props.Book.isbn)
+      formData.append('bookIsbn', props.Book.isbn)
+      formData.append('userUsername', user.user.username)
+      formData.append('amount', amount)
+      const data = await create(formData);
+      setAlertShow(true)
+    } catch (e) {
+      alert(e.response.data.message)
+    }
+  }
+
+
+
+
   return (
     <div class="Bookdet">
       <div className="upperbook">
-
-
-        {/*<Image  width={100}height={200}scr={process.env.REACT_APP_API_URL+props.Book.coverart}/>*/}
         <img src={process.env.REACT_APP_API_URL + props.Book.coverart} />
         <div className="infosdet">
-
           <div>{props.Book.title}</div>
           <div>{props.Book.isbn}</div>
           <TagList tags={props.Book.tags} />
@@ -33,15 +69,22 @@ const BookPage = (props) => {
 
       </div>
       <div className="lowerbook">
-
-
-        <button>в корзину</button>
+        <input value={amount} onChange={e => setAmount(e.target.value)} placeholder="Количество книг" />
+        <button onClick={e => click()}>в корзину</button>
 
 
       </div>
+      <AlertMsg show={alertShow} onHide={() => setAlertShow(false)} title={'Оповещение'} body={`Книга добавлена в корзину`} />
+      <AlertButton show={alertButtonShow}
+        onHide={() => setAlertButtonShow(false)}
+        title={'Оповещение'}
+        body={`Для добавления книги в корзину необходимо авторизоваться`}
+        buttontext='Перейти к авторизации'
+        buttonfunc={() => history.push(LOGIN_ROUTE)}
+      />
     </div>
 
   );
-};
+});
 
 export default BookPage;
