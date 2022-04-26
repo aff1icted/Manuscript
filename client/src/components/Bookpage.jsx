@@ -18,7 +18,7 @@ const BookPage = observer((props) => {
 
   async function click() {
     if (user.isAuth) {
-      addStaff()      
+      addStaff()
     } else {
       setAlertButtonShow(true)
     }
@@ -52,20 +52,24 @@ const BookPage = observer((props) => {
       <div className="upperbook">
         <img src={process.env.REACT_APP_API_URL + props.Book.coverart} />
         <div className="infosdet">
-          <div>{props.Book.title}</div>
-          <div>ISBN: {props.Book.isbn}</div>
+          <div className="boldtext">{props.Book.title}</div>
           <AuthorList authors={props.Book.authors} />
+          <div>ISBN: {props.Book.isbn}</div>
           <TagList tags={props.Book.tags} />
           <div>Дата публикации: {props.Book.publicationdate}</div>
-          <div>Количество страниц: {props.Book.pagenumber}</div>
-          <div>Тираж: {props.Book.edition}</div>
-          <div>{props.Book.description}</div>
+          <div>Количество страниц: {props.Book.pagenumber} с.</div>
+          <div>Тираж: {props.Book.edition} шт.</div>
+          <div>Описание: {props.Book.description}</div>
+          
+          <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.shortpdf}>Отрывок</a>
+          <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.fullpdf}>Читать полностью</a>
+          
+          
         </div>
       </div>
       <div className="lowerbook">
         Цена: {props.Book.price}₽
-        <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.shortpdf}>отрывок</a>
-        <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.fullpdf}>читать полностью</a>
+
 
       </div>
       <div className="lowerbook">

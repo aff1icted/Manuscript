@@ -39,9 +39,9 @@
     padding: 0 15px;
 } 
 
-/*.navbar__links{
+.navbar__links{
     margin-left: auto;
-}*/
+}
 
 /*Navigation*/
 .nav {
@@ -51,7 +51,6 @@
 	background-color: #B96262;
 	margin: 0 auto;
 	padding-top: 23px;
-    
     
 }
 
@@ -145,10 +144,10 @@ ul.menu li a:hover {
     margin: 15%;
     background-color: #f8f8f8;
     box-shadow: 0px 2px 5px gray;
-    font-size: 28px;
+    font-size: 20px;
     margin-top: 15px;
     justify-content:  start;
-    font-family: serif;
+    font-family:'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
 .Bookdet img 
@@ -167,22 +166,30 @@ ul.menu li a:hover {
     
 }
 
+.infosdet a
+{
+    display: flex;
+    justify-content: start;
+}
+
 .upperbook
 {
     display: flex;
     
     background-color: #f8f8f8;
     
-    font-size: 28px;
+    font-size: 20px;
     
     justify-content:  start;
 }
 
 .lowerbook
 {
+    width: 62%;
     padding-top: 15px;
     display: flex;
-    justify-content: space-between;
+    justify-content:space-between;
+    font-weight: bold;
     
 }
 
@@ -196,7 +203,7 @@ ul.menu li a:hover {
     text-align: center;
     margin-right: 10px;
     border: 0;
-    border-radius: 20px;
+    border-radius: 5px;
     font-size: 28px;
     color: #fff;
     
@@ -208,6 +215,13 @@ ul.menu li a:hover {
     bottom: -50px;
 }
 
-.nav-link {    
-    color:#fff !important;
+.navdrop
+{
+    color:#fff
+}
+
+.boldtext
+{
+    font-weight: bold;
+    font-size: 34px;
 }
