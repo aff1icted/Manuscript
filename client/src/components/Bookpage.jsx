@@ -17,17 +17,17 @@ const BookPage = (props) => {
         <div className="infosdet">
 
           <div>{props.Book.title}</div>
-          <div>{props.Book.isbn}</div>
-          <TagList tags={props.Book.tags} />
+          <div>ISBN: {props.Book.isbn}</div>
           <AuthorList authors={props.Book.authors} />
-          <div>Дата публикации:{props.Book.publicationdate}</div>
-          <div>количество страниц:{props.Book.pagenumber}</div>
-          <div>тираж:{props.Book.edition}</div>
-          <div className="description">{props.Book.description}</div>
+          <TagList tags={props.Book.tags} />
+          <div>Дата публикации: {props.Book.publicationdate}</div>
+          <div>Количество страниц: {props.Book.pagenumber}</div>
+          <div>Тираж: {props.Book.edition}</div>
+          <div>{props.Book.description}</div>
         </div>
       </div>
       <div className="lowerbook">
-        цена:{props.Book.price}
+        Цена: {props.Book.price}₽
         <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.shortpdf}>отрывок</a>
         <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.fullpdf}>читать полностью</a>
 
