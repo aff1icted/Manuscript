@@ -6,8 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
-import AlertDelete from "../components/modals/AlertDelete";
 import NavAdmin from "../components/UI/NavAdmin";
+import AlertButton from "../components/modals/AlertButton";
 
 function AdminSeries() {
     const hist = useHistory()
@@ -141,7 +141,7 @@ function AdminSeries() {
 
                     </Col>
                 </Row>
-                <AlertDelete show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить серию ${currentSeries}?`} del={() => { deleteseries(); setShow(false) }} />
+                <AlertButton show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить серию ${currentSeries}?`} buttontext='Да, удалить' buttonfunc={() => { deleteseries(); setShow(false) }} />
 
             </div>
         </div>
