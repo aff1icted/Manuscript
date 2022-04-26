@@ -66,6 +66,19 @@ const Pages = sequelize.define('pages', {
     url: {type: DataTypes.TEXT}
 })
 
+const CartStaff = sequelize.define('cartstaff', {
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
+    amount:{type: DataTypes.INTEGER},
+})
+
+const Orders = sequelize.define('orders', {
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
+    fullname:{type: DataTypes.STRING},
+    phonenumber:{type: DataTypes.STRING},
+    status:{type: DataTypes.STRING},
+})
+
+
 Format.hasMany(Book)
 Book.belongsTo(Format)
 
@@ -81,6 +94,17 @@ Series.belongsToMany(Book,{through: BookSeries})
 Book.belongsToMany(Tags,{through: BookTag})
 Tags.belongsToMany(Book,{through: BookTag})
 
+Book.hasMany(CartStaff)
+CartStaff.belongsTo(Book)
+
+User.hasMany(CartStaff)
+CartStaff.belongsTo(User)
+
+User.hasMany(Orders)
+Orders.belongsTo(User)
+
+Orders.hasMany(CartStaff)
+CartStaff.belongsTo(Orders)
 
 module.exports = {
     Book,
@@ -93,5 +117,7 @@ module.exports = {
     BookSeries,
     BookTag,
     User,
-    Pages
+    Pages,
+    CartStaff,
+    Orders
 }

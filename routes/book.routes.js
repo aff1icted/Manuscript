@@ -5,6 +5,5 @@ router.post('/', BookConrroller.create)
 router.get('/', BookConrroller.getAll)
 router.get('/:isbn', BookConrroller.getOne)
 router.put('/', BookConrroller.update)
-router.put('/:limit', BookConrroller.getLimit)
 router.delete('/:isbn', BookConrroller.delete)
 module.exports = router

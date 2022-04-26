@@ -10,16 +10,15 @@ function Main() {
 
     const [Books, setBook] = useState([])
     const [loading, setLoading] = useState(true)
+    
 
-
-
-    async function fetchBooks(type) {
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}api/book/5`)
+    async function fetchBooks(limit) {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book`,{params: {limit}})
         setBook(response.data)
     }
 
     useEffect(() => {
-        fetchBooks().finally(() => setLoading(false))
+        fetchBooks(5).finally(() => setLoading(false))
 
     }, [])
 

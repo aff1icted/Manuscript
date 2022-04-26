@@ -83,11 +83,14 @@ class BookController {
     }
 
     async getAll(req, res) {
-        const { limit } = req.body
+        const { limit } = req.query
+        if (limit!==null) {
+            const books = await Book.findAll({ include: [Tags, Authors, Series], order: ['createdAt'], limit: limit })      
+            return res.json(books) 
+        }          
         const books = await Book.findAll({ include: [Tags, Authors, Series] })       
-            
-        
         return res.json(books)
+              
 
     }
     async getOne(req, res) {
@@ -100,7 +103,7 @@ class BookController {
         )
         return res.json(book)
     }
-    // не рабочая хуита, не знаю как сделать изменения связей
+
     async update(req, res) {
         const { oldisbn, isbn, title, publicationdate, edition, pagenumber, description, price, tags, authors, series, formatName, coverCover } = req.body
         let coverartName
@@ -190,14 +193,7 @@ class BookController {
             }
         )
         return res.json(book)
-    }
-
-    async getLimit(req, res) {
-        const { limit} = req.params
-        const book = await Book.findAll({ include: [Tags, Authors, Series], order: ['createdAt'], limit: limit })         
-       
-        return res.json(book)
-    }
+    }  
 
     
 
