@@ -6,29 +6,40 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
 import Container from "react-bootstrap/Container";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 
 
 const NavBar = () => {
 
-  const tags =[
-    {tagname:"tag1"}, 
-    {tagname:"tag2"}, 
-    {tagname:"tag3"}
-  ];
+  const [tags, setTags] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  async function fetchtags() {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/tag`)
+    setTags(response.data)
+  }
+
+
+  useEffect(() => {
+    fetchtags().finally(() => setLoading(false))
+
+  }, [])
 
   return (
 
 
     <Navbar className="d-flex justify-content-around col-12" bg="dark">
-      <Container  fluid className="justify-content-around">
+      <Container fluid className="justify-content-around">
 
 
-        
-        <NavDropdown style={{ color: '#ffffff', textDecoration: 'none', fontSize: '30px' }} title={"КНИГИ"}>
-        {tags.map(tag => (
-          <NavDropdown.Item>{tag.tagname}</NavDropdown.Item>
+
+        <NavDropdown style={{ textDecoration: 'none', fontSize: '30px' }} title={"КНИГИ"}>
+          <NavDropdown.Item href={BOOKS_ROUTE}>Все книги</NavDropdown.Item>
+          {tags.map(tag => (
+            <NavDropdown.Item>{tag.tagname}</NavDropdown.Item>
           ))}
         </NavDropdown>
         <NavLink style={{ color: 'white', textDecoration: 'none', fontSize: '30px' }} to={AUTHOR_ROUTE}>АВТОРЫ</NavLink>

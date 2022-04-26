@@ -39,9 +39,9 @@
     padding: 0 15px;
 } 
 
-.navbar__links{
+/*.navbar__links{
     margin-left: auto;
-}
+}*/
 
 /*Navigation*/
 .nav {
@@ -51,6 +51,7 @@
 	background-color: #B96262;
 	margin: 0 auto;
 	padding-top: 23px;
+    
     
 }
 
@@ -207,7 +208,6 @@ ul.menu li a:hover {
     bottom: -50px;
 }
 
-.navdrop
-{
-    color:#fff
+.nav-link {    
+    color:#fff !important;
 }
