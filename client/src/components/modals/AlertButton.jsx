@@ -1,6 +1,6 @@
 import { Modal, Button } from "react-bootstrap"
 
-const AlertDelete = ({ show, onHide, title, body , del}) =>{
+const AlertButton= ({ show, onHide, title, body , buttonfunc, buttontext}) =>{
     return(
         <Modal
             show={show}
@@ -16,15 +16,15 @@ const AlertDelete = ({ show, onHide, title, body , del}) =>{
                 {body}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={del}>
-                    Да, удалить
+                <Button variant="secondary" onClick={buttonfunc}>
+                    {buttontext}
                 </Button>
                 <Button variant="secondary" onClick={onHide}>
-                    Отмена
+                    Закрыть
                 </Button>
             </Modal.Footer>
         </Modal>
     )
 }
 
-export default AlertDelete
+export default AlertButton
