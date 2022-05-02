@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
-import { LOGIN_ROUTE, MAIN_ROUTE } from "../components/utils/consts";
+import { ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE } from "../components/utils/consts";
 import { observer } from "mobx-react-lite";
 import { Context } from "../index";
 import jwt_decode from "jwt-decode";
@@ -49,6 +49,7 @@ const Auth = observer(() => {
             user.setIsAuth(true)
             if (data.role == 'ADMIN') {
                 user.setIsAdmin(true)
+                history.push(ADMIN_ROUTE)
             }
             history.push(MAIN_ROUTE)
         } catch (e) {

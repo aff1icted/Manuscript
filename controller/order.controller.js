@@ -1,13 +1,13 @@
 const ApiError = require("../error/ApiError")
-const { Orders, CartStaff } = require("../models/models")
+const { Orders, CartStaff, User } = require("../models/models")
 
 class OrderController {
     async create(req, res, next) {
         try {
-            const { fullname, phonenumber, status, userUsername } = req.body
-            const order = await Orders.create({ fullname, phonenumber, status, userUsername }).then(
-                data => {
-                    await CartStaff.update({ orderid: data.id }, { where: { userUsername, orderid: null } })
+            const { fullname, phonenumber,  userUsername } = req.body
+            const order = await Orders.create({ fullname, phonenumber, status:'Оформлен', userUsername }).then(
+                function ( data ) {
+                    CartStaff.update({ orderId: data.id }, { where: { userUsername, orderId: null } })
                 })
             return res.json({ order })
         } catch (e) {
@@ -16,12 +16,15 @@ class OrderController {
     }
 
     async getAll(req, res) {
-        const orders = await Orders.findAll({ order: ['createdAt'] })
+        const orders = await Orders.findAll({ 
+            include: [{model: User}],
+            order: [['createdAt', 'DESC']] })
         return res.json(orders)
     }
     async getOne(req, res) {
         const { id } = req.params
-        const order = await Orders.findOne({ where: { id } })
+        const order = await Orders.findOne({ include: [{model: User}],
+            where: { id } })
         return res.json(order)
     }
 

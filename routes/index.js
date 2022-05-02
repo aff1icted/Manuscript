@@ -9,7 +9,7 @@ const coversRouter = require('./covers.routes')
 const userRouter = require('./user.routers')
 const pagesRouter = require('./pages.routes')
 const cartstaffRouter = require('./cartstaff.routes')
-const orderRouter = require('./cartstaff.routes')
+const orderRouter = require('./order.routes')
 
 router.use('/tag', tagRouter)
 router.use('/author', authorRouter)

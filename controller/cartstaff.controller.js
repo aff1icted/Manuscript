@@ -14,16 +14,24 @@ class CartStaffController {
     }
 
     async getAll(req, res) {
-        const staff = await CartStaff.findAll({ order: ['createdAt'] })
+        const { orderid } = req.query
+        if (orderid != null) {
+            const staff = await CartStaff.findAll({ 
+                include: [{ model: Book }],
+                where: {orderId:orderid},
+                order: [['createdAt', 'DESC']]})
+            return res.json(staff)
+        }
+        const staff = await CartStaff.findAll({ order: [['createdAt', 'DESC']] })
         return res.json(staff)
     }
 
     async getUserCart(req, res) {
         const { user } = req.params
         const staff = await CartStaff.findAll({
-            include: [{model: Book}],
-            where: { userUsername:user, orderId: null },
-            order: ['createdAt']
+            include: [{ model: Book }],
+            where: { userUsername: user, orderId: null },
+            order: [['createdAt', 'DESC']]
         })
         return res.json(staff)
     }

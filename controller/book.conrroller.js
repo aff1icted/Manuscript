@@ -82,10 +82,10 @@ class BookController {
 
     }
 
-    async getAll(req, res) {
-        const { limit } = req.query
+    async getAll(req, res) {       
+        const { limit } = req.query         
         if (limit!==null) {
-            const books = await Book.findAll({ include: [Tags, Authors, Series], order: ['createdAt'], limit: limit })      
+            const books = await Book.findAll({ include: [Tags, Authors, Series], order: [['createdAt', 'DESC']], limit: limit })      
             return res.json(books) 
         }          
         const books = await Book.findAll({ include: [Tags, Authors, Series] })       

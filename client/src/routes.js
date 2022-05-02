@@ -1,4 +1,4 @@
-import { ABOUT_ROUTE, ADDAUTHOR_ROUTE, ADDBOOK_ROUTE, ADDSERIES_ROUTE, ADDTAG_ROUTE, ADMIN_AUTHOR_ROUTE, ADMIN_BOOK_ROUTE, ADMIN_COVER_ROUTE, ADMIN_FORMAT_ROUTE, ADMIN_PAGE_ROUTE, ADMIN_ROUTE, ADMIN_SERIES_ROUTE, ADMIN_TAG_ROUTE, AUTHOR_ROUTE, BOOKS_ROUTE, Cart_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, ORDER_ROUTE, REGISTRATION_ROUTE } from "./components/utils/consts";
+import { ABOUT_ROUTE, ADMIN_AUTHOR_ROUTE, ADMIN_BOOK_ROUTE, ADMIN_COVER_ROUTE, ADMIN_FORMAT_ROUTE, ADMIN_ORDER_ROUTE, ADMIN_PAGE_ROUTE, ADMIN_ROUTE, ADMIN_SERIES_ROUTE, ADMIN_TAG_ROUTE, AUTHOR_ROUTE, BOOKS_ROUTE, BOOKTAG_ROUTE, Cart_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, ORDER_ROUTE, REGISTRATION_ROUTE } from "./components/utils/consts";
 import About from "./pages/About";
 import AddAuthor from "./pages/AddAuthor";
 import AddBook from "./pages/AddBook";
@@ -11,6 +11,7 @@ import AdminAuthor from "./pages/AdminAuthor";
 import AdminBook from "./pages/AdminBook";
 import AdminCover from "./pages/AdminCover";
 import AdminFormat from "./pages/AdminFormat";
+import AdminOrder from "./pages/AdminOrder";
 import AdminSeries from "./pages/AdminSeries";
 import AdminTag from "./pages/AdminTag";
 import Auth from "./pages/Auth";
@@ -80,7 +81,12 @@ export const adminRoutes = [
     {
         path: ADMIN_COVER_ROUTE + '/:cover',
         Component: AddCover
-    }    
+    } ,
+    {
+        path: ADMIN_ORDER_ROUTE+'/:id',
+        Component: AdminOrder
+    },    
+
 ]
 
 export const authRoutes = [
@@ -113,6 +119,10 @@ export const publicRoutes = [
         path: BOOKS_ROUTE,
         Component: Books
     }, 
+    {
+        path: BOOKTAG_ROUTE + '/:tag',
+        Component: Books
+    }, 
 
     {
         path: BOOKS_ROUTE  + '/:ISBN',
@@ -130,6 +140,7 @@ export const publicRoutes = [
     {
         path: ORDER_ROUTE,
         Component: Order
-    }, 
+    },  
+    
    
 ]

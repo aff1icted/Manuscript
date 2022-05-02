@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { ABOUT_ROUTE, AUTHOR_ROUTE, BOOKS_ROUTE, ORDER_ROUTE } from "../utils/consts";
+import { ABOUT_ROUTE, AUTHOR_ROUTE, BOOKS_ROUTE, BOOKTAG_ROUTE, ORDER_ROUTE } from "../utils/consts";
 import { Button, Form, NavDropdown, Offcanvas, FormControl } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -39,7 +39,7 @@ const NavBar = () => {
         <NavDropdown style={{ textDecoration: 'none', fontSize: '30px' }} title={"КНИГИ"}>
           <NavDropdown.Item href={BOOKS_ROUTE}>Все книги</NavDropdown.Item>
           {tags.map(tag => (
-            <NavDropdown.Item>{tag.tagname}</NavDropdown.Item>
+            <NavDropdown.Item href={BOOKTAG_ROUTE+`/${tag.tagname}`}>{tag.tagname}</NavDropdown.Item>
           ))}
         </NavDropdown>
         <NavLink style={{ color: 'white', textDecoration: 'none', fontSize: '30px' }} to={AUTHOR_ROUTE}>АВТОРЫ</NavLink>
