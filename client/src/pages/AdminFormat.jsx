@@ -100,9 +100,13 @@ function AdminFormat() {
                     <Col md-4>
                         {/* Основная часть, здесь размещать таблицы и проч */}
                         <div className="subcolumns-left">
-                            <div hidden={filterHide}>
-                                <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
-                                <input value={coeffSearch} onChange={e => setCoeffSearch(e.target.value)} placeholder="Поиск по коэффиценту" />
+                            <div style={{ paddingBottom: "10px", display:"flex", alignItems:"flex-end" }} hidden={filterHide}>
+                            <div style={{paddingRight:"30px"}}>
+                                <div>Поиск по названию:</div>
+                                <input size="30" value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
+                                <div>Поиск по коэффиценту:</div>
+                                <input size="30" value={coeffSearch} onChange={e => setCoeffSearch(e.target.value)} placeholder="Поиск по коэффиценту" />
+                                </div>
                                 <Button onClick={Filtr}>Поиск</Button>
                             </div>
                             <Button onClick={FilterClic}>{filterButton}</Button>

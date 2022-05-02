@@ -22,6 +22,7 @@
     
     margin-top: 15px;
     justify-content:  start;
+    cursor: pointer;
     
 }
 
@@ -95,12 +96,16 @@ ul.menu li a:hover {
 .footer
 {
 
-    height: 160px;
+    min-height: 160px;
+    height: auto;
     background: #733C3C; 
     color: #fff;
     width: 100vw;
     text-align: center;
     font-size: 36px;
+    margin-bottom: -1px;
+    padding-top: 2%;
+    padding-bottom: 2%;
     
     
     
@@ -155,8 +160,18 @@ ul.menu li a:hover {
     width: 360px;
     height: 400px;
     float: left;
-    
-    }
+}
+
+.authbooks
+{
+    font-size:medium;
+}
+.authbooks img
+{
+    width: 160px;
+    height: 200px;
+    float: left;
+}
 
 .infosdet 
 {

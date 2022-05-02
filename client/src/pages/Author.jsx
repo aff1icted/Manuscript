@@ -38,9 +38,9 @@ function Author() {
     <div>
       <div className="content">
         <NavBar />
-        <div>
+        <div >
           <h1>{authorText.text}</h1>
-          {authors.map(author => <div onClick={e => hist.push(`/author/${author.fullname}`)}>{author.fullname}</div>)}
+          {authors.map(author => <div style={{cursor: "pointer"}} onClick={e => hist.push(`/author/${author.fullname}`)}>{author.fullname}</div>)}
         </div>
       </div>
       <Footer />

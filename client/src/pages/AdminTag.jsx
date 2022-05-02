@@ -94,9 +94,12 @@ function AdminTag() {
                     <Col md-4>
                         {/* Основная часть, здесь размещать таблицы и проч */}
                         <div className="subcolumns-left">
-                            <div hidden={filterHide}>
-                                <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
-                                <Button onClick={Filtr}>Поиск</Button>
+                            <div style={{ paddingBottom: "10px" }} hidden={filterHide}>
+                                <div>Поиск по названию:</div>
+                                <div style={{ display: "flex" }}>
+                                    <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
+                                    <Button onClick={Filtr}>Поиск</Button>
+                                </div>
                             </div>
                             <Button onClick={FilterClic}>{filterButton}</Button>
                             <BootstrapTable

@@ -99,10 +99,14 @@ function AdminSeries() {
                     <Col md-4>
                         {/* Основная часть, здесь размещать таблицы и проч */}
                         <div className="subcolumns-left">
-                            <div hidden={filterHide}>
-                                <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
+                            <div style={{ paddingBottom: "10px", display:"flex", alignItems:"flex-end" }} hidden={filterHide}>
+                                <div style={{paddingRight:"30px"}}>
+                                <div>Поиск по названию:</div>
+                                <input size="30" value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
                                 {/*переделать на поле с датой*/}
-                                <input value={foundationSearch} onChange={e => setFoundationSearch(e.target.value)} placeholder="Поиск по дате основания" />
+
+                                <div>Поиск по дате:</div>
+                                <input size="30" value={foundationSearch} onChange={e => setFoundationSearch(e.target.value)} placeholder="Поиск по дате основания" /></div>
                                 <Button onClick={Filtr}>Поиск</Button>
                             </div>
                             <Button onClick={FilterClic}>{filterButton}</Button>

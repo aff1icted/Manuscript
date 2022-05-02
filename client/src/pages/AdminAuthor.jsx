@@ -94,9 +94,12 @@ function AdminAuthor() {
                     <Col md-4>
                         {/* Основная часть, здесь размещать таблицы и проч */}
                         <div className="subcolumns-left">
-                            <div hidden={filterHide}>
-                                <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по ФИО" />
+                            <div style={{paddingBottom: "10px"}} hidden={filterHide}>
+                                <div>Поиск по ФИО:</div>
+                                <div style={{display:"flex"}}>
+                                <input size="30" value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по ФИО" />
                                 <Button onClick={Filtr}>Поиск</Button>
+                                </div>
                             </div>
                             <Button onClick={FilterClic}>{filterButton}</Button>
                             <BootstrapTable

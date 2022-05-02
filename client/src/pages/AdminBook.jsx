@@ -121,36 +121,39 @@ function AdminBook() {
                 <Row className="justify-content-md-center">
                     <Col md-4>
                         <div className="subcolumns-left">
-                            <div hidden={filterHide} >
-                                <div>
-                                    Поиск по ISBN
+                            <div style={{display: "flex", paddingBottom:"10px", alignItems:"flex-end"}} hidden={filterHide} >
+                                <div style={{paddingRight:"30px", width:"60%"}}>
+                                    <div>
+                                        Поиск по ISBN
+                                    </div>
+                                    <div>
+                                        <input size="35" value={isbnSearch} onChange={e => setIsbnSearch(e.target.value)} placeholder="Поиск по ISBN" />
+                                    </div>
+                                    <div>
+                                        Поиск по названию
+                                    </div>
+                                    <div>
+                                        <input size="35" value={titleSearch} onChange={e => setTitleSearch(e.target.value)} placeholder="Поиск по названию" />
+                                    </div>
                                 </div>
                                 <div>
-                                    <input value={isbnSearch} onChange={e => setIsbnSearch(e.target.value)} placeholder="Поиск по ISBN" />
-                                </div>
-                                <div>
-                                    Поиск по названию
-                                </div>
-                                <div>
-                                    <input value={titleSearch} onChange={e => setTitleSearch(e.target.value)} placeholder="Поиск по названию" />
-                                </div>
-                                <div>
-                                    Поиск по автору
-                                </div>
-                                <div>
-                                    <select onChange={(e) => setAuthorSearch(e.target.value)}>
-                                        <option selected="true" value={''}>{''}</option>
-                                        {authors.map(option =>
-                                            <option key={option.fullname} value={option.fullname}>
-                                                {option.fullname}
-                                            </option>
-                                        )}
-                                    </select>
-                                </div>
+                                    <div>
+                                        Поиск по автору
+                                    </div>
+                                    <div style={{paddingBottom:"10px"}}>
+                                        <select onChange={(e) => setAuthorSearch(e.target.value)}>
+                                            <option selected="true" value={''}>{''}</option>
+                                            {authors.map(option =>
+                                                <option key={option.fullname} value={option.fullname}>
+                                                    {option.fullname}
+                                                </option>
+                                            )}
+                                        </select>
+                                    </div>
 
 
 
-                                <Button onClick={Filtr}>Поиск</Button>
+                                    <Button onClick={Filtr}>Поиск</Button></div>
                             </div>
                             <Button onClick={FilterClic}>{filterButton}</Button>
                             <BootstrapTable

@@ -38,7 +38,9 @@ function AuthorPage() {
                             <div>{author.about}</div>
                         </div>
                     </div>
-                    <BookList Books={author.books} />
+                    <div className="authbooks">
+                    <BookList Books={author.books} /></div>
+                    
 
                 </div>
             </div>
