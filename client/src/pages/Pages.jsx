@@ -13,6 +13,7 @@ function Pages() {
     const [book, setBook] = useState('')
     const [author, setAuthor] = useState('')
     const [about, setAbout] = useState('')
+    const [order, setOrder] = useState('')
     const [footer1, setFooter1] = useState('')
     const [footer2, setFooter2] = useState('')
     const [footer3, setFooter3] = useState('')
@@ -47,6 +48,7 @@ function Pages() {
             formData.append('book', book)
             formData.append('author', author)
             formData.append('about', about)
+            formData.append('order', order)
 
             formData.append('footer1', footer1)
             formData.append('footer2', footer2)
@@ -102,6 +104,9 @@ function Pages() {
                     break;
                 case 'about':
                     setAbout(obj.text)
+                    break;
+                case 'order':
+                    setOrder(obj.text)
                     break;
                 case 'footer1':
                     setFooter1(obj.text)
@@ -182,6 +187,10 @@ function Pages() {
                                 <Form.Label>Страница о нас</Form.Label>
                                 <Form.Group className="mb-3" controlId="AuthorDescr">
                                     <Form.Control as="textarea" rows='3' placeholder="" value={about} onChange={e => setAbout(e.target.value)} />
+                                </Form.Group>
+                                <Form.Label>Страница заказа</Form.Label>
+                                <Form.Group className="mb-3" controlId="AuthorDescr">
+                                    <Form.Control as="textarea" rows='3' placeholder="" value={order} onChange={e => setOrder(e.target.value)} />
                                 </Form.Group>
                                 <Form.Label>Подвал</Form.Label>
                                 <Form.Group className="mb-3" controlId="AuthorDescr">

@@ -9,10 +9,11 @@ class pagesController {
     async getAll(req, res) {
 
         if ((await Pages.findAll()).length == 0) {
-            await Pages.create({ item: 'mainText'})
+            await Pages.create({ item: 'mainText' })
             await Pages.create({ item: 'book' })
             await Pages.create({ item: 'author' })
             await Pages.create({ item: 'about' })
+            await Pages.create({ item: 'order' })
             await Pages.create({ item: 'footer1' })
             await Pages.create({ item: 'footer2' })
             await Pages.create({ item: 'footer3' })
@@ -37,6 +38,7 @@ class pagesController {
             await Pages.create({ item: 'book' })
             await Pages.create({ item: 'author' })
             await Pages.create({ item: 'about' })
+            await Pages.create({ item: 'order' })
             await Pages.create({ item: 'footer1' })
             await Pages.create({ item: 'footer2' })
             await Pages.create({ item: 'footer3' })
@@ -67,6 +69,7 @@ class pagesController {
             await Pages.create({ item: 'book' })
             await Pages.create({ item: 'author' })
             await Pages.create({ item: 'about' })
+            await Pages.create({ item: 'order' })
             await Pages.create({ item: 'footer1' })
             await Pages.create({ item: 'footer2' })
             await Pages.create({ item: 'footer3' })
@@ -90,7 +93,7 @@ class pagesController {
 
     async update(req, res, next) {
         try {
-            const { mainText, book, author, about, footer1, footer2, footer3, footer4, footer5, footer6, first, second, third, fourth, fifth, firsturl, secondurl, thirdurl, fourthurl, fifthurl } = req.body
+            const { mainText, book, author, about, order, footer1, footer2, footer3, footer4, footer5, footer6, first, second, third, fourth, fifth, firsturl, secondurl, thirdurl, fourthurl, fifthurl } = req.body
             let page
 
             if ((await Pages.findAll()).length == 0) {
@@ -98,6 +101,7 @@ class pagesController {
                 await Pages.create({ item: 'book' })
                 await Pages.create({ item: 'author' })
                 await Pages.create({ item: 'about' })
+                await Pages.create({ item: 'order' })
                 await Pages.create({ item: 'footer1' })
                 await Pages.create({ item: 'footer2' })
                 await Pages.create({ item: 'footer3' })
@@ -115,6 +119,7 @@ class pagesController {
             await Pages.update({ text: book }, { where: { item: 'book' } })
             await Pages.update({ text: author }, { where: { item: 'author' } })
             await Pages.update({ text: about }, { where: { item: 'about' } })
+            await Pages.update({ text: order }, { where: { item: 'order' } })
             await Pages.update({ text: footer1 }, { where: { item: 'footer1' } })
             await Pages.update({ text: footer2 }, { where: { item: 'footer2' } })
             await Pages.update({ text: footer3 }, { where: { item: 'footer3' } })

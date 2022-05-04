@@ -1,9 +1,10 @@
-import { ABOUT_ROUTE, ADMIN_AUTHOR_ROUTE, ADMIN_BOOK_ROUTE, ADMIN_COVER_ROUTE, ADMIN_FORMAT_ROUTE, ADMIN_ORDER_ROUTE, ADMIN_PAGE_ROUTE, ADMIN_ROUTE, ADMIN_SERIES_ROUTE, ADMIN_TAG_ROUTE, AUTHOR_ROUTE, BOOKS_ROUTE, BOOKTAG_ROUTE, Cart_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, ORDER_ROUTE, REGISTRATION_ROUTE } from "./components/utils/consts";
+import { ABOUT_ROUTE, ADMIN_AUTHOR_ROUTE, ADMIN_BOOK_ROUTE, ADMIN_COVER_ROUTE, ADMIN_FORMAT_ROUTE, ADMIN_ORDER_ROUTE, ADMIN_PAGE_ROUTE, ADMIN_PARTNER_ROUTE, ADMIN_ROUTE, ADMIN_SERIES_ROUTE, ADMIN_TAG_ROUTE, AUTHOR_ROUTE, BOOKS_ROUTE, BOOKTAG_ROUTE, CART_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, ORDER_ROUTE, PARTNERS_ROUTE, REGISTRATION_ROUTE } from "./components/utils/consts";
 import About from "./pages/About";
 import AddAuthor from "./pages/AddAuthor";
 import AddBook from "./pages/AddBook";
 import AddCover from "./pages/Addcover";
 import AddFormat from "./pages/AddFormat";
+import AddPartner from "./pages/AddPartner";
 import AddSeries from "./pages/AddSeries";
 import AddTag from "./pages/AddTag";
 import Admin from "./pages/Admin";
@@ -12,6 +13,7 @@ import AdminBook from "./pages/AdminBook";
 import AdminCover from "./pages/AdminCover";
 import AdminFormat from "./pages/AdminFormat";
 import AdminOrder from "./pages/AdminOrder";
+import AdminPartner from "./pages/AdminPartners";
 import AdminSeries from "./pages/AdminSeries";
 import AdminTag from "./pages/AdminTag";
 import Auth from "./pages/Auth";
@@ -23,6 +25,7 @@ import Cart from "./pages/Cart";
 import Main from "./pages/Main";
 import Order from "./pages/Order";
 import Pages from "./pages/Pages";
+import Partners from "./pages/Partners";
 
 
 export const adminRoutes = [
@@ -81,19 +84,31 @@ export const adminRoutes = [
     {
         path: ADMIN_COVER_ROUTE + '/:cover',
         Component: AddCover
-    } ,
+    },
     {
-        path: ADMIN_ORDER_ROUTE+'/:id',
+        path: ADMIN_ORDER_ROUTE + '/:id',
         Component: AdminOrder
-    },    
+    },
+    {
+        path: ADMIN_PARTNER_ROUTE,
+        Component: AdminPartner
+    },
+    {
+        path: ADMIN_PARTNER_ROUTE + '/:title',
+        Component: AddPartner
+    },
+    {
+        path: PARTNERS_ROUTE,
+        Component: Partners
+    },
 
 ]
 
 export const authRoutes = [
     {
-        path: Cart_ROUTE,
+        path: CART_ROUTE,
         Component: Cart
-    }   
+    }
 
 ]
 
@@ -101,46 +116,46 @@ export const publicRoutes = [
     {
         path: MAIN_ROUTE,
         Component: Main
-    }, 
+    },
     {
         path: ABOUT_ROUTE,
         Component: About
-    }, 
+    },
     {
         path: REGISTRATION_ROUTE,
         Component: Auth
-    }, 
+    },
     {
         path: LOGIN_ROUTE,
         Component: Auth
-    }, 
+    },
 
     {
         path: BOOKS_ROUTE,
         Component: Books
-    }, 
+    },
     {
         path: BOOKTAG_ROUTE + '/:tag',
         Component: Books
-    }, 
+    },
 
     {
-        path: BOOKS_ROUTE  + '/:ISBN',
+        path: BOOKS_ROUTE + '/:ISBN',
         Component: Bookid
-    }, 
+    },
     {
         path: AUTHOR_ROUTE,
         Component: Author
-    }, 
+    },
 
     {
-        path: AUTHOR_ROUTE  + '/:fullname',
+        path: AUTHOR_ROUTE + '/:fullname',
         Component: AuthorPage
-    }, 
+    },
     {
         path: ORDER_ROUTE,
         Component: Order
-    },  
-    
-   
+    },
+
+
 ]

@@ -5,20 +5,20 @@ import { Loader } from '../components/UI/Loader';
 import NavBar from '../components/UI/NavBar';
 import '../styles/App.css'
 
-function Order() {
+function Partners() {
 
-  const [orderText,setOrderText]=useState('')
+  const [partners,setPartners]=useState([])
   const [loading,setLoading]=useState(true)
 
-  async function fetchOrderText() {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/elem/author`)
-    setOrderText(response.data)
+  async function fetchPartners() {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/partner`)
+    setPartners(response.data)
   }
  
 
 
   useEffect(() => {
-    fetchOrderText().finally(() => setLoading(false))
+    fetchPartners().finally(() => setLoading(false))
 
   }, [])
 
@@ -30,7 +30,7 @@ function Order() {
       <div className="content">
         <NavBar />
         <div>
-          <h1>Заказ</h1>
+         
         </div>
       </div>
       <Footer />
@@ -39,4 +39,4 @@ function Order() {
   )
 }
 
-export default Order;
+export default Partners;

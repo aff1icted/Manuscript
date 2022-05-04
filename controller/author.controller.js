@@ -17,7 +17,7 @@ class AuthorsController {
                 const { img } = req.files
                 fileName = uuid.v4() + ".jpg"
                 img.mv(path.resolve(__dirname, '..', 'static', fileName))
-                await Authors.update({ photo: oldphoto }, { where: { fullname } })
+                await Authors.update({ photo: fileName }, { where: { fullname } })
             }
             return res.json({ author })
         } catch (e) {
@@ -51,7 +51,7 @@ class AuthorsController {
             fileName = uuid.v4() + ".jpg"
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
             await Authors.update({ photo: fileName }, { where: { fullname} })
-        } else 
+        }
         return res.json({ author })
     }
 

@@ -3,7 +3,7 @@ import { Context } from "../../index";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
-import { ADMIN_ROUTE, Cart_ROUTE, LOGIN_ROUTE, MAIN_ROUTE } from "../utils/consts";
+import { ADMIN_ROUTE, CART_ROUTE, LOGIN_ROUTE, MAIN_ROUTE } from "../utils/consts";
 import { Button } from "react-bootstrap";
 import { observer } from "mobx-react-lite";
 import Container from "react-bootstrap/Container";
@@ -33,7 +33,7 @@ const NavUser = observer(() => {
                                 Админ панель
                             </Button><Button
                                 variant={"outline-light"}
-                                onClick={() => history.push(Cart_ROUTE)}
+                                onClick={() => history.push(CART_ROUTE)}
                                 className="ml-2"
                             >
                                     Корзина
@@ -51,7 +51,7 @@ const NavUser = observer(() => {
                             <div>
                                 <Button
                                     variant={"outline-light"}
-                                    onClick={() => history.push(Cart_ROUTE)}
+                                    onClick={() => history.push(CART_ROUTE)}
                                     className="ml-2"
                                 >
                                     Корзина

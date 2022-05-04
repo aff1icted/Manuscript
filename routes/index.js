@@ -10,6 +10,7 @@ const userRouter = require('./user.routers')
 const pagesRouter = require('./pages.routes')
 const cartstaffRouter = require('./cartstaff.routes')
 const orderRouter = require('./order.routes')
+const partnersRouter = require('./partners.routes')
 
 router.use('/tag', tagRouter)
 router.use('/author', authorRouter)
@@ -21,5 +22,6 @@ router.use('/user', userRouter)
 router.use('/pages', pagesRouter)
 router.use('/staff', cartstaffRouter)
 router.use('/order', orderRouter)
+router.use('/partner', partnersRouter)
 
 module.exports = router

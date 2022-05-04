@@ -78,6 +78,11 @@ const Orders = sequelize.define('orders', {
     status:{type: DataTypes.STRING},
 })
 
+const Partners = sequelize.define('partners', {
+    title:{type: DataTypes.STRING,primaryKey:true},
+    img: {type: DataTypes.STRING}
+})
+
 
 Format.hasMany(Book)
 Book.belongsTo(Format)
@@ -119,5 +124,6 @@ module.exports = {
     User,
     Pages,
     CartStaff,
-    Orders
+    Orders,
+    Partners
 }

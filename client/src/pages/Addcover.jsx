@@ -106,7 +106,7 @@ function AddCover() {
                     </Col>
                 </Row>
                 <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Переплет ${coverName} создан`} />
-                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Переплет ${LinkCover} добавлен`} />
+                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Переплет ${LinkCover} изменен`} />
 
             </div >
         </div>

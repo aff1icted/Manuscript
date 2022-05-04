@@ -11,13 +11,12 @@ import AlertMsg from "../components/modals/AlertMsg";
 import NavAdmin from "../components/UI/NavAdmin";
 
 
-function AddAuthor() {
+function AddPartner() {
     const hist = useHistory()
-    const LinkFullName = useParams().fullname
-    const [description, setDescription] = useState('')
+    const LinkTitle = useParams().title
     const [loading, setLoading] = useState(true)
     const [img, setImg] = useState(null)
-    const [name, setName] = useState('')
+    const [title, setTitle] = useState('')
     const [titleText, setTitleText] = useState('')
     const [addVisible, setAddVisible] = useState(true)
     const [editVisible, setEditVisible] = useState(true)
@@ -27,17 +26,16 @@ function AddAuthor() {
 
 
     async function create(type) {
-        const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/author`, type)
+        const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/partner`, type)
         return data
     }
 
 
-    const addAuthor = async () => {
+    const addPartner = async () => {
 
         try {
             const formData = new FormData()
-            formData.append('fullname', name)
-            formData.append('about', description)
+            formData.append('title', title)
             formData.append('img', img)
             await create(formData);
             setShowCreate(true)
@@ -51,23 +49,23 @@ function AddAuthor() {
 
 
 
-    async function fetchAuthor() {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author/${LinkFullName}`)
-        setName(response.data.fullname)
-        setDescription(response.data.about)
-        setImg(response.data.photo)
+    async function fetchPartner() {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/partner/${LinkTitle}`)
+        setTitle(response.data.title)
+        setImg(response.data.img)
+        console.log('img', response.data.img)
     }
 
     useEffect(() => {
 
-        if (LinkFullName === "creating") {
-            setTitleText('Добавление автора')
+        if (LinkTitle === "creating") {
+            setTitleText('Добавление партнера')
             setAddVisible(false)
             setLoading(false)
         } else {
-            setTitleText('Изменение автора')
+            setTitleText('Изменение партнера')
             setEditVisible(false)
-            fetchAuthor().finally(() => setLoading(false))
+            fetchPartner().finally(() => setLoading(false))
         }
 
     }, [])
@@ -77,19 +75,19 @@ function AddAuthor() {
 
 
 
-    async function uauthor(type) {
-        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/author`, type)
+    async function uPartner(type) {
+        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/partner`, type)
         return data
     }
 
-    const edtAuthor = async () => {
+    const edtPartner = async () => {
         try {
             const formData = new FormData()
-            formData.append('fullname', name)
-            formData.append('oldfullname', LinkFullName)
-            formData.append('about', description)
+            formData.append('title', title)
+            formData.append('oldtitle', LinkTitle)
             formData.append('img', img)
-            await uauthor(formData);
+            console.log('img', img)
+            await uPartner(formData);
             setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)
@@ -110,16 +108,12 @@ function AddAuthor() {
                         <div className="subcolumns-left">
                             <Form>
                                 <h2>{titleText}</h2>
-                                <FormGroup className="mb-3" controlId="AuthorFullName">
-                                    Полное имя
-                                    <Form.Control required type="text" placeholder="Полное имя" value={name} onChange={e => setName(e.target.value)} />
+                                <FormGroup className="mb-3" controlId="PartnerTitle">
+                                    Название партнера
+                                    <Form.Control required type="text" placeholder="Полное имя" value={title} onChange={e => setTitle(e.target.value)} />
                                 </FormGroup>
-                                <Form.Group className="mb-3" controlId="AuthorDescr">
-                                    Описание
-                                    <Form.Control as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
-                                </Form.Group>
                                 <Form.Group controlId="authimg" className="mb-3">
-                                    <Form.Label>Фотография автора</Form.Label>
+                                    <Form.Label>Эконка партнера</Form.Label>
                                     <Form.Control type="file" onChange={e => setImg(e.target.files[0])} />
                                 </Form.Group>
                             </Form >
@@ -129,11 +123,11 @@ function AddAuthor() {
                         {/* А здесь кнопки */}
                         <div className="subcolumns-right">
 
-                            <Button variant="secondary" hidden={addVisible} onClick={e => addAuthor()}>
+                            <Button variant="secondary" hidden={addVisible} onClick={e => addPartner()}>
                                 Добавить
                             </Button>
 
-                            <Button variant="secondary" hidden={editVisible} onClick={e => edtAuthor()} >
+                            <Button variant="secondary" hidden={editVisible} onClick={e => edtPartner()} >
                                 Сохранить
                             </Button>
 
@@ -142,11 +136,11 @@ function AddAuthor() {
 
                     </Col >
                 </Row >
-                <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Автор ${name} создан`} />
-                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Автор ${LinkFullName} изменен`} />
+                <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Партнер ${title} создан`} />
+                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Партнер ${LinkTitle} изменен`} />
             </div>
         </div>
     )
 }
 
-export default AddAuthor;
+export default AddPartner;

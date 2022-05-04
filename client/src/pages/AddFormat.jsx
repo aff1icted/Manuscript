@@ -117,7 +117,7 @@ function AddFormat() {
                     </Col >
                 </Row >
                 <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Формат ${name} создан`} />
-                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Формат ${LinkFormatName} добавлен`} />
+                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Формат ${LinkFormatName} изменен`} />
 
 
             </div >

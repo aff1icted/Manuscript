@@ -5,10 +5,12 @@ import { Button } from "react-bootstrap";
 import axios from "axios"
 import { Loader } from "../components/UI/Loader";
 import { Col, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import NavAdmin from "../components/UI/NavAdmin";
+import AlertMsg from "../components/modals/AlertMsg";
 
 function AddSeries() {
+    const hist = useHistory()
     const LinkSeriesName = useParams().seriesname
     const [foundation, setFoundation] = useState('')
     const [seriesPic, setSeriesPic] = useState(null)
@@ -17,6 +19,8 @@ function AddSeries() {
     const [titleText, setTitleText] = useState('')
     const [addVisible, setAddVisible] = useState(true)
     const [editVisible, setEditVisible] = useState(true)
+    const [showCreate, setShowCreate] = useState(false)
+    const [showEdit, setShowEdit] = useState(false)
 
     async function create(type) {
         const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/series`, type)
@@ -30,6 +34,7 @@ function AddSeries() {
             formData.append('foundation', foundation)
             formData.append('seriespic', seriesPic)
             await create(formData);
+            setShowCreate(true)
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -73,7 +78,7 @@ function AddSeries() {
             formData.append('seriespic', seriesPic)
             let data;
             data = await useries(formData);
-            alert("Изменено")
+            setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -120,6 +125,9 @@ function AddSeries() {
                         </div>
                     </Col >
                 </Row >
+
+                <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Серия ${name} добавлена`} />
+                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Серия ${LinkSeriesName} изменена`} />
 
 
             </div>

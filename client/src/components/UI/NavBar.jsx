@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { ABOUT_ROUTE, AUTHOR_ROUTE, BOOKS_ROUTE, BOOKTAG_ROUTE, ORDER_ROUTE } from "../utils/consts";
+import { ABOUT_ROUTE, AUTHOR_ROUTE, BOOKS_ROUTE, BOOKTAG_ROUTE, ORDER_ROUTE, PARTNERS_ROUTE } from "../utils/consts";
 import { Button, Form, NavDropdown, Offcanvas, FormControl } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -43,7 +43,11 @@ const NavBar = () => {
           ))}
         </NavDropdown>
         <NavLink style={{ color: 'white', textDecoration: 'none', fontSize: '30px' }} to={AUTHOR_ROUTE}>АВТОРЫ</NavLink>
-        <NavLink style={{ color: 'white', textDecoration: 'none', fontSize: '30px' }} to={ORDER_ROUTE}>ЗАКАЗАТЬ</NavLink>
+        <NavDropdown style={{ textDecoration: 'none', fontSize: '30px' }} title={"ПАРТНЕРСТВО"}>
+          <NavDropdown.Item href={PARTNERS_ROUTE}>Наши партнеры</NavDropdown.Item>
+          <NavDropdown.Item href={ORDER_ROUTE}>Заказать</NavDropdown.Item>
+          <NavDropdown.Item href={BOOKS_ROUTE}>Купить книгу</NavDropdown.Item>
+        </NavDropdown>
         <NavLink style={{ color: 'white', textDecoration: 'none', fontSize: '30px' }} to={ABOUT_ROUTE}>О НАС</NavLink>
 
       </Container>

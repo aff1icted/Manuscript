@@ -113,7 +113,7 @@ function AddTag() {
                 </Row>
 
                 <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Тег/жанр ${tag} создан`} />
-                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Тег/жанр ${LinkTagName} добавлен`} />
+                <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Тег/жанр ${LinkTagName} изменен`} />
 
 
 
