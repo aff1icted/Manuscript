@@ -98,11 +98,7 @@ export const adminRoutes = [
     {
         path: ADMIN_PARTNER_ROUTE + '/:title',
         Component: AddPartner
-    },
-    {
-        path: PARTNERS_ROUTE,
-        Component: Partners
-    },
+    },    
 
 ]
 
@@ -165,6 +161,10 @@ export const publicRoutes = [
     {
         path: ORDER_ROUTE,
         Component: Order
+    },
+    {
+        path: PARTNERS_ROUTE,
+        Component: Partners
     },
 
 

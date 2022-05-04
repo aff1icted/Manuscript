@@ -19,13 +19,13 @@ app.use(fileUpload({}))
 app.use('/api', router)
 app.use(errorHandling)
 
-/*if (process.env.STATUS = 'production') {
+if (process.env.STATUS == 'production') {
     app.use('/', express.static(path.join(__dirname, 'client', 'build')))
 
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
-}*/
+}
 
 const start = async () => {
     try {
