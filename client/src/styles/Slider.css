@@ -1,7 +1,7 @@
 :root
 {
   --heights: 300px;
-  --widths: 700px;
+  --widths: 800px;
 }
 
 @keyframes fadeIn {

@@ -14,9 +14,11 @@
 
 .blocks
 {
-    padding: 30px 200px;
+    padding: 30px 40px;
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
+    align-self: flex-start;
     
 }
 .admmenu
@@ -43,7 +45,7 @@
 
 .enter
 {
-    width: 800px;
+    
     justify-content: flex-start;
     display: flex;
     padding: 10px;

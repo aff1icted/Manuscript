@@ -78,7 +78,9 @@ function Admin() {
           <Col md-4>
             {/* Основная часть, здесь размещать таблицы и проч */}
             <div className="subcolumns-left">
-              <div hidden={filterHide}>
+              <div style={{ paddingBottom: "10px"}} hidden={filterHide}>
+                Сортировка по статусу заказа:
+                <div style={{display:"flex", paddingTop: "10px"}}>
                 <select onChange={(e) => setStatusFiltr(e.target.value)}>
                   <option selected="true" key={''} value={''}> {'Любой'}</option>
                   <option key={'Оформлен'} value={'Оформлен'}> {'Оформлен'}</option>
@@ -88,6 +90,7 @@ function Admin() {
                   <option key={'Закрыт'} value={'Закрыт'}> {'Закрыт'}</option>
                 </select>
                 <Button onClick={Filtr}>Поиск</Button>
+                </div>
               </div>
               <Button onClick={FilterClic}>{filterButton}</Button>
               <BootstrapTable

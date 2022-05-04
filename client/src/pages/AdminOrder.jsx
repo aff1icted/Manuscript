@@ -40,8 +40,8 @@ function AdminOrder() {
     const columns = [
         { dataField: "id", text: "id" },
         { dataField: "book.title", text: "Название" },
-        { dataField: "amount", text: "Количество" },
-        { dataField: "book.price", text: "Цена экземпляра" }
+        { dataField: "amount", text: "Количество, шт." },
+        { dataField: "book.price", text: "Цена экземпляра, ₽" }
     ]
 
     const selectRow = {
@@ -79,10 +79,10 @@ function AdminOrder() {
                                 data={staff}
                                 columns={columns}
                                 hover="true"
-                                selectRow={selectRow}
+                                
                                 rowEvents={rowEvents}
                             />
-                            Сумма:{sum}
+                            Сумма: {sum}₽
                         </div>
                     </Col>
                     <Col md-auto>

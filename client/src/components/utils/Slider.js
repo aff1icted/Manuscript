@@ -1,11 +1,15 @@
 import React, {useState} from 'react'
+import { useHistory } from 'react-router-dom'
 import '../../styles/Slider.css'
 import BtnSlider from './BtnSlider.js'
+import { BOOKS_ROUTE } from './consts'
 import dataSlider from './dataSlider'
+
 
 
 export default function Slider() {
 
+    const history=useHistory()
     const [slideIndex, setSlideIndex] = useState(1)
 
     const nextSlide = () => {
@@ -38,12 +42,17 @@ export default function Slider() {
                     key={obj.id}
                     className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
                     >
-                        <img 
+                        <p  style={{ position:"absolute", color:"white", top:"50%", left:"50%", transform: "translateX(-50%) translateY(-60%)", fontSize:"30px"}}>{obj.title}</p>
+                        <p style={{ position:"absolute", color:"white", top:"60%", left:"50%", transform: "translateX(-50%) translateY(-60%)", fontSize:"20px"}}>{obj.subTitle}</p>
+
+                        <a href='https://www.codegrepper.com/code-examples/whatever/onclick+p+tag+react'><img style={{cursor:"pointer"}}
                         src={process.env.REACT_APP_API_URL + `slider${index + 1}.jpg`} 
-                        />
+                        /></a>
+                        
                     </div>
                 )
             })}
+            
             <BtnSlider moveSlide={nextSlide} direction={"next"} />
             <BtnSlider moveSlide={prevSlide} direction={"prev"}/>
 

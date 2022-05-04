@@ -32,18 +32,12 @@ const OrderStaff = observer(() => {
     }, [])
 
     const columns = [
-        { dataField: "id", text: "id" },
+        { dataField: "id", text: "id", hidden:true },
         { dataField: "book.title", text: "Название" },
-        { dataField: "amount", text: "Количество" },
-        { dataField: "book.price", text: "Цена экземпляра" }
+        { dataField: "amount", text: "Количество, шт." },
+        { dataField: "book.price", text: "Цена экземпляра, ₽" }
     ]
 
-    const selectRow = {
-        mode: 'radio',
-        clickToSelect: true,
-        bgColor: '#00BFFF',
-        hideSelectColumn: true
-    };
 
     const rowEvents = {
         onClick: (e, row) => {
@@ -60,16 +54,16 @@ const OrderStaff = observer(() => {
             <div className="content">
                 <NavBar />
 
-                <div>
+                <div className="col-5" style={{paddingTop: "20px", paddingBottom:"20px"}}>
                     <BootstrapTable
                         keyField="id"
                         data={staff}
                         columns={columns}
-                        hover="true"
-                        selectRow={selectRow}
+                        
+                        
                         rowEvents={rowEvents}
                     />
-                    Сумма:{sum}
+                    <div style={{fontSize:"20px"}}>Сумма: {sum}₽</div>
 
                 </div>
 

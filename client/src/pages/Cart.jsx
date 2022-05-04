@@ -74,10 +74,10 @@ const Cart = observer(() => {
     }, [])
 
     const columns = [
-        { dataField: "id", text: "id" },
+        { dataField: "id", text: "id", hidden:true},
         { dataField: "book.title", text: "Название" },
-        { dataField: "amount", text: "Количество" },
-        { dataField: "book.price", text: "Цена экземпляра" }
+        { dataField: "amount", text: "Количество, шт." },
+        { dataField: "book.price", text: "Цена экземпляра, ₽" }
     ]
 
     const selectRow = {
@@ -99,16 +99,17 @@ const Cart = observer(() => {
     }
     return (
         <div>
-            <div className="content">
+            <div className="content"> 
                 <NavBar />
                 {emptyCart ?
-                    <div>
+                    <div className="col-5" style={{paddingTop: "20px", paddingBottom:"20px"}}>
                         <Form>
-                            <Form.Label>ФИО</Form.Label>
+                            <Form.Label>ФИО<span style={{color:"red"}}>*</span></Form.Label>
                             <Form.Control required type="text" value={fullname} onChange={e => setFullname(e.target.value)} />
-                            <Form.Label>Телефон</Form.Label>
+                            <Form.Label>Телефон<span style={{color:"red"}}>*</span></Form.Label>
                             <Form.Control required type="text" value={phonenumber} onChange={e => setPhonenumber(e.target.value)} />
                         </Form>
+                        <div style={{paddingTop: "20px"}}>
                         <BootstrapTable
                             keyField="id"
                             data={staff}
@@ -117,10 +118,13 @@ const Cart = observer(() => {
                             selectRow={selectRow}
                             rowEvents={rowEvents}
                         />
-                        Сумма:{sum}
+                        </div>
+                        <div style={{display:"flex", flexDirection:"column"}}>
+                        <div style={{fontSize:"20px", paddingBottom:"10px"}}>Сумма: {sum}₽</div>
                         <Button onClick={() => setBuyShow(true)}>
                             Оформить заказ
-                        </Button>
+                        </Button> 
+                        </div>
 
                         <AlertButton
                             show={show}

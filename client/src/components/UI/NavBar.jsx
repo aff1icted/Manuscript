@@ -45,7 +45,7 @@ const NavBar = () => {
         <NavLink style={{ color: 'white', textDecoration: 'none', fontSize: '30px' }} to={AUTHOR_ROUTE}>АВТОРЫ</NavLink>
         <NavDropdown style={{ textDecoration: 'none', fontSize: '30px' }} title={"ПАРТНЕРСТВО"}>
           <NavDropdown.Item href={PARTNERS_ROUTE}>Наши партнеры</NavDropdown.Item>
-          <NavDropdown.Item href={ORDER_ROUTE}>Заказать</NavDropdown.Item>
+          <NavDropdown.Item href={ORDER_ROUTE}>Заказать издание</NavDropdown.Item>
           <NavDropdown.Item href={BOOKS_ROUTE}>Купить книгу</NavDropdown.Item>
         </NavDropdown>
         <NavLink style={{ color: 'white', textDecoration: 'none', fontSize: '30px' }} to={ABOUT_ROUTE}>О НАС</NavLink>

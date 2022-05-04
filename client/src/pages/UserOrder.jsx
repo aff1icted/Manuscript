@@ -35,7 +35,7 @@ const UserOrder = observer(() => {
 
     const columns = [
         { dataField: "id", text: "Номер" },
-        { dataField: "createdAt", text: "Дата офрмления" },
+        { dataField: "createdAt", text: "Дата оформления" },
         { dataField: "status", text: "Статус" }
     ]
 
@@ -62,7 +62,7 @@ const UserOrder = observer(() => {
             <div className="content">
                 <NavBar />
                 {emptyCart ?
-                    <div>
+                    <div className="col-5" style={{paddingTop: "20px", paddingBottom:"20px"}}>
                         <BootstrapTable
                             keyField="id"
                             data={orders}

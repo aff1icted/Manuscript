@@ -3,7 +3,7 @@ import { ADMIN_AUTHOR_ROUTE, ADMIN_BOOK_ROUTE, ADMIN_COVER_ROUTE, ADMIN_FORMAT_R
 
 const NavAdmin = () => {
     return (
-        <div className="admmenu">
+        <div className="col-2 admmenu">
             <li><Link to={ADMIN_ROUTE}>Заказы</Link></li>
             <li><Link to={ADMIN_BOOK_ROUTE}>Книги</Link></li>
             <li><Link to={ADMIN_TAG_ROUTE}>Теги/Жанры</Link></li>
