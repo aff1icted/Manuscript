@@ -16,6 +16,13 @@ class OrderController {
     }
 
     async getAll(req, res) {
+        const { user } = req.query
+        if (user !=null) {
+            const orders = await Orders.findAll({ 
+                where: [{userUsername:user}],
+                order: [['createdAt', 'DESC']] })
+            return res.json(orders)
+        }
         const orders = await Orders.findAll({ 
             include: [{model: User}],
             order: [['createdAt', 'DESC']] })
