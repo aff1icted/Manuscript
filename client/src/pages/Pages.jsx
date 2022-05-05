@@ -57,11 +57,11 @@ function Pages() {
             formData.append('footer5', footer5)
             formData.append('footer6', footer6)
 
-            formData.append('first', first)
-            formData.append('second', second)
-            formData.append('third', third)
-            formData.append('fourth', fourth)
-            formData.append('fifth', fifth)
+            formData.append('banner1', first)
+            formData.append('banner2', second)
+            formData.append('banner3', third)
+            formData.append('banner4', fourth)
+            formData.append('banner5', fifth)
 
             formData.append('firstimg', firstImg)
             formData.append('secondimg', secondImg)
@@ -126,25 +126,25 @@ function Pages() {
                 case 'footer6':
                     setFooter6(obj.text)
                     break;
-                case 'first':
+                case 'banner1':
                     setFirst(obj.text)
                     setFirstUrl(obj.url)
                     break;
-                case 'second':
+                case 'banner2':
                     setSecond(obj.text)
                     setSecondUrl(obj.url)
                     break;
-                case 'third':
+                case 'banner3':
                     setThird(obj.text)
-                    setSecondUrl(obj.url)
+                    setThirdUrl(obj.url)
                     break;
-                case 'fourth':
+                case 'banner4':
                     setFourth(obj.text)
-                    setSecondUrl(obj.url)
+                    setFourthUrl(obj.url)
                     break;
-                case 'fifth':
+                case 'banner5':
                     setFifth(obj.text)
-                    setSecondUrl(obj.url)
+                    setFifthUrl(obj.url)
                     break;
                 default:
                     break;

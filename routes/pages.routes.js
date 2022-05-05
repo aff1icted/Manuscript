@@ -5,6 +5,7 @@ const pagesConrroller = require('../controller/pages.controller')
 router.put('/', pagesConrroller.update)
 router.get('/elem/:item', pagesConrroller.getOne)
 router.get('/footer', pagesConrroller.getfooter)
+router.get('/banner', pagesConrroller.getbanner)
 router.get('/', pagesConrroller.getAll)
 
 module.exports = router
