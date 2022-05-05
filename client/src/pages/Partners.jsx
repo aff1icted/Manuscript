@@ -7,14 +7,14 @@ import '../styles/App.css'
 
 function Partners() {
 
-  const [partners,setPartners]=useState([])
-  const [loading,setLoading]=useState(true)
+  const [partners, setPartners] = useState([])
+  const [loading, setLoading] = useState(true)
 
   async function fetchPartners() {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}api/partner`)
     setPartners(response.data)
   }
- 
+
 
 
   useEffect(() => {
@@ -30,7 +30,14 @@ function Partners() {
       <div className="content">
         <NavBar />
         <div>
-         
+          {partners.map(partner =>
+            <div style={{fontSize:"30px", fontFamily:"Lucida Sans Unicode", paddingTop:"30px"}}>
+              <img  height="100px" width="100px" src={process.env.REACT_APP_API_URL + partner.img} />
+              <span style={{paddingLeft:"20px"}}>
+                {partner.title}
+              </span>
+              
+            </div>)}
         </div>
       </div>
       <Footer />

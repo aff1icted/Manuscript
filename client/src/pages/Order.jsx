@@ -11,8 +11,8 @@ function Order() {
   const [loading,setLoading]=useState(true)
 
   async function fetchOrderText() {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/elem/author`)
-    setOrderText(response.data)
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/elem/order`)
+    setOrderText(response.data.text)
   }
  
 
@@ -29,8 +29,8 @@ function Order() {
     <div>
       <div className="content">
         <NavBar />
-        <div>
-          <h1>Заказ</h1>
+        <div className="col-8" style={{paddingTop:"30px", textAlign:"justify", textAlignLast:"center"}}>
+          <h5>{orderText}</h5>
         </div>
       </div>
       <Footer />

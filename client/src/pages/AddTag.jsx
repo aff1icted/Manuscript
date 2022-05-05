@@ -75,7 +75,7 @@ function AddTag() {
                             <Form>
                                 <h2>{titleText}</h2>
                                 <FormGroup className="mb-3" controlId="Tagname">
-                                    Название тега/жанра
+                                    Название тега/жанра<span style={{color:"red"}}>*</span>
                                     <Form.Control required type="text" placeholder="Название тега" value={tag} onChange={e => setTag(e.target.value)} />
                                 </FormGroup>
 

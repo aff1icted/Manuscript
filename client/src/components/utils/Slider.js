@@ -60,7 +60,7 @@ export default function Slider() {
                         key={obj.id}
                         className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
                     >
-                        <p style={{ position: "absolute", color: "white", top: "50%", left: "50%", transform: "translateX(-50%) translateY(-60%)", fontSize: "30px" }}>{obj.text}</p>
+                        <p style={{ position: "absolute", color: "white", textShadow:"black 0 0 5px", top: "50%", left: "50%", transform: "translateX(-50%) translateY(-60%)", fontSize: "30px" }}>{obj.text}</p>
                         {/* <p style={{ position: "absolute", color: "white", top: "60%", left: "50%", transform: "translateX(-50%) translateY(-60%)", fontSize: "20px" }}>{obj.subTitle}</p> */}
 
                         <a href={obj.url}><img style={{ cursor: "pointer" }}

@@ -92,7 +92,7 @@ function AddAuthor() {
                             <Form>
                                 <h2>{titleText}</h2>
                                 <FormGroup className="mb-3" controlId="AuthorFullName">
-                                    Полное имя
+                                    Полное имя<span style={{color:"red"}}>*</span>
                                     <Form.Control required type="text" placeholder="Полное имя" value={name} onChange={e => setName(e.target.value)} />
                                 </FormGroup>
                                 <Form.Group className="mb-3" controlId="AuthorDescr">
@@ -100,7 +100,7 @@ function AddAuthor() {
                                     <Form.Control as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
                                 </Form.Group>
                                 <Form.Group controlId="authimg" className="mb-3">
-                                    <Form.Label>Фотография автора</Form.Label>
+                                    <Form.Label>Фотография автора <span style={{color:"gray"}}>(Рек. размер 360х400 пикселей, JPG)</span></Form.Label>
                                     <Form.Control type="file" onChange={e => setImg(e.target.files[0])} />
                                 </Form.Group>
                             </Form >

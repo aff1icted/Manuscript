@@ -29,10 +29,10 @@ function About() {
     <div>
       <div className="content">
         <NavBar />
-        <div>
-          <h1>
+        <div className="col-8" style={{paddingTop:"30px", textAlign:"justify", textAlignLast:"center"}}>
+          <h5>
             {aboutText.text}
-          </h1>
+          </h5>
 
         </div>
       </div>

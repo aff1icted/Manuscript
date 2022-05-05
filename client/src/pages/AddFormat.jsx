@@ -80,12 +80,12 @@ function AddFormat() {
                             <Form>
                                 <h2>{titleText}</h2>
                                 <FormGroup className="mb-3" controlId="formatname">
-                                    Название формата
+                                    Название формата<span style={{color:"red"}}>*</span>
                                     <Form.Control required type="text" placeholder="Название формата" value={name} onChange={e => setName(e.target.value)} />
                                 </FormGroup>
 
                                 <FormGroup className="mb-3" controlId="formratio">
-                                    Коэффициент
+                                    Коэффициент<span style={{color:"red"}}>*</span>
                                     <Form.Control required type="text" placeholder="коэффициент" value={coeff} onChange={e => setCoeff(e.target.value)} />
                                 </FormGroup>
                             </Form>

@@ -72,7 +72,7 @@ function AddCover() {
                             <Form>
                                 <h2>{titleText}</h2>
                                 <FormGroup className="mb-3" controlId="covername">
-                                    Название переплета
+                                    Название переплета<span style={{color:"red"}}>*</span>
                                     <Form.Control required type="text" placeholder="Название" value={coverName} onChange={e => setCoverName(e.target.value)} />
                                 </FormGroup>
                             </Form>

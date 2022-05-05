@@ -8,6 +8,8 @@ class pagesController {
 
     async getAll(req, res) {
 
+        
+
         if ((await Pages.findAll()).length == 0) {
             await Pages.create({ item: 'mainText' })
             await Pages.create({ item: 'book' })
@@ -52,8 +54,7 @@ class pagesController {
             await Pages.create({ item: 'banner5', img: 'slider5.jpg' })
         }
 
-
-
+        
         const pages = await Pages.findAll(
             {
                 where: { item: { [Op.like]: '%footer%' } },

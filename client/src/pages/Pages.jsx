@@ -37,8 +37,8 @@ function Pages() {
     const [third, setThird] = useState('')
     const [fourth, setFourth] = useState('')
     const [fifth, setFifth] = useState('')
-    const [showEdit,setShowEdit]= useState(false)  
-    
+    const [showEdit, setShowEdit] = useState(false)
+
 
     const edtPage = async () => {
         try {
@@ -200,39 +200,63 @@ function Pages() {
                                     <Form.Control className="mb-3" placeholder="" value={footer5} onChange={e => setFooter5(e.target.value)} />
                                     <Form.Control className="mb-3" placeholder="" value={footer6} onChange={e => setFooter6(e.target.value)} />
                                 </Form.Group>
-                                <Form.Label>Банер</Form.Label>
-                                <Form.Label>Страница1</Form.Label>
-                                <Form.Group className="mb-3" controlId="AuthorDescr">
-                                    <Form.Control className="mb-3" placeholder="" value={first} onChange={e => setFirst(e.target.value)} />
-                                    <Form.Control className="mb-3" type="file" onChange={e => setFirstImg(e.target.files[0])} />
-                                    <Form.Control className="mb-3" placeholder="" value={firstUrl} onChange={e => setFirstUrl(e.target.value)} />
-                                </Form.Group>
-                                <Form.Label>Страница2</Form.Label>
-                                <Form.Group className="mb-3" controlId="AuthorDescr">
-                                    <Form.Control className="mb-3" placeholder="" value={second} onChange={e => setSecond(e.target.value)} />
-                                    <Form.Control className="mb-3" type="file" onChange={e => setSecondImg(e.target.files[0])} />
-                                    <Form.Control className="mb-3" placeholder="" value={secondUrl} onChange={e => setSecondUrl(e.target.value)} />
-                                </Form.Group>
-                                <Form.Label>Страница3</Form.Label>
-                                <Form.Group className="mb-3" controlId="AuthorDescr">
-                                    <Form.Control className="mb-3" placeholder="" value={third} onChange={e => setThird(e.target.value)} />
-                                    <Form.Control className="mb-3" type="file" onChange={e => setThirdImg(e.target.files[0])} />
-                                    <Form.Control className="mb-3" placeholder="" value={thirdUrl} onChange={e => setThirdUrl(e.target.value)} />
-                                </Form.Group>
-                                <Form.Label>Страница4</Form.Label>
-                                <Form.Group className="mb-3" controlId="AuthorDescr">
-                                    <Form.Control className="mb-3" placeholder="" value={fourth} onChange={e => setFourth(e.target.value)} />
-                                    <Form.Control className="mb-3" type="file" onChange={e => setFourthImg(e.target.files[0])} />
-                                    <Form.Control className="mb-3" placeholder="" value={fourthUrl} onChange={e => setFourthUrl(e.target.value)} />
-                                </Form.Group>
-                                <Form.Label>Страница5</Form.Label>
-                                <Form.Group className="mb-3" controlId="AuthorDescr">
-                                    <Form.Control className="mb-3" placeholder="" value={fifth} onChange={e => setFifth(e.target.value)} />
-                                    <Form.Control className="mb-3" type="file" onChange={e => setFifthImg(e.target.files[0])} />
-                                    <Form.Control className="mb-3" placeholder="" value={fifthUrl} onChange={e => setFifthUrl(e.target.value)} />
-                                </Form.Group>
+                                <div style={{ fontSize: "30px" }}>
+                                    <Form.Label>Редактирование баннера</Form.Label></div>
+                                <Form.Label>Страница №1</Form.Label>
+                                <div style={{ backgroundColor: "#cbcbcb" }}>
+                                    <Form.Group className="mb-3" controlId="AuthorDescr" style={{ padding: "10px" }}>
+                                        <Form.Label>Текст</Form.Label>
+                                        <Form.Control className="mb-3" placeholder="" value={first} onChange={e => setFirst(e.target.value)} />
+                                        <Form.Label>Изображение <span style={{color:"gray"}}>(800х300 пикселей, JPG)</span></Form.Label>
+                                        <Form.Control className="mb-3" type="file" onChange={e => setFirstImg(e.target.files[0])} />
+                                        <Form.Label>Ссылка</Form.Label>
+                                        <Form.Control className="mb-3" placeholder="" value={firstUrl} onChange={e => setFirstUrl(e.target.value)} />
+                                    </Form.Group>
+                                </div>
+
+
+                                <Form.Label>Страница №2</Form.Label>
+                                <div style={{ backgroundColor: "#cbcbcb" }}>
+                                    <Form.Group className="mb-3" controlId="AuthorDescr" style={{ padding: "10px" }}>
+                                        <Form.Label>Текст</Form.Label>
+                                        <Form.Control className="mb-3" placeholder="" value={second} onChange={e => setSecond(e.target.value)} />
+                                        <Form.Label>Изображение <span style={{color:"gray"}}>(800х300 пикселей, JPG)</span></Form.Label>
+                                        <Form.Control className="mb-3" type="file" onChange={e => setSecondImg(e.target.files[0])} />
+                                        <Form.Label>Ссылка</Form.Label>
+                                        <Form.Control className="mb-3" placeholder="" value={secondUrl} onChange={e => setSecondUrl(e.target.value)} />
+                                    </Form.Group></div>
+                                <Form.Label>Страница №3</Form.Label>
+                                <div style={{ backgroundColor: "#cbcbcb" }}>
+                                    <Form.Group className="mb-3" controlId="AuthorDescr" style={{ padding: "10px" }}>
+                                        <Form.Label>Текст</Form.Label>
+                                        <Form.Control className="mb-3" placeholder="" value={third} onChange={e => setThird(e.target.value)} />
+                                        <Form.Label>Изображение <span style={{color:"gray"}}>(800х300 пикселей, JPG)</span></Form.Label>
+                                        <Form.Control className="mb-3" type="file" onChange={e => setThirdImg(e.target.files[0])} />
+                                        <Form.Label>Ссылка</Form.Label>
+                                        <Form.Control className="mb-3" placeholder="" value={thirdUrl} onChange={e => setThirdUrl(e.target.value)} />
+                                    </Form.Group></div>
+                                <Form.Label>Страница №4</Form.Label>
+                                <div style={{ backgroundColor: "#cbcbcb" }}>
+                                    <Form.Group className="mb-3" controlId="AuthorDescr" style={{ padding: "10px" }}>
+                                        <Form.Label>Текст</Form.Label>
+                                        <Form.Control className="mb-3" placeholder="" value={fourth} onChange={e => setFourth(e.target.value)} />
+                                        <Form.Label>Изображение <span style={{color:"gray"}}>(800х300 пикселей, JPG)</span></Form.Label>
+                                        <Form.Control className="mb-3" type="file" onChange={e => setFourthImg(e.target.files[0])} />
+                                        <Form.Label>Ссылка</Form.Label>
+                                        <Form.Control className="mb-3" placeholder="" value={fourthUrl} onChange={e => setFourthUrl(e.target.value)} />
+                                    </Form.Group></div>
+                                <Form.Label>Страница №5</Form.Label>
+                                <div style={{ backgroundColor: "#cbcbcb" }}>
+                                    <Form.Group className="mb-3" controlId="AuthorDescr" style={{ padding: "10px" }}>
+                                        <Form.Label>Текст</Form.Label>
+                                        <Form.Control className="mb-3" placeholder="" value={fifth} onChange={e => setFifth(e.target.value)} />
+                                        <Form.Label>Изображение <span style={{color:"gray"}}>(800х300 пикселей, JPG)</span></Form.Label>
+                                        <Form.Control className="mb-3" type="file" onChange={e => setFifthImg(e.target.files[0])} />
+                                        <Form.Label>Ссылка</Form.Label>
+                                        <Form.Control className="mb-3" placeholder="" value={fifthUrl} onChange={e => setFifthUrl(e.target.value)} />
+                                    </Form.Group></div>
                             </Form >
-                            <AlertMsg show={showEdit} onHide={() => { setShowEdit(false)}} title={'Оповещение'} body={`Данные на страницах изменены`} />
+                            <AlertMsg show={showEdit} onHide={() => { setShowEdit(false) }} title={'Оповещение'} body={`Данные на страницах изменены`} />
                         </div>
                     </Col>
                     <Col md-auto>

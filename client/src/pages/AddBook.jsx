@@ -256,21 +256,21 @@ function AddBook() {
                             <Form>
                                 <h2>{titleText}</h2>
                                 <FormGroup className="mb-3" controlId="isbn">
-                                    ISBN
+                                    ISBN<span style={{color:"red"}}>*</span>
                                     <Form.Control required type="text" placeholder="ISBN" value={isbn} onChange={e => setIsbn(e.target.value)} />
                                 </FormGroup>
 
                                 <FormGroup className="mb-3" controlId="bookname">
-                                    Название книги
+                                    Название книги<span style={{color:"red"}}>*</span>
                                     <Form.Control required type="text" placeholder="Название книги" value={title} onChange={e => setTitle(e.target.value)} />
                                 </FormGroup>
 
                                 <FormGroup className="mb-3" controlId="bookdate">
-                                    <Form.Label>Дата выпуска</Form.Label>
+                                    <Form.Label>Дата выпуска<span style={{color:"red"}}>*</span></Form.Label>
                                     <Form.Control required type="date" value={publicationdate} onChange={e => setPublicationdate(e.target.value)} />
                                 </FormGroup>
-                                <Form.Label>Авторы</Form.Label>
-                                <div style={{ height: "150px", overflow: "auto" }}>
+                                <Form.Label>Авторы<span style={{color:"red"}}>*</span></Form.Label>
+                                <div style={{ height: "150px", overflow: "auto"}}>
                                     <BootstrapTable
                                         keyField="fullname"
                                         data={authors}
@@ -280,7 +280,7 @@ function AddBook() {
                                         selected={selectedAuthor}
                                     />
                                 </div>
-                                <Form.Label>Теги/Жанры</Form.Label>
+                                <Form.Label style={{paddingTop:"30px"}}>Теги/Жанры<span style={{color:"red"}}>*</span></Form.Label>
                                 <div style={{ height: "150px", overflow: "auto" }}>
                                     <BootstrapTable
                                         keyField="tagname"
@@ -291,7 +291,7 @@ function AddBook() {
                                         selected={selectedTag}
                                     />
                                 </div>
-                                <Form.Label>Серии</Form.Label>
+                                <Form.Label style={{paddingTop:"30px"}}>Серии<span style={{color:"red"}}>*</span></Form.Label>
                                 <div style={{ height: "150px", overflow: "auto" }}>
                                     <BootstrapTable
                                         keyField="seriesname"
@@ -304,7 +304,7 @@ function AddBook() {
                                 </div>
 
                                 <FormGroup className="mb-3" controlId="bookdate">
-                                    Переплет
+                                    Переплет<span style={{color:"red"}}>*</span>
                                     <Form.Select onChange={(e) => setCover(e.target.value)}>
                                         <option selected="true" disabled="disabled">{selectedCover}</option>
                                         {covers.map(option =>
@@ -316,7 +316,7 @@ function AddBook() {
                                 </FormGroup>
 
                                 <FormGroup className="mb-3" controlId="bookdate">
-                                    Формат
+                                    Формат<span style={{color:"red"}}>*</span>
                                     <Form.Select onChange={(e) => setFormat(e.target.value)}>
                                         <option selected="true" disabled="disabled">{selectedFormat}</option>
                                         {formats.map(option =>
@@ -328,16 +328,16 @@ function AddBook() {
                                 </FormGroup>
 
                                 <FormGroup className="mb-3" controlId="isbn">
-                                    Количество страниц
+                                    Количество страниц<span style={{color:"red"}}>*</span>
                                     <Form.Control required type="text" placeholder="Количество страниц" value={pagenumber} onChange={e => setPagenumber(e.target.value)} />
                                 </FormGroup>
 
                                 <FormGroup className="mb-3" controlId="isbn">
-                                    Тираж
+                                    Тираж<span style={{color:"red"}}>*</span>
                                     <Form.Control required type="text" placeholder="Тираж" value={edition} onChange={e => setEdition(e.target.value)} />
                                 </FormGroup>
                                 <FormGroup className="mb-3" controlId="isbn">
-                                    Цена
+                                    Цена<span style={{color:"red"}}>*</span>
                                     <Form.Control required type="text" placeholder="Цена" value={price} onChange={e => setPrice(e.target.value)} />
                                 </FormGroup>
 
@@ -348,7 +348,7 @@ function AddBook() {
                                     <Form.Control required as="textarea" rows='3' placeholder="Описание" value={description} onChange={e => setDescription(e.target.value)} />
                                 </Form.Group>
                                 <Form.Group controlId="bookimg" className="mb-3">
-                                    <Form.Label>Обложка книги</Form.Label>
+                                    <Form.Label>Обложка книги<span style={{color:"red"}}>*</span> <span style={{color:"gray"}}>(Рек. размер 360х400 пикселей, JPG)</span></Form.Label>
                                     <Form.Control type="file" onChange={e => setCoverart(e.target.files[0])} />
                                 </Form.Group>
                                 <Form.Group controlId="bookimg" className="mb-3">

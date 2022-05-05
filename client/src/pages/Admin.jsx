@@ -73,7 +73,7 @@ function Admin() {
   return (
     <div className="blocks">
       <NavAdmin />
-      <div className="enter">
+      <div className="enter"  style={{width:"100vw"}}>
         <Row className="justify-content-md-center">
           <Col md-4>
             {/* Основная часть, здесь размещать таблицы и проч */}

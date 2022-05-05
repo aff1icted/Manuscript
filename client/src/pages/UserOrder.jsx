@@ -74,7 +74,7 @@ const UserOrder = observer(() => {
 
                     </div>
                     :
-                    <div>
+                    <div style={{paddingTop:"30px", fontSize: "20px"}}>
                         Нет оформленных заказов
                     </div>
                 }

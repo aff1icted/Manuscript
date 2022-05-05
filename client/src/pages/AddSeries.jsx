@@ -91,15 +91,12 @@ function AddSeries() {
                             <Form>
                                 <h2>{titleText}</h2>
                                 <FormGroup className="mb-3" controlId="sername">
-                                    Название
+                                    Название<span style={{color:"red"}}>*</span>
                                     <Form.Control required type="text" placeholder="Название" value={name} onChange={e => setName(e.target.value)} />
                                 </FormGroup>
-                                <Form.Group controlId="serimg" className="mb-3">
-                                    <Form.Label>Иллюстрация к серии</Form.Label>
-                                    <Form.Control type="file" filename={seriesPic} onChange={e => setSeriesPic(e.target.files[0])} />{/*сделать получение имени файла или сделать отображение изображения*/}
-                                </Form.Group>
+                                
                                 <Form.Group controlId="serdate" className="mb-3">
-                                    <Form.Label>Дата основания серии</Form.Label>
+                                    <Form.Label>Дата основания серии<span style={{color:"red"}}>*</span></Form.Label>
                                     <Form.Control required type="date" value={foundation} onChange={e => setFoundation(e.target.value)} />
                                 </Form.Group>
                             </Form>

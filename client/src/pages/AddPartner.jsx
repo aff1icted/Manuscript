@@ -90,11 +90,11 @@ function AddPartner() {
                             <Form>
                                 <h2>{titleText}</h2>
                                 <FormGroup className="mb-3" controlId="PartnerTitle">
-                                    Название партнера
-                                    <Form.Control required type="text" placeholder="Полное имя" value={title} onChange={e => setTitle(e.target.value)} />
+                                    Название партнера<span style={{color:"red"}}>*</span>
+                                    <Form.Control required type="text" placeholder="Полное название" value={title} onChange={e => setTitle(e.target.value)} />
                                 </FormGroup>
                                 <Form.Group controlId="authimg" className="mb-3">
-                                    <Form.Label>Эконка партнера</Form.Label>
+                                    <Form.Label>Иконка партнера<span style={{color:"red"}}>*</span> <span style={{color:"gray"}}>(Рек. размер 100х100 пикселей, JPG)</span> </Form.Label>
                                     <Form.Control type="file" onChange={e => setImg(e.target.files[0])} />
                                 </Form.Group>
                             </Form >

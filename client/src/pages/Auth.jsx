@@ -113,14 +113,14 @@ const Auth = observer(() => {
                                     <div>
                                         Есть аккаунт? <NavLink to="/login">Войдите!</NavLink>
                                     </div>
-                                }
+                                }</Row>
                                 <Button
-                                    variant={"outline-success"}
+                                    variant={"dark"}
                                     onClick={click}
                                 >
                                     {isLogin ? 'Войти' : 'Регистрация'}
                                 </Button>
-                            </Row>
+                            
 
                         </Form>
                     </Card>

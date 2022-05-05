@@ -1,10 +1,5 @@
 import React from "react";
 import '../../styles/Slider.css'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-//import leftArrow from "./icons/left-arrow.svg";
-//import rightArrow from "./icons/right-arrow.svg";
 import LeftArrow from '../../static/angle-left.svg'
 import RightArrow from '../../static/angle-right.svg'
 
