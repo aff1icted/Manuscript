@@ -5,6 +5,7 @@ import { Loader } from "../components/UI/Loader";
 import axios from "axios";
 import NavAdmin from "../components/UI/NavAdmin";
 import { updatePage } from "../http/pagesApi";
+import AlertMsg from "../components/modals/AlertMsg";
 
 
 
@@ -36,7 +37,8 @@ function Pages() {
     const [third, setThird] = useState('')
     const [fourth, setFourth] = useState('')
     const [fifth, setFifth] = useState('')
-   
+    const [showEdit,setShowEdit]= useState(false)  
+    
 
     const edtPage = async () => {
         try {
@@ -73,7 +75,7 @@ function Pages() {
             formData.append('fifthurl', fifthUrl)
 
             updatePage(formData)
-            alert('Сохранено')
+            setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -230,6 +232,7 @@ function Pages() {
                                     <Form.Control className="mb-3" placeholder="" value={fifthUrl} onChange={e => setFifthUrl(e.target.value)} />
                                 </Form.Group>
                             </Form >
+                            <AlertMsg show={showEdit} onHide={() => { setShowEdit(false)}} title={'Оповещение'} body={`Данные на страницах изменены`} />
                         </div>
                     </Col>
                     <Col md-auto>
