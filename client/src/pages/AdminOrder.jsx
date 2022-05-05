@@ -38,7 +38,7 @@ function AdminOrder() {
     }, [])
 
     const columns = [
-        { dataField: "id", text: "id" },
+        { dataField: "id", text: "id" , hidden:true },
         { dataField: "book.title", text: "Название" },
         { dataField: "amount", text: "Количество, шт." },
         { dataField: "book.price", text: "Цена экземпляра, ₽" }

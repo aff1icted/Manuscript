@@ -25,8 +25,8 @@ function Author() {
 
 
   useEffect(() => {
-    fetchAuthors()
-    fetchAuthorText().finally(() => setLoading(false))
+    //fetchAuthorText()
+    fetchAuthors().finally(() => setLoading(false))
 
   }, [])
 
@@ -39,7 +39,7 @@ function Author() {
       <div className="content">
         <NavBar />
         <div className="col-8" style={{ fontSize: "20px", backgroundColor: "#f8f8f8", boxShadow: "0px 0px 10px grey", textAlign: "center", minHeight: "40vw", height: "fit-content" }} >
-          <h1>{authorText.text}</h1>
+          {/* <h1>{authorText.text}</h1> */}
           <div style={{paddingTop:"30px"}}>
             {authors.map(author => <div style={{ cursor: "pointer" }} onClick={e => hist.push(`/author/${author.fullname}`)}>{author.fullname}</div>)}
           </div>

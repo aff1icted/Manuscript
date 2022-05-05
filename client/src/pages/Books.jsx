@@ -40,7 +40,7 @@ function Books() {
   }
 
   useEffect(() => {
-    fetchBookText()
+    //fetchBookText()
     fetchBooks().finally(() => setLoading(false))
   }, [])
 
@@ -52,7 +52,7 @@ function Books() {
       <div className="content">
         <NavBar />
         <div className="App">
-          <div>{bookText.text}</div>
+          {/* <div>{bookText.text}</div> */}
           <BookList Books={Books} />
         </div>
       </div>

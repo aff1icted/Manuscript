@@ -171,7 +171,7 @@ function Pages() {
                         {/* Основная часть, здесь размещать таблицы и проч */}
                         <div className="subcolumns-left">
                             <Form>
-                                <Form.Label>Главная страница</Form.Label>
+                                {/* <Form.Label>Главная страница</Form.Label>
                                 <Form.Group className="mb-3" controlId="AuthorDescr">
                                     <Form.Control as="textarea" rows='3' placeholder="" value={mainText} onChange={e => setMainText(e.target.value)} />
                                 </Form.Group>
@@ -182,7 +182,7 @@ function Pages() {
                                 <Form.Label>Страница авторов</Form.Label>
                                 <Form.Group className="mb-3" controlId="AuthorDescr">
                                     <Form.Control as="textarea" rows='3' placeholder="" value={author} onChange={e => setAuthor(e.target.value)} />
-                                </Form.Group>
+                                </Form.Group> */}
                                 <Form.Label>Страница о нас</Form.Label>
                                 <Form.Group className="mb-3" controlId="AuthorDescr">
                                     <Form.Control as="textarea" rows='3' placeholder="" value={about} onChange={e => setAbout(e.target.value)} />
