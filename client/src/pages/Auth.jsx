@@ -7,8 +7,6 @@ import { NavLink, useLocation, useHistory } from "react-router-dom";
 import { ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE } from "../components/utils/consts";
 import { observer } from "mobx-react-lite";
 import { Context } from "../index";
-import jwt_decode from "jwt-decode";
-import axios from "axios";
 import { login, registration } from '../http/userApi';
 import Footer from '../components/UI/Footer';
 import NavBar from '../components/UI/NavBar';

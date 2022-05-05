@@ -1,9 +1,10 @@
 const Router = require('express')
 const cartstaffConrroller = require('../controller/cartstaff.controller')
+const authMiddleware = require('../middleware/authMiddleware')
 const router = new Router()
-router.post('/', cartstaffConrroller.create)
+router.post('/',authMiddleware, cartstaffConrroller.create)
 router.get('/', cartstaffConrroller.getAll)
 router.get('/:user', cartstaffConrroller.getUserCart)
-router.put('/', cartstaffConrroller.update)
-router.delete('/:id', cartstaffConrroller.delete)
+router.put('/',authMiddleware, cartstaffConrroller.update)
+router.delete('/:id',authMiddleware, cartstaffConrroller.delete)
 module.exports = router

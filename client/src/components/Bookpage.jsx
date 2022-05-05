@@ -8,6 +8,7 @@ import { Context } from "../index";
 import AlertButton from "./modals/AlertButton";
 import { LOGIN_ROUTE } from "./utils/consts";
 import axios from "axios";
+import { createStaff } from "../http/staffApi";
 
 const BookPage = observer((props) => {
   const history = useHistory()
@@ -24,10 +25,10 @@ const BookPage = observer((props) => {
     }
   }
 
-  async function create(staff) {
-    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/staff`, staff)
-    return data
-  }
+  // async function create(staff) {
+  //   const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/staff`, staff)
+  //   return data
+  // }
 
 
   const addStaff = async () => {
@@ -37,7 +38,8 @@ const BookPage = observer((props) => {
       formData.append('bookIsbn', props.Book.isbn)
       formData.append('userUsername', user.user.username)
       formData.append('amount', amount)
-      const data = await create(formData);
+      // const data = await create(formData);
+      createStaff(formData)
       setAlertShow(true)
     } catch (e) {
       alert(e.response.data.message)

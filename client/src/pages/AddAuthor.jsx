@@ -9,6 +9,7 @@ import { Col, Row } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import AlertMsg from "../components/modals/AlertMsg";
 import NavAdmin from "../components/UI/NavAdmin";
+import { createAuthor, updateAuthor } from "../http/authorApi";
 
 
 function AddAuthor() {
@@ -25,13 +26,6 @@ function AddAuthor() {
     const [showEdit, setShowEdit] = useState(false)
 
 
-
-    async function create(type) {
-        const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/author`, type)
-        return data
-    }
-
-
     const addAuthor = async () => {
 
         try {
@@ -39,16 +33,12 @@ function AddAuthor() {
             formData.append('fullname', name)
             formData.append('about', description)
             formData.append('img', img)
-            await create(formData);
+            createAuthor(formData)
             setShowCreate(true)
         } catch (e) {
             alert(e.response.data.message)
         }
     }
-
-
-
-
 
 
     async function fetchAuthor() {
@@ -72,16 +62,6 @@ function AddAuthor() {
 
     }, [])
 
-
-
-
-
-
-    async function uauthor(type) {
-        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/author`, type)
-        return data
-    }
-
     const edtAuthor = async () => {
         try {
             const formData = new FormData()
@@ -89,7 +69,8 @@ function AddAuthor() {
             formData.append('oldfullname', LinkFullName)
             formData.append('about', description)
             formData.append('img', img)
-            await uauthor(formData);
+
+            updateAuthor(formData)
             setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)

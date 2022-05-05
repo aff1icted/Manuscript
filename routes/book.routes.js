@@ -1,9 +1,10 @@
 const Router = require('express')
+const checkRole = require('../middleware/checkRoleMiddleware')
 const BookConrroller = require('../controller/book.conrroller')
 const router = new Router()
-router.post('/', BookConrroller.create)
+router.post('/', checkRole('ADMIN'), BookConrroller.create)
 router.get('/', BookConrroller.getAll)
 router.get('/:isbn', BookConrroller.getOne)
-router.put('/', BookConrroller.update)
-router.delete('/:isbn', BookConrroller.delete)
+router.put('/', checkRole('ADMIN'), BookConrroller.update)
+router.delete('/:isbn', checkRole('ADMIN'), BookConrroller.delete)
 module.exports = router

@@ -9,6 +9,7 @@ import { Col, Row } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import AlertMsg from "../components/modals/AlertMsg";
 import NavAdmin from "../components/UI/NavAdmin";
+import { createPartner, updatePartner } from "../http/partnerApi";
 
 
 function AddPartner() {
@@ -23,13 +24,7 @@ function AddPartner() {
     const [showCreate, setShowCreate] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
 
-
-
-    async function create(type) {
-        const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/partner`, type)
-        return data
-    }
-
+   
 
     const addPartner = async () => {
 
@@ -37,16 +32,12 @@ function AddPartner() {
             const formData = new FormData()
             formData.append('title', title)
             formData.append('img', img)
-            await create(formData);
+            createPartner(formData)
             setShowCreate(true)
         } catch (e) {
             alert(e.response.data.message)
         }
     }
-
-
-
-
 
 
     async function fetchPartner() {
@@ -70,16 +61,6 @@ function AddPartner() {
 
     }, [])
 
-
-
-
-
-
-    async function uPartner(type) {
-        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/partner`, type)
-        return data
-    }
-
     const edtPartner = async () => {
         try {
             const formData = new FormData()
@@ -87,7 +68,7 @@ function AddPartner() {
             formData.append('oldtitle', LinkTitle)
             formData.append('img', img)
             console.log('img', img)
-            await uPartner(formData);
+            updatePartner(formData)
             setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)

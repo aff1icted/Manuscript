@@ -4,6 +4,7 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 import { Loader } from "../components/UI/Loader";
 import axios from "axios";
 import NavAdmin from "../components/UI/NavAdmin";
+import { updatePage } from "../http/pagesApi";
 
 
 
@@ -35,11 +36,7 @@ function Pages() {
     const [third, setThird] = useState('')
     const [fourth, setFourth] = useState('')
     const [fifth, setFifth] = useState('')
-
-    async function uPage(type) {
-        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/pages`, type)
-        return data
-    }
+   
 
     const edtPage = async () => {
         try {
@@ -75,7 +72,7 @@ function Pages() {
             formData.append('fourthurl', fourthUrl)
             formData.append('fifthurl', fifthUrl)
 
-            await uPage(formData);
+            updatePage(formData)
             alert('Сохранено')
         } catch (e) {
             alert(e.response.data.message)

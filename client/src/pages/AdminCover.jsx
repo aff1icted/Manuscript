@@ -8,6 +8,7 @@ import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
 import NavAdmin from "../components/UI/NavAdmin";
 import AlertButton from "../components/modals/AlertButton";
+import { deleteCover } from "../http/coverApi";
 
 function AdminCover() {
 
@@ -65,18 +66,15 @@ function AdminCover() {
     };
 
 
-    async function dcover() {
-        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/cover/${currentCover}`)
-        return data
-    }
-
     const deletecover = async () => {
 
         try {
-            let data = await dcover();
-            fetchcovers()
-            Filtr()
-            setCurrentCover('')
+            deleteCover(currentCover).then(() => {
+                fetchcovers()
+                Filtr()
+                setCurrentCover('')
+            })
+
 
         } catch (e) {
             alert(e.response.data.message)
@@ -94,11 +92,11 @@ function AdminCover() {
                     <Col md-4>
                         {/* Основная часть, здесь размещать таблицы и проч */}
                         <div className="subcolumns-left">
-                            <div style={{ paddingBottom: "10px"}} hidden={filterHide}>
+                            <div style={{ paddingBottom: "10px" }} hidden={filterHide}>
                                 <div>Поиск по названию:</div>
-                                <div style={{display:"flex"}}>
-                                <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
-                                <Button onClick={Filtr}>Поиск</Button></div>
+                                <div style={{ display: "flex" }}>
+                                    <input value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
+                                    <Button onClick={Filtr}>Поиск</Button></div>
                             </div>
                             <Button onClick={FilterClic}>{filterButton}</Button>
                             <BootstrapTable

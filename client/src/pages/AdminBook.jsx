@@ -8,6 +8,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import NavAdmin from "../components/UI/NavAdmin";
 import AlertButton from "../components/modals/AlertButton";
+import { deleteBook } from "../http/bookApi";
 
 
 
@@ -30,7 +31,6 @@ function AdminBook() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
         setAuthors(response.data)
     }
-
 
     async function fetchbooks() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/book`)
@@ -90,19 +90,15 @@ function AdminBook() {
         }
     };
 
-    async function dbook() {
-        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/book/${currentBook}`)
-        return data
-    }
 
     const deletebook = async () => {
 
         try {
-
-            let data = await dbook();
-            fetchbooks()
-            Filtr()
-            SetCurrentBook('')
+            deleteBook(currentBook).then(() => {
+                fetchbooks()
+                Filtr()
+                SetCurrentBook('')
+            })
 
         } catch (e) {
             alert(e.response.data.message)
@@ -121,8 +117,8 @@ function AdminBook() {
                 <Row className="justify-content-md-center">
                     <Col md-4>
                         <div className="subcolumns-left">
-                            <div style={{display: "flex", paddingBottom:"10px", alignItems:"flex-end"}} hidden={filterHide} >
-                                <div style={{paddingRight:"30px", width:"60%"}}>
+                            <div style={{ display: "flex", paddingBottom: "10px", alignItems: "flex-end" }} hidden={filterHide} >
+                                <div style={{ paddingRight: "30px", width: "60%" }}>
                                     <div>
                                         Поиск по ISBN
                                     </div>
@@ -140,7 +136,7 @@ function AdminBook() {
                                     <div>
                                         Поиск по автору
                                     </div>
-                                    <div style={{paddingBottom:"10px"}}>
+                                    <div style={{ paddingBottom: "10px" }}>
                                         <select onChange={(e) => setAuthorSearch(e.target.value)}>
                                             <option selected="true" value={''}>{''}</option>
                                             {authors.map(option =>

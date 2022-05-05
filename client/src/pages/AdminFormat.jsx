@@ -8,6 +8,7 @@ import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
 import NavAdmin from "../components/UI/NavAdmin";
 import AlertButton from "../components/modals/AlertButton";
+import { deleteFormat } from "../http/formatApi";
 
 function AdminFormat() {
     const hist = useHistory()
@@ -70,19 +71,18 @@ function AdminFormat() {
         }
     };
 
-    async function dformat() {
-        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/format/${currentFormat}`)
-        return data
-    }
 
-    const deleteFormat = async () => {
+    const deleteformat = async () => {
 
         try {
 
-            let data = await dformat();
-            fetchformats()
-            Filtr()
-            setCurrentFormat('')
+
+            deleteFormat(currentFormat).then(() => {
+                fetchformats()
+                Filtr()
+                setCurrentFormat('')
+            })
+
 
         } catch (e) {
             alert(e.response.data.message)
@@ -100,12 +100,12 @@ function AdminFormat() {
                     <Col md-4>
                         {/* Основная часть, здесь размещать таблицы и проч */}
                         <div className="subcolumns-left">
-                            <div style={{ paddingBottom: "10px", display:"flex", alignItems:"flex-end" }} hidden={filterHide}>
-                            <div style={{paddingRight:"30px"}}>
-                                <div>Поиск по названию:</div>
-                                <input size="30" value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
-                                <div>Поиск по коэффиценту:</div>
-                                <input size="30" value={coeffSearch} onChange={e => setCoeffSearch(e.target.value)} placeholder="Поиск по коэффиценту" />
+                            <div style={{ paddingBottom: "10px", display: "flex", alignItems: "flex-end" }} hidden={filterHide}>
+                                <div style={{ paddingRight: "30px" }}>
+                                    <div>Поиск по названию:</div>
+                                    <input size="30" value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
+                                    <div>Поиск по коэффиценту:</div>
+                                    <input size="30" value={coeffSearch} onChange={e => setCoeffSearch(e.target.value)} placeholder="Поиск по коэффиценту" />
                                 </div>
                                 <Button onClick={Filtr}>Поиск</Button>
                             </div>
@@ -145,7 +145,7 @@ function AdminFormat() {
 
                     </Col>
                 </Row>
-                <AlertButton show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить формат ${currentFormat}?`} buttontext='Да, удалить' buttonfunc={() => { deleteFormat(); setShow(false) }} />
+                <AlertButton show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить формат ${currentFormat}?`} buttontext='Да, удалить' buttonfunc={() => { deleteformat(); setShow(false) }} />
 
             </div>
         </div>

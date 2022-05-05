@@ -9,6 +9,7 @@ import { useHistory, useParams } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import AlertMsg from "../components/modals/AlertMsg";
 import NavAdmin from "../components/UI/NavAdmin";
+import { createBook, updateBook } from "../http/bookApi";
 
 function AddBook() {
     const hist = useHistory()
@@ -108,13 +109,7 @@ function AddBook() {
             fetchtags().finally(() => setLoading(false))
         }
 
-    }, [])
-
-
-    async function create(type) {
-        const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/book`, type)
-        return data
-    }
+    }, [])   
 
     const addBook = async () => {
         try {
@@ -133,9 +128,8 @@ function AddBook() {
             formData.append('shortpdf', shortpdf)
             formData.append('fullpdf', fullpdf)
             formData.append('formatName', format)
-            formData.append('coverCover', cover)
-            let data;
-            data = await create(formData);
+            formData.append('coverCover', cover)          
+            createBook(formData)
             setShowCreate(true)
         } catch (e) {
             alert(e.response.data.message)
@@ -169,8 +163,7 @@ function AddBook() {
             formData.append('fullpdf', fullpdf)
             formData.append('formatName', format)
             formData.append('coverCover', cover)
-            let data;
-            data = await ubook(formData);
+            updateBook(formData)
             setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)

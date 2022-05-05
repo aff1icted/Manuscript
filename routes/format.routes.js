@@ -1,11 +1,12 @@
 const Router = require('express')
 const router = new Router
 const formatConrroller = require('../controller/format.controller')
+const checkRole = require('../middleware/checkRoleMiddleware')
 
-router.post('/', formatConrroller.create)
+router.post('/',checkRole('ADMIN'), formatConrroller.create)
 router.get('/', formatConrroller.getAll)
-router.put('/', formatConrroller.update)
+router.put('/',checkRole('ADMIN'), formatConrroller.update)
 router.get('/:name', formatConrroller.getOne)
-router.delete('/:name', formatConrroller.delete)
+router.delete('/:name',checkRole('ADMIN'), formatConrroller.delete)
 
 module.exports = router

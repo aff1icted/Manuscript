@@ -8,6 +8,7 @@ import { Col, Row } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import AlertMsg from "../components/modals/AlertMsg";
 import NavAdmin from "../components/UI/NavAdmin";
+import { createFormat, updateFormat } from "../http/formatApi";
 
 function AddFormat() {
     const hist = useHistory()
@@ -22,15 +23,9 @@ function AddFormat() {
     const [showEdit, setShowEdit] = useState(false)
 
 
-    async function create(type) {
-        const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/format`, type)
-        return data
-    }
-
     const addformat = async () => {
         try {
-            let data;
-            data = await create({ name: name, transfercoeff: coeff });
+            createFormat({ name: name, transfercoeff: coeff })
             setShowCreate(true)
         } catch (e) {
             alert(e.response.data.message)
@@ -57,19 +52,13 @@ function AddFormat() {
         }
     }, [])
 
-    async function uformat(type) {
-        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/format`, type)
-        return data
-    }
-
     const edtformat = async () => {
         try {
             const formData = new FormData()
             formData.append('oldname', LinkFormatName)
             formData.append('name', name)
             formData.append('transfercoeff', coeff)
-            let data;
-            data = await uformat(formData);
+            updateFormat(formData)
             setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)

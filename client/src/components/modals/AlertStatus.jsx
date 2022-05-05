@@ -1,22 +1,18 @@
 import axios from "axios"
 import { useState } from "react"
 import { Modal, Button } from "react-bootstrap"
+import { updateOrderStatus } from "../../http/orderApi"
 
 const AlertStatus = ({ show, onHide, id }) => {
     const [status,setStatus]= useState('Оформлен')
-
-    async function ustatus(type) {
-        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/order`, type)
-        return data
-    }
+    
 
     const edtstatus= async () => {
         try {
             const formData = new FormData()
             formData.append('id', id)
             formData.append('status', status)
-            let data;
-            data = await ustatus(formData);
+            updateOrderStatus(formData)
         } catch (e) {
             alert(e.response.data.message)
         }

@@ -8,6 +8,7 @@ import { Col, Row } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import NavAdmin from "../components/UI/NavAdmin";
 import AlertMsg from "../components/modals/AlertMsg";
+import { createSeries, updateSeries } from "../http/seriesApi";
 
 function AddSeries() {
     const hist = useHistory()
@@ -22,10 +23,7 @@ function AddSeries() {
     const [showCreate, setShowCreate] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
 
-    async function create(type) {
-        const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/series`, type)
-        return data
-    }
+  
 
     const addSeries = async () => {
         try {
@@ -33,7 +31,7 @@ function AddSeries() {
             formData.append('seriesname', name)
             formData.append('foundation', foundation)
             formData.append('seriespic', seriesPic)
-            await create(formData);
+            createSeries(formData)
             setShowCreate(true)
         } catch (e) {
             alert(e.response.data.message)
@@ -63,10 +61,6 @@ function AddSeries() {
 
 
 
-    async function useries(type) {
-        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/series`, type)
-        return data
-    }
 
     const edtSeries = async () => {
         try {
@@ -76,8 +70,7 @@ function AddSeries() {
             formData.append('foundation', foundation)
             console.log('seriespic', seriesPic)
             formData.append('seriespic', seriesPic)
-            let data;
-            data = await useries(formData);
+            updateSeries(formData)
             setShowEdit(true)
         } catch (e) {
             alert(e.response.data.message)

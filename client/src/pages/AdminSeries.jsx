@@ -8,6 +8,7 @@ import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
 import NavAdmin from "../components/UI/NavAdmin";
 import AlertButton from "../components/modals/AlertButton";
+import { deleteSeries } from "../http/seriesApi";
 
 function AdminSeries() {
     const hist = useHistory()
@@ -70,19 +71,15 @@ function AdminSeries() {
         }
     };
 
-    async function dseries() {
-        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/series/${currentSeries}`)
-        return data
-    }
-
     const deleteseries = async () => {
 
         try {
+            deleteSeries(currentSeries).then(() => {
+                fetchSeries()
+                Filtr()
+                setCurrentSeries('')
+            })
 
-            let data = await dseries();
-            fetchSeries()
-            Filtr()
-            setCurrentSeries('')
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -99,14 +96,14 @@ function AdminSeries() {
                     <Col md-4>
                         {/* Основная часть, здесь размещать таблицы и проч */}
                         <div className="subcolumns-left">
-                            <div style={{ paddingBottom: "10px", display:"flex", alignItems:"flex-end" }} hidden={filterHide}>
-                                <div style={{paddingRight:"30px"}}>
-                                <div>Поиск по названию:</div>
-                                <input size="30" value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
-                                {/*переделать на поле с датой*/}
+                            <div style={{ paddingBottom: "10px", display: "flex", alignItems: "flex-end" }} hidden={filterHide}>
+                                <div style={{ paddingRight: "30px" }}>
+                                    <div>Поиск по названию:</div>
+                                    <input size="30" value={nameSearch} onChange={e => setNameSearch(e.target.value)} placeholder="Поиск по названию" />
+                                    {/*переделать на поле с датой*/}
 
-                                <div>Поиск по дате:</div>
-                                <input size="30" value={foundationSearch} onChange={e => setFoundationSearch(e.target.value)} placeholder="Поиск по дате основания" /></div>
+                                    <div>Поиск по дате:</div>
+                                    <input size="30" value={foundationSearch} onChange={e => setFoundationSearch(e.target.value)} placeholder="Поиск по дате основания" /></div>
                                 <Button onClick={Filtr}>Поиск</Button>
                             </div>
                             <Button onClick={FilterClic}>{filterButton}</Button>

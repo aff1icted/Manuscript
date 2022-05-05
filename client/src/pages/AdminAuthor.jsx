@@ -8,6 +8,7 @@ import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
 import NavAdmin from "../components/UI/NavAdmin";
 import AlertButton from "../components/modals/AlertButton";
+import { deleteAuthor } from "../http/authorApi";
 
 function AdminAuthor() {
     const hist = useHistory()
@@ -64,19 +65,14 @@ function AdminAuthor() {
         }
     };
 
-    async function dauthor() {
-        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/author/${currentAuthor}`)
-        return data
-    }
-
     const deleteauthor = async () => {
 
         try {
-
-            let data = await dauthor();
-            fetchauthors()
+            deleteAuthor(currentAuthor).then(()=>{
+                fetchauthors()
             Filtr()
             setCurrentAuthor('')
+            })           
 
         } catch (e) {
             alert(e.response.data.message)

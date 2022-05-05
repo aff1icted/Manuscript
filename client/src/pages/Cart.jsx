@@ -12,6 +12,8 @@ import { Button } from "react-bootstrap";
 import AlertMsg from "../components/modals/AlertMsg";
 import { useHistory } from "react-router-dom";
 import { MAIN_ROUTE } from "../components/utils/consts";
+import { deleteStaff } from "../http/staffApi";
+import { createOrder } from "../http/orderApi";
 
 const Cart = observer(() => {
     const hist = useHistory()
@@ -43,14 +45,10 @@ const Cart = observer(() => {
     }
 
     async function deletestaff(id) {
-        await axios.delete(`${process.env.REACT_APP_API_URL}api/staff/${id}`)
+        deleteStaff(id)
         fetchstaff()
     }
-
-    async function create(type) {
-        const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/order`, type)
-        return data
-    }
+    
 
     const addOrder = async () => {
         try {
@@ -58,8 +56,7 @@ const Cart = observer(() => {
             formData.append('fullname', fullname)
             formData.append('phonenumber', phonenumber)
             formData.append('userUsername', user.user.username)
-            let data;
-            data = await create(formData);
+            createOrder(formData)
             setOrderShow(true)
         } catch (e) {
             alert(e.response.data.message)

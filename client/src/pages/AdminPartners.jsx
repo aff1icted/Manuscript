@@ -8,6 +8,7 @@ import { Loader } from "../components/UI/Loader";
 import { useHistory } from "react-router-dom";
 import NavAdmin from "../components/UI/NavAdmin";
 import AlertButton from "../components/modals/AlertButton";
+import { deletePartner } from "../http/partnerApi";
 
 function AdminPartner() {
     const hist = useHistory()
@@ -63,20 +64,17 @@ function AdminPartner() {
             setFIlterButton('Показать фильтр')
         }
     };
+    
 
-    async function dPartner() {
-        const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}api/partner/${currentPartner}`)
-        return data
-    }
-
-    const deletePartner = async () => {
+    const deletepartner = async () => {
 
         try {
+            deletePartner(currentPartner).then(() => {
+                fetchPartners()
+                Filtr()
+                setCurrentPartner('')
+            })
 
-            let data = await dPartner();
-            fetchPartners()
-            Filtr()
-            setCurrentPartner('')
 
         } catch (e) {
             alert(e.response.data.message)
@@ -137,7 +135,7 @@ function AdminPartner() {
 
                     </Col>
                 </Row>
-                <AlertButton show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить автора ${currentPartner}?`} buttontext='Да, удалить' buttonfunc={() => { deletePartner(); setShow(false) }} />
+                <AlertButton show={show} onHide={() => setShow(false)} title={'Удаление'} body={`Вы уверены, что хотите удалить автора ${currentPartner}?`} buttontext='Да, удалить' buttonfunc={() => { deletepartner(); setShow(false) }} />
 
 
             </div>
