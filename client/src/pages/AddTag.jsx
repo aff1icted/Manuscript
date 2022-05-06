@@ -20,28 +20,37 @@ function AddTag() {
     const [editVisible, setEditVisible] = useState(true)
     const [showCreate, setShowCreate] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
+    const [showError, setShowError] = useState(false)
+    const [error, setError] = useState('')
 
     
     const addTag = async () => {
-        try {        
+        try {   
+            if (tag == '')  {
+                throw('Все обязательные поля должны быть заполнены')
+            }     
             createTag({ tagname: tag })
             setShowCreate(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }  
 
 
     const edtTag = async () => {
         try {
-            
+            if (tag == '')  {
+                throw('Все обязательные поля должны быть заполнены')
+            }
             const formData = new FormData()
             formData.append('tagname', tag)
             formData.append('oldtagname', LinkTagName)
             updateTag(formData)
             setShowEdit(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -102,6 +111,7 @@ function AddTag() {
 
                 <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Тег/жанр ${tag} создан`} />
                 <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Тег/жанр ${LinkTagName} изменен`} />
+                <AlertMsg show={showError} onHide={() => setShowError(false)} title={'Ошибка'} body={error} />
 
 
 

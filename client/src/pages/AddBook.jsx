@@ -42,6 +42,8 @@ function AddBook() {
     const [selectedFormat, setSelectedFormat] = useState('Формат')
     const [showCreate, setShowCreate] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
+    const [showError, setShowError] = useState(false)
+    const [error, setError] = useState('')
 
     async function fetchAuthors() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/author`)
@@ -113,6 +115,13 @@ function AddBook() {
 
     const addBook = async () => {
         try {
+            if (isbn == '' || title == '' || publicationdate == '' || selectedTag.length == 0 || 
+            selectedAuthor.length == 0  ||  format == '' ||  cover == '' || pagenumber == '' || edition == '' || price == '' ||coverart === null) {
+                throw('Все обязательные поля должны быть заполнены')
+            }
+            if(isNaN(pagenumber)|| isNaN(edition)|| isNaN(price) ){
+                throw('Количество страниц, тираж и цена должены быть числами')
+            }
             const formData = new FormData()
             formData.append('isbn', isbn)
             formData.append('title', title)
@@ -132,17 +141,22 @@ function AddBook() {
             createBook(formData)
             setShowCreate(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
-    async function ubook(type) {
-        const { data } = await axios.put(`${process.env.REACT_APP_API_URL}api/book`, type)
-        return data
-    }
+    
 
     const edtbook = async () => {
         try {
+            if (isbn == '' || title == '' || publicationdate == '' || selectedTag.length == 0 || 
+            selectedAuthor.length == 0  ||  format == '' ||  cover == '' || pagenumber == '' || edition == '' || price == '' ||coverart === null) {
+                throw('Все обязательные поля должны быть заполнены')
+            }
+            if(isNaN(pagenumber)|| isNaN(edition)|| isNaN(price) ){
+                throw('Количество страниц, тираж и цена должены быть числами')
+            }
             const formData = new FormData()
             formData.append('oldisbn', LinkIsbn)
             formData.append('isbn', isbn)
@@ -166,7 +180,8 @@ function AddBook() {
             updateBook(formData)
             setShowEdit(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -291,7 +306,7 @@ function AddBook() {
                                         selected={selectedTag}
                                     />
                                 </div>
-                                <Form.Label style={{paddingTop:"30px"}}>Серии<span style={{color:"red"}}>*</span></Form.Label>
+                                <Form.Label style={{paddingTop:"30px"}}>Серии</Form.Label>
                                 <div style={{ height: "150px", overflow: "auto" }}>
                                     <BootstrapTable
                                         keyField="seriesname"
@@ -378,6 +393,7 @@ function AddBook() {
 
                 <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Книга ${isbn} создана`} />
                 <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Книга ${LinkIsbn} изменена`} />
+                <AlertMsg show={showError} onHide={() => setShowError(false)} title={'Ошибка'} body={error} />
 
             </div>
         </div>

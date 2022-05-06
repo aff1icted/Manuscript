@@ -22,11 +22,16 @@ function AddSeries() {
     const [editVisible, setEditVisible] = useState(true)
     const [showCreate, setShowCreate] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
+    const [showError, setShowError] = useState(false)
+    const [error, setError] = useState('')
 
   
 
     const addSeries = async () => {
         try {
+            if (name == '' || foundation === '') {
+                throw('Все обязательные поля должны быть заполнены')
+            }
             const formData = new FormData()
             formData.append('seriesname', name)
             formData.append('foundation', foundation)
@@ -34,7 +39,8 @@ function AddSeries() {
             createSeries(formData)
             setShowCreate(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -64,6 +70,9 @@ function AddSeries() {
 
     const edtSeries = async () => {
         try {
+            if (name == '' || foundation === '')  {
+                throw('Все обязательные поля должны быть заполнены')
+            }
             const formData = new FormData()
             formData.append('seriesname', name)
             formData.append('oldseriesname', LinkSeriesName)
@@ -73,7 +82,8 @@ function AddSeries() {
             updateSeries(formData)
             setShowEdit(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -118,6 +128,7 @@ function AddSeries() {
 
                 <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Серия ${name} добавлена`} />
                 <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Серия ${LinkSeriesName} изменена`} />
+                <AlertMsg show={showError} onHide={() => setShowError(false)} title={'Ошибка'} body={error} />
 
 
             </div>

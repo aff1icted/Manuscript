@@ -28,12 +28,14 @@ const Cart = observer(() => {
     const [phonenumber, setPhonenumber] = useState('')
     const [sum, setSum] = useState(0)
     const [emptyCart, setEmptyCart] = useState(true)
+    const [showError, setShowError] = useState(false)
+    const [error, setError] = useState('')
 
 
     async function fetchstaff() {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}api/staff/${user.user.username}`)
-        console.log('response',response.data.length)
-        if (response.data.length>0) {
+        console.log('response', response.data.length)
+        if (response.data.length > 0) {
             let s = 0
             response.data?.map(staff => s = s + (staff.book.price * staff.amount))
             setSum(s)
@@ -45,13 +47,16 @@ const Cart = observer(() => {
     }
 
     async function deletestaff(id) {
-        deleteStaff(id)
-        fetchstaff()
+        deleteStaff(id).then(() => fetchstaff())
+
     }
-    
+
 
     const addOrder = async () => {
         try {
+            if (fullname == '' || phonenumber == '') {
+                throw ('Все обязательные поля должны быть заполнены')
+            }
             const formData = new FormData()
             formData.append('fullname', fullname)
             formData.append('phonenumber', phonenumber)
@@ -59,7 +64,8 @@ const Cart = observer(() => {
             createOrder(formData)
             setOrderShow(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -71,7 +77,7 @@ const Cart = observer(() => {
     }, [])
 
     const columns = [
-        { dataField: "id", text: "id", hidden:true},
+        { dataField: "id", text: "id", hidden: true },
         { dataField: "book.title", text: "Название" },
         { dataField: "amount", text: "Количество, шт." },
         { dataField: "book.price", text: "Цена экземпляра, ₽" }
@@ -96,31 +102,31 @@ const Cart = observer(() => {
     }
     return (
         <div>
-            <div className="content"> 
+            <div className="content">
                 <NavBar />
                 {emptyCart ?
-                    <div className="col-5" style={{paddingTop: "20px", paddingBottom:"20px"}}>
+                    <div className="col-5" style={{ paddingTop: "20px", paddingBottom: "20px" }}>
                         <Form>
-                            <Form.Label>ФИО<span style={{color:"red"}}>*</span></Form.Label>
+                            <Form.Label>ФИО<span style={{ color: "red" }}>*</span></Form.Label>
                             <Form.Control required type="text" value={fullname} onChange={e => setFullname(e.target.value)} />
-                            <Form.Label>Телефон<span style={{color:"red"}}>*</span></Form.Label>
+                            <Form.Label>Телефон<span style={{ color: "red" }}>*</span></Form.Label>
                             <Form.Control required type="text" value={phonenumber} onChange={e => setPhonenumber(e.target.value)} />
                         </Form>
-                        <div style={{paddingTop: "20px"}}>
-                        <BootstrapTable
-                            keyField="id"
-                            data={staff}
-                            columns={columns}
-                            hover="true"
-                            selectRow={selectRow}
-                            rowEvents={rowEvents}
-                        />
+                        <div style={{ paddingTop: "20px" }}>
+                            <BootstrapTable
+                                keyField="id"
+                                data={staff}
+                                columns={columns}
+                                hover="true"
+                                selectRow={selectRow}
+                                rowEvents={rowEvents}
+                            />
                         </div>
-                        <div style={{display:"flex", flexDirection:"column"}}>
-                        <div style={{fontSize:"20px", paddingBottom:"10px"}}>Сумма: {sum}₽</div>
-                        <Button onClick={() => setBuyShow(true)}>
-                            Оформить заказ
-                        </Button> 
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                            <div style={{ fontSize: "20px", paddingBottom: "10px" }}>Сумма: {sum}₽</div>
+                            <Button onClick={() => setBuyShow(true)}>
+                                Оформить заказ
+                            </Button>
                         </div>
 
                         <AlertButton
@@ -147,11 +153,11 @@ const Cart = observer(() => {
 
                     </div>
                     :
-                    <div style={{paddingTop:"30px", fontSize: "20px"}}>
+                    <div style={{ paddingTop: "30px", fontSize: "20px" }}>
                         Корзина пуста, добавьте что-то, чтобы оформить заказ.
                     </div>
                 }
-
+                <AlertMsg show={showError} onHide={() => setShowError(false)} title={'Ошибка'} body={error} />
             </div>
             <Footer />
         </div>

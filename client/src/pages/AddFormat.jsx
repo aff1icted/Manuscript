@@ -21,14 +21,25 @@ function AddFormat() {
     const [editVisible, setEditVisible] = useState(true)
     const [showCreate, setShowCreate] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
+    const [showError, setShowError] = useState(false)
+    const [error, setError] = useState('')
+
 
 
     const addformat = async () => {
         try {
+            if (name == '' || coeff=='') {
+                throw('Все обязательные поля должны быть заполнены')
+            }
+            console.log('bsdfgsdg',isNaN(coeff))
+            if(isNaN(coeff)){
+                throw('Коэффицент должен быть числом')
+            }
             createFormat({ name: name, transfercoeff: coeff })
             setShowCreate(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -54,6 +65,12 @@ function AddFormat() {
 
     const edtformat = async () => {
         try {
+            if (name == '' || coeff=='') {
+                throw('Все обязательные поля должны быть заполнены')
+            }
+            if(isNaN(coeff)){
+                throw('Коэффицент должен быть числом')
+            }
             const formData = new FormData()
             formData.append('oldname', LinkFormatName)
             formData.append('name', name)
@@ -61,7 +78,8 @@ function AddFormat() {
             updateFormat(formData)
             setShowEdit(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -85,7 +103,7 @@ function AddFormat() {
                                 </FormGroup>
 
                                 <FormGroup className="mb-3" controlId="formratio">
-                                    Коэффициент<span style={{color:"red"}}>*</span>
+                                    Коэффициент<span style={{color:"red"}}>* </span><span style={{color:"gray"}}>(Дробный коэффициент записывается через точку)</span>
                                     <Form.Control required type="text" placeholder="коэффициент" value={coeff} onChange={e => setCoeff(e.target.value)} />
                                 </FormGroup>
                             </Form>
@@ -107,6 +125,7 @@ function AddFormat() {
                 </Row >
                 <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Формат ${name} создан`} />
                 <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Формат ${LinkFormatName} изменен`} />
+                <AlertMsg show={showError} onHide={() => setShowError(false)} title={'Ошибка'} body={error} />
 
 
             </div >

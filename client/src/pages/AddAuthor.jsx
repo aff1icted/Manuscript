@@ -24,11 +24,16 @@ function AddAuthor() {
     const [editVisible, setEditVisible] = useState(true)
     const [showCreate, setShowCreate] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
+    const [showError, setShowError] = useState(false)
+    const [error, setError] = useState('')
 
 
     const addAuthor = async () => {
 
         try {
+            if (name== '') {
+                throw('Все обязательные поля должны быть заполнены')
+            }
             const formData = new FormData()
             formData.append('fullname', name)
             formData.append('about', description)
@@ -36,7 +41,8 @@ function AddAuthor() {
             createAuthor(formData)
             setShowCreate(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -64,6 +70,9 @@ function AddAuthor() {
 
     const edtAuthor = async () => {
         try {
+            if (name== '') {
+                throw('Все обязательные поля должны быть заполнены')
+            }
             const formData = new FormData()
             formData.append('fullname', name)
             formData.append('oldfullname', LinkFullName)
@@ -73,7 +82,8 @@ function AddAuthor() {
             updateAuthor(formData)
             setShowEdit(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -125,6 +135,7 @@ function AddAuthor() {
                 </Row >
                 <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Автор ${name} создан`} />
                 <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Автор ${LinkFullName} изменен`} />
+                <AlertMsg show={showError} onHide={() => setShowError(false)} title={'Ошибка'} body={error} />
             </div>
         </div>
     )

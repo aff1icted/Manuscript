@@ -16,6 +16,11 @@ const BookPage = observer((props) => {
   const [alertShow, setAlertShow] = useState(false)
   const [alertButtonShow, setAlertButtonShow] = useState(false)
   const [amount, setAmount] = useState(1)
+  const [showError, setShowError] = useState(false)
+  const [error, setError] = useState('')
+  const isShort = props.Book.shortpdf === null
+  const isFull = props.Book.fullpdf === null
+
 
   async function click() {
     if (user.isAuth) {
@@ -25,24 +30,22 @@ const BookPage = observer((props) => {
     }
   }
 
-  // async function create(staff) {
-  //   const { data } = await axios.post(`${process.env.REACT_APP_API_URL}api/staff`, staff)
-  //   return data
-  // }
 
 
   const addStaff = async () => {
     try {
+      if (amount < 0 || isNaN(amount)) {
+        throw ('Укажите количество книг для покупки')
+      }
       const formData = new FormData()
-      console.log('bookIsbn', props.Book.isbn)
       formData.append('bookIsbn', props.Book.isbn)
       formData.append('userUsername', user.user.username)
       formData.append('amount', amount)
-      // const data = await create(formData);
       createStaff(formData)
       setAlertShow(true)
     } catch (e) {
-      alert(e.response.data.message)
+      setError(e)
+      setShowError(true)
     }
   }
 
@@ -62,11 +65,21 @@ const BookPage = observer((props) => {
           <div>Количество страниц: {props.Book.pagenumber} с.</div>
           <div>Тираж: {props.Book.edition} шт.</div>
           <div>Описание: {props.Book.description}</div>
-          
-          <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.shortpdf}>Отрывок</a>
-          <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.fullpdf}>Читать полностью</a>
-          
-          
+          {isShort ?
+            <div />
+            :
+            <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.shortpdf}>Отрывок</a>
+          }
+
+          {isFull ?
+            <div />
+            :
+            <a className="mr-3" href={process.env.REACT_APP_API_URL + props.Book.fullpdf}>Читать полностью</a>
+          }
+
+
+
+
         </div>
       </div>
       <div className="lowerbook">
@@ -88,7 +101,9 @@ const BookPage = observer((props) => {
         buttontext='Перейти к авторизации'
         buttonfunc={() => history.push(LOGIN_ROUTE)}
       />
+      <AlertMsg show={showError} onHide={() => setShowError(false)} title={'Ошибка'} body={error} />
     </div>
+
 
   );
 });

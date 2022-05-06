@@ -23,19 +23,25 @@ function AddPartner() {
     const [editVisible, setEditVisible] = useState(true)
     const [showCreate, setShowCreate] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
+    const [showError, setShowError] = useState(false)
+    const [error, setError] = useState('')
 
    
 
     const addPartner = async () => {
 
         try {
+            if (title == '' || img === null) {
+                throw('Все обязательные поля должны быть заполнены')
+            }
             const formData = new FormData()
             formData.append('title', title)
             formData.append('img', img)
             createPartner(formData)
             setShowCreate(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -63,6 +69,9 @@ function AddPartner() {
 
     const edtPartner = async () => {
         try {
+            if (title == '' || img =='') {
+                throw('Все обязательные поля должны быть заполнены')
+            }
             const formData = new FormData()
             formData.append('title', title)
             formData.append('oldtitle', LinkTitle)
@@ -71,7 +80,8 @@ function AddPartner() {
             updatePartner(formData)
             setShowEdit(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -119,6 +129,7 @@ function AddPartner() {
                 </Row >
                 <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Партнер ${title} создан`} />
                 <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Партнер ${LinkTitle} изменен`} />
+                <AlertMsg show={showError} onHide={() => setShowError(false)} title={'Ошибка'} body={error} />
             </div>
         </div>
     )

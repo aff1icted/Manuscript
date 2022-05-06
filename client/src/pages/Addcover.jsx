@@ -20,15 +20,20 @@ function AddCover() {
     const LinkCover = useParams().cover
     const [showCreate, setShowCreate] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
+    const [showError, setShowError] = useState(false)
+    const [error, setError] = useState('')
 
 
     const addCover = async () => {
         try {
-            let data;
+            if (coverName== '') {
+                throw('Все обязательные поля должны быть заполнены')
+            }
             createCover({ cover: coverName })
             setShowCreate(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -48,13 +53,17 @@ function AddCover() {
 
     const edtCover = async () => {
         try {
+            if (coverName== '') {
+                throw('Все обязательные поля должны быть заполнены')
+            }
             const formData = new FormData()
             formData.append('cover', coverName)
             formData.append('oldcover', LinkCover)
             updateCover(formData)
             setShowEdit(true)
         } catch (e) {
-            alert(e.response.data.message)
+            setError(e)
+            setShowError(true)
         }
     }
 
@@ -96,6 +105,7 @@ function AddCover() {
                 </Row>
                 <AlertMsg show={showCreate} onHide={() => { setShowCreate(false); hist.goBack() }} title={'Оповещение'} body={`Переплет ${coverName} создан`} />
                 <AlertMsg show={showEdit} onHide={() => { setShowEdit(false); hist.goBack() }} title={'Оповещение'} body={`Переплет ${LinkCover} изменен`} />
+                <AlertMsg show={showError} onHide={() => setShowError(false)} title={'Ошибка'} body={error} />
 
             </div >
         </div>
