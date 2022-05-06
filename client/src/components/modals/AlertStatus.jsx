@@ -27,7 +27,7 @@ const AlertStatus = ({ show, onHide, id }) => {
             centered
         >
             <Modal.Header closeButton>
-                <Modal.Title>Смена статус</Modal.Title>
+                <Modal.Title>Смена статуса</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 Сменить статус заказа {id} на: 
