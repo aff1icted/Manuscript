@@ -36,7 +36,7 @@ class pagesController {
     async getfooter(req, res) {
 
         if ((await Pages.findAll()).length == 0) {
-            await Pages.create({ item: 'mainText', text: mainText })
+            await Pages.create({ item: 'mainText'})
             await Pages.create({ item: 'book' })
             await Pages.create({ item: 'author' })
             await Pages.create({ item: 'about' })
@@ -67,7 +67,7 @@ class pagesController {
     async getbanner(req, res) {
 
         if ((await Pages.findAll()).length == 0) {
-            await Pages.create({ item: 'mainText', text: mainText })
+            await Pages.create({ item: 'mainText' })
             await Pages.create({ item: 'book' })
             await Pages.create({ item: 'author' })
             await Pages.create({ item: 'about' })
@@ -100,7 +100,7 @@ class pagesController {
         const { item } = req.params
 
         if ((await Pages.findAll()).length == 0) {
-            await Pages.create({ item: 'mainText', text: mainText })
+            await Pages.create({ item: 'mainText' })
             await Pages.create({ item: 'book' })
             await Pages.create({ item: 'author' })
             await Pages.create({ item: 'about' })
@@ -132,7 +132,7 @@ class pagesController {
             let page
 
             if ((await Pages.findAll()).length == 0) {
-                await Pages.create({ item: 'mainText', text: mainText })
+                await Pages.create({ item: 'mainText' })
                 await Pages.create({ item: 'book' })
                 await Pages.create({ item: 'author' })
                 await Pages.create({ item: 'about' })
