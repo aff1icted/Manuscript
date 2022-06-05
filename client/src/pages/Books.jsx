@@ -49,7 +49,7 @@ function Books() {
   }
   return (
     <div>
-      <div className="content">
+      <div className="col-10 content">
         <NavBar />
         <div className="App">
           {/* <div>{bookText.text}</div> */}

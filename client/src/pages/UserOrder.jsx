@@ -59,7 +59,7 @@ const UserOrder = observer(() => {
     }
     return (
         <div>
-            <div className="content">
+            <div className="col-10 content">
                 <NavBar />
                 {emptyCart ?
                     <div className="col-5" style={{paddingTop: "20px", paddingBottom:"20px"}}>

@@ -14,11 +14,12 @@
 
 .blocks
 {
-    padding: 30px 90px;
+    
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-self: flex-start;
+    
 
     
 }
@@ -92,7 +93,7 @@
 {
     padding: 10px;
      /* background: violet;  */
-    width: 55vw;
+    width: 50vw;
     
 
 }

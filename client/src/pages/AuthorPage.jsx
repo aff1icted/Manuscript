@@ -28,7 +28,7 @@ function AuthorPage() {
     }
     return (
         <div>
-            <div className="content">
+            <div className="col-10 content">
                 <NavBar />
                 <div class="Bookdet">
                     <div className="upperbook">

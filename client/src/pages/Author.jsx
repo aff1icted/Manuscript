@@ -36,7 +36,7 @@ function Author() {
   return (
 
     <div>
-      <div className="content">
+      <div className="col-10 content">
         <NavBar />
         <div className="col-8" style={{ fontSize: "20px", backgroundColor: "#f8f8f8", boxShadow: "0px 0px 10px grey", textAlign: "center", minHeight: "40vw", height: "fit-content" }} >
           {/* <h1>{authorText.text}</h1> */}

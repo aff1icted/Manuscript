@@ -110,7 +110,7 @@ function AdminBook() {
         return <Loader />
     }
     return (
-        <div className="blocks">
+        <div className="col-10 mx-auto blocks">
             <NavAdmin />
             <div className="enter">
 

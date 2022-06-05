@@ -27,7 +27,7 @@ function About() {
   }
   return (
     <div>
-      <div className="content">
+      <div className="col-10 content">
         <NavBar />
         <div className="col-8" style={{paddingTop:"30px", textAlign:"justify", textAlignLast:"center"}}>
           <h5>

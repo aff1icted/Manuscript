@@ -27,7 +27,7 @@ function Partners() {
   }
   return (
     <div>
-      <div className="content">
+      <div className="col-10 content">
         <NavBar />
         <div>
           {partners.map(partner =>

@@ -71,7 +71,7 @@ function Admin() {
     return <Loader />
   }
   return (
-    <div className="blocks">
+    <div className="col-10 mx-auto blocks">
       <NavAdmin />
       <div className="enter"  style={{width:"100vw"}}>
         <Row className="justify-content-md-center">

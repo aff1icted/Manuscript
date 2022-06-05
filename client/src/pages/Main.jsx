@@ -27,7 +27,7 @@ function Main() {
     }
     return (
         <div>
-            <div className="content">
+            <div className="col-10 content">
                 <NavBar />
                 <div>
                     <Slider />
