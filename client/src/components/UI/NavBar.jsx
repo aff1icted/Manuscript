@@ -31,7 +31,7 @@ const NavBar = () => {
   return (
 
 
-    <Navbar className="d-flex justify-content-around col-12">
+    <Navbar className="navblue d-flex justify-content-around col-12" >
       <Container fluid className="justify-content-around">
 
 

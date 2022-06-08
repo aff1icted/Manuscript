@@ -249,3 +249,11 @@ ul.menu li a:hover {
 .nav-link {    
     color:#fff !important;
 }
+
+.navblue{
+    background-color: rgb(124, 155, 205) !important;
+}
+
+.navgrey{
+    background-color: rgb(230, 230, 230) !important;
+}
