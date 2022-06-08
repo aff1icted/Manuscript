@@ -12,7 +12,11 @@ function Order() {
 
   async function fetchOrderText() {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}api/pages/elem/order`)
-    setOrderText(response.data.text)
+    if(response.data!=null)
+    {
+      setOrderText(response.data.text)
+    }
+    
   }
  
 
