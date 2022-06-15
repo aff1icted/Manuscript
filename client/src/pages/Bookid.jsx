@@ -34,7 +34,7 @@ function Bookid() {
   return (
 
     <div>
-      <div className="col-10 content">
+      <div className="col-8 content">
         <NavBar />
         <BookPage Book={Book} />
       </div>

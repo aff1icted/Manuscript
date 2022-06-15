@@ -27,7 +27,7 @@ const NavUser = observer(() => {
     }
 
     return (
-        <Navbar className='navgrey col-10 mx-auto' variant="dark" >
+        <Navbar className='navgrey col-8 mx-auto' variant="dark" >
             <Container>
                 <NavLink style={{ color: 'white' }} to={MAIN_ROUTE}> <img src={logo} style={{fill:"white"}} height="45px"/></NavLink>
                 {user.isAuth ?

@@ -60,7 +60,7 @@ const Auth = observer(() => {
 
 
         <div>
-            <div className="col-10 content">
+            <div className="col-8 content">
                 <NavBar />
                 <Container
                     className="d-flex justify-content-center align-items-center"

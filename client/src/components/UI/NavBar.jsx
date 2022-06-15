@@ -36,21 +36,21 @@ const NavBar = () => {
 
 
 
-        <NavDropdown style={{ textDecoration: 'none', fontSize: '30px' }} title={"КНИГИ"}>
+        <NavDropdown style={{ textDecoration: 'none', fontSize: '20px' }} title={"КНИГИ"}>
           <NavDropdown.Item href={BOOKS_ROUTE}>Все книги</NavDropdown.Item>
           {tags.map(tag => (
             <NavDropdown.Item href={BOOKTAG_ROUTE+`/${tag.tagname}`}>{tag.tagname}</NavDropdown.Item>
           ))}
         </NavDropdown>
         
-        <NavLink style={{ color: 'white', textDecoration: 'none', fontSize: '30px' }} to={AUTHOR_ROUTE}>АВТОРЫ</NavLink>
-        <NavDropdown style={{ textDecoration: 'none', fontSize: '30px' }} title={"ПАРТНЕРСТВО"}>
+        <NavLink style={{ color: 'white', textDecoration: 'none', fontSize: '20px' }} to={AUTHOR_ROUTE}>АВТОРЫ</NavLink>
+        <NavDropdown style={{ textDecoration: 'none', fontSize: '20px' }} title={"ПАРТНЕРСТВО"}>
           <NavDropdown.Item href={PARTNERS_ROUTE}>Наши партнеры</NavDropdown.Item>
           <NavDropdown.Item href={ORDER_ROUTE}>Заказать издание</NavDropdown.Item>  
           <NavDropdown.Item href={BOOKS_ROUTE}>Купить книгу</NavDropdown.Item>
         </NavDropdown>
-        <a style={{ color: 'white', textDecoration: 'none', fontSize: '30px' }} href="https://nto-journal.ru/">НТО</a>
-        <NavLink style={{ color: 'white', textDecoration: 'none', fontSize: '30px' }} to={ABOUT_ROUTE}>О НАС</NavLink>
+        <a style={{ color: 'white', textDecoration: 'none', fontSize: '20px' }} href="https://nto-journal.ru/">НТО</a>
+        <NavLink style={{ color: 'white', textDecoration: 'none', fontSize: '20px' }} to={ABOUT_ROUTE}>О НАС</NavLink>
 
       </Container>
     </Navbar>

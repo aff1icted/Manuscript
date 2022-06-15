@@ -102,7 +102,7 @@ const Cart = observer(() => {
     }
     return (
         <div>
-            <div className="col-10 content">
+            <div className="col-8 content">
                 <NavBar />
                 {emptyCart ?
                     <div className="col-5" style={{ paddingTop: "20px", paddingBottom: "20px" }}>

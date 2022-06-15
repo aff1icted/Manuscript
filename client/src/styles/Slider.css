@@ -12,12 +12,13 @@
 
 
 .container-slider {
-    max-width: var(--widths);
+  width: 100%;  
+  
     height: var(--heights);
-    margin: 100px auto;
+    
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    
   }
   @media screen and (max-width: 700px){
     .container-slider {
@@ -48,7 +49,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: #f1f1f1;
+    background: #f1f1f17a;
     border: 1px solid rgba(34, 34, 34, 0.287);
     position: absolute;
     display: flex;

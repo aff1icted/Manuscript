@@ -31,7 +31,7 @@ function Order() {
   }
   return (
     <div>
-      <div className="col-10 content">
+      <div className="col-8 content">
         <NavBar />
         <div className="col-8" style={{paddingTop:"30px", textAlign:"justify", textAlignLast:"center"}}>
           <h5>{orderText}</h5>
